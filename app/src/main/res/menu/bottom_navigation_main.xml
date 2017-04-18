@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_music"
+        android:enabled="true"
+        android:icon="@drawable/music"
+        android:title="@string/text_music"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_community"
+        android:enabled="true"
+        android:icon="@drawable/board"
+        android:title="@string/text_community"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="@string/text_home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_search"
+        android:enabled="true"
+        android:icon="@drawable/search"
+        android:title="@string/text_search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/profile"
+        android:title="@string/text_profile"
+        app:showAsAction="ifRoom" />
+</menu>
