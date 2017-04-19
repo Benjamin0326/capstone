@@ -5,5 +5,7 @@
     <string name="text_home">Home</string>
     <string name="text_search">Search</string>
     <string name="text_profile">Profile</string>
+    
+    <string name="label_community_list">Community List</string>
 
 </resources>
