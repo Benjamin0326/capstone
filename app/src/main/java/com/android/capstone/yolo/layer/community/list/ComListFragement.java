@@ -1,4 +1,4 @@
-package com.android.capstone.yolo;
+package com.android.capstone.yolo.layer.community.list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ComListAdapter;
 import com.android.capstone.yolo.model.CommunityList;
 import com.android.capstone.yolo.scenario.scenario;
@@ -27,7 +28,7 @@ public class ComListFragement extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_community_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_community_list, container, false);
         listView = (ListView) rootView.findViewById(R.id.community_list);
         adapter = new ComListAdapter(getContext());
         listView.setAdapter(adapter);

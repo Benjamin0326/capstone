@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.android.capstone.yolo.MainFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_festival_list"
+    <com.android.capstone.yolo.layer.festival.ClickableViewPager
+        android:id="@+id/pager_festival_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.android.capstone.yolo.layer.festival.ClickableViewPager>
 
 
 </FrameLayout>

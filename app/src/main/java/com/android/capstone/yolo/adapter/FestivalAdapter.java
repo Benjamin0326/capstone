@@ -1,11 +1,16 @@
-package com.android.capstone.yolo;
+package com.android.capstone.yolo.adapter;
 
+import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.android.capstone.yolo.layer.festival.FestivalInfoFragment;
+import com.android.capstone.yolo.R;
 
 /**
  * Created by sung9 on 2017-04-19.
@@ -36,6 +41,10 @@ public class FestivalAdapter extends RecyclerView.Adapter<FestivalAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int data = list_img_festival[pos];
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment fr = new FestivalInfoFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, fr).commit();
+
             }
         };
 
