@@ -4,10 +4,28 @@
     android:layout_height="match_parent"
     tools:context="com.android.capstone.yolo.FestivalTabInfoFragment">
 
-    <TextView
-        android:textSize="100dp"
+    <RelativeLayout
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Information" />
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleX="1.5"
+            android:id="@+id/img_festival_info"/>
+
+        <ScrollView
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/img_festival_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="15dp"
+                android:id="@+id/text_festival_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </ScrollView>
+    </RelativeLayout>
 
 </FrameLayout>

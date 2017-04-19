@@ -2,14 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.capstone.yolo.MainFragment">
+    tools:context="com.android.capstone.yolo.ItemFestivalFragment">
 
-    <com.android.capstone.yolo.ClickableViewPager
-        android:id="@+id/pager_festival_list"
+    <ImageView
+        android:id="@+id/img_item_festival"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.android.capstone.yolo.ClickableViewPager>
-
+        android:layout_height="match_parent"
+        android:layout_margin="25dp"
+        android:elevation="50dip"/>
 
 </FrameLayout>
