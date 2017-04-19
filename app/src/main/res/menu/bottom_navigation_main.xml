@@ -15,6 +15,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_home"
+        android:checked="true"
         android:enabled="true"
         android:icon="@drawable/home"
         android:title="@string/text_home"
