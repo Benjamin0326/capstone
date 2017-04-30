@@ -1,7 +1,7 @@
 package com.android.capstone.yolo.model;
 
 public class CommunityList {
-    public int id;
+    public long id;
     public String title;
     public String sub;
     public String path;
@@ -34,7 +34,7 @@ public class CommunityList {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 }

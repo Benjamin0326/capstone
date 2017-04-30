@@ -2,6 +2,7 @@ package com.android.capstone.yolo.scenario;
 
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.model.CommunityList;
+import com.android.capstone.yolo.model.Post;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +32,30 @@ public class scenario {
         return lists;
     }
 
-    public static List<BoardList> getBoardList(int id){
+    public static Post getBoardDetali(long id){
+
+        Post post = new Post();
+        post.setId(id);
+        post.setTitle("Hello world!");
+        post.setType("type1");
+        post.setWriter("HyoJong");
+        post.setContent("북미와 아시아 유럽 등에서 열고 있는 일렉트로니카 페스티벌. 약칭은 UMF.\n" +
+                "메인인 미국에서는 1999년 부터 마이애미에서 열리고 있으며 Winter Music Conference라는 기간과 비슷하게 맞춰서 보통 3월 쯤에 열린다. 2016년 기준 18주년을 달성했다. 미국 뿐만 아니라 세계 여러 나라 등지에서 열리고 있는 점이 특징으로 꼽힌다. 이비자를 포함해 대한민국, 일본, 상파울루, 부에노스 아이레스, 산티아고, 크로아티아, 태국, 홍콩, 남아공등에서 열리고 있고 2016년 올해 브라질 리우데자네이루에서도 열릴 예정이다.\n" +
+                "이와 비슷한 페스티벌로는 유럽에서 열리는 Tomorrowland가 꼽힌다. \n" +
+                "첫 일본 페스티벌에는 한국에 로드투 울트라 2012를 통하여 내한한 Hardwell이 헤드라이너로 선정되었다.");
+        post.setDate(new Date());
+
+        String image1 = "https://ultramusicfestival.com/wp-content/uploads/2016/04/miami-2016-og-1.jpg";
+        String image2 = "http://edmchicago.com/wp-content/uploads/2015/03/ultra_mainstage2014_design.jpg";
+        ArrayList<String> images = new ArrayList<>();
+        images.add(image1);
+        images.add(image2);
+        post.setImage(images);
+
+        return post;
+    }
+
+    public static List<BoardList> getBoardList(long id){
 
         ArrayList<BoardList> lists = new ArrayList<>();
 

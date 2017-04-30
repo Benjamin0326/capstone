@@ -16,8 +16,7 @@ public class BoardListAdapter extends BaseAdapter{
     private static BoardListAdapter instance;
     private List<BoardList> lists;
     private Context context;
-    private static final SimpleDateFormat FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    private SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
     public BoardListAdapter(Context context){
         BoardListAdapter.instance = this;
