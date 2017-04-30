@@ -13,18 +13,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ComListAdapter extends BaseAdapter{
+public class CommunityListAdapter extends BaseAdapter{
 
-    private static ComListAdapter instance;
-    private List<CommunityList> lists; //리스트뷰에 사용되는 모델
+    private static CommunityListAdapter instance;
+    private List<CommunityList> lists;
     private Context context;
 
-    public ComListAdapter(Context context){
-        ComListAdapter.instance = this;
+    public CommunityListAdapter(Context context){
+        CommunityListAdapter.instance = this;
         this.context = context;
     }
 
-    public static ComListAdapter getInstance(){
+    public static CommunityListAdapter getInstance(){
         return instance;
     }
 
@@ -53,7 +53,7 @@ public class ComListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        convertView = View.inflate(parent.getContext(), R.layout.item_com_list, null);
+        convertView = View.inflate(parent.getContext(), R.layout.item_community_list, null);
         TextView title = (TextView) convertView.findViewById(R.id.com_list_title);
         TextView sub = (TextView) convertView.findViewById(R.id.com_list_sub);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.com_list_thumbnail);
