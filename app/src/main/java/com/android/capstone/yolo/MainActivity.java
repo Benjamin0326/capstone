@@ -1,5 +1,6 @@
 package com.android.capstone.yolo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.android.capstone.yolo.layer.community.list.ComListFragement;
+import com.android.capstone.yolo.layer.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         fragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -46,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.action_profile:
-
+                        fr=new ProfileFragment();
+                        fragmentManager.beginTransaction().replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_search:
 

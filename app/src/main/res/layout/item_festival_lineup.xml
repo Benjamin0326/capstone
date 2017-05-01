@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@android:color/white"
+android:paddingTop="@dimen/com_list_paddingUpdown"
+android:paddingBottom="@dimen/com_list_paddingUpdown"
+android:paddingLeft="@dimen/com_list_paddingSide"
+android:paddingRight="@dimen/com_list_paddingSide"
+android:orientation="horizontal">
+
+<de.hdodenhof.circleimageview.CircleImageView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/com_list_thumbnail_size"
+    android:layout_height="@dimen/com_list_thumbnail_size"
+    android:id="@+id/thumbnail_item_festival_lineup"
+    app:civ_border_width="1dp"
+    app:civ_border_color="@color/colorPrimaryBlue"
+    android:src="@mipmap/ic_launcher" />
+
+<android.support.v4.widget.Space
+    android:layout_width="10dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"/>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_item_festival_lineup"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/com_list_title_text"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_item_festival_lineup_sub"
+        android:textSize="@dimen/com_list_sub_text"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/darker_gray" />
+
+</LinearLayout>
+
+</LinearLayout>
+
