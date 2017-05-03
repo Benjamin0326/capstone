@@ -5,28 +5,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.android.capstone.yolo.layer.profile.ProfileFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_profile"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:scaleX="1.1"
-            android:scaleY="1.1"
-            android:layout_height="wrap_content"
-            app:tabTextColor="@android:color/white"
-            android:background="@color/colorPrimaryDark"
-            app:tabSelectedTextColor="@color/colorAccent"
-            android:elevation="30dp"></android.support.design.widget.TabLayout>
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="30dp"
+            android:orientation="horizontal">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager_profile"
-            android:layout_below="@id/tab_profile"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/thumbnail_profile"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="@color/colorPrimaryBlue"
+                app:civ_border_width="1dp" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Nick Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/text_profile_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="1999. 09. 09"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="5">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_profile"
+                android:layout_width="match_parent"
+                android:scaleX="1.1"
+                android:scaleY="1.1"
+                android:layout_height="wrap_content"
+                app:tabTextColor="@android:color/white"
+                android:background="@color/colorPrimaryDark"
+                app:tabSelectedTextColor="@color/colorAccent"
+                android:elevation="30dp"></android.support.design.widget.TabLayout>
 
-        </android.support.v4.view.ViewPager>
-    </RelativeLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_profile"
+                android:layout_below="@id/tab_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+            </android.support.v4.view.ViewPager>
+        </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>

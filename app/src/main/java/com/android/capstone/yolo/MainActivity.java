@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.android.capstone.yolo.layer.community.list.ComListFragement;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
+import com.android.capstone.yolo.layer.community.list.CommunityListFrag;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 final Fragment fr;
                 switch (item.getItemId()){
                     case R.id.action_community:
-                        fr = new ComListFragement();
+                        fr = new CommunityListFrag();
                         fragmentManager.beginTransaction().replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_home:

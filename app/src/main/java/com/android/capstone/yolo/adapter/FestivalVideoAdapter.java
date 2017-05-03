@@ -10,18 +10,26 @@ import android.media.Image;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.layer.festival.GetFilePathFromDevice;
+import com.android.capstone.yolo.layer.festival.YoutubeActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -31,13 +39,13 @@ import com.squareup.picasso.Picasso;
 public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdapter.ViewHolder>{
 
     private String[] videoResources;
-    private Uri[] videoUris;
+    //private Uri[] videoUris;
     private Context context;
     public static final String API_KEY = "AIzaSyBz948TjD7Wo993-0TbSh3wMf5nqYGZCh0";
 
-    public FestivalVideoAdapter(Context _context, Uri[] _videoUris, String[] _videoResources){
+    public FestivalVideoAdapter(Context _context, String[] _videoResources){
         context = _context;
-        videoUris = _videoUris;
+        //videoUris = _videoUris;
         videoResources = _videoResources;
     }
 
@@ -54,10 +62,42 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final int pos = position;
+/*
+        holder.img_pic.initialize(API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                youTubeThumbnailLoader.setVideo(videoResources[pos]);
+                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                    @Override
+                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                        youTubeThumbnailLoader.release();
+                    }
+
+                    @Override
+                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+
+                    }
+                });
+
+                //Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+                //Toast.makeText(context, "Failure", Toast.LENGTH_LONG).show();
+            }
+        });
+*/
         ImageView.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW,videoUris[pos]));
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Intent intent = new Intent(context, YoutubeActivity.class);
+                intent.putExtra("videId", videoResources[pos]);
+                context.startActivity(intent);
+
+                //context.startActivity(new Intent(Intent.ACTION_VIEW,videoUris[pos]));
                 //String data = dummyData[pos];
                 //Toast.makeText(context, pos+" clicked", Toast.LENGTH_SHORT).show();
                 /*Dialog dialog = new Dialog(context);
@@ -81,8 +121,8 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
         //String selectedVideoFilePath = GetFilePathFromDevice.getPath(context, videoResources[pos]);
         //holder.img_pic.setImageBitmap(ThumbnailUtils.createVideoThumbnail(selectedVideoFilePath, MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
         //Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(selectedVideoFilePath, MediaStore.Video.Thumbnails.FULL_SCREEN_KIND);
-        holder.img_pic.setImageResource(R.drawable.festivalinfo);
-        //Picasso.with(context).load(videoResources[i]).into(holder.img_pic);
+        //holder.img_pic.setImageResource(R.drawable.festivalinfo);
+        Picasso.with(context).load("http://img.youtube.com/vi/"+videoResources[pos]+"/default.jpg").resize(500,500).centerCrop().into(holder.img_pic);
         holder.img_pic.setOnClickListener(listener);
     }
     //startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.youtube.com/watch?v=Hxy8BZGQ5Jo")));

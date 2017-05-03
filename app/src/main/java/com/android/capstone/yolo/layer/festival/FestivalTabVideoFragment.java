@@ -15,9 +15,9 @@ import com.android.capstone.yolo.adapter.FestivalPictureAdapter;
 import com.android.capstone.yolo.adapter.FestivalVideoAdapter;
 
 public class FestivalTabVideoFragment extends Fragment {
-    String[] addr = {"https://youtu.be/iQpGq4HguVs?v=VIDEOID",
-            "https://youtu.be/pFscrs6qmDY?v=VIDEOID",
-            "https://youtu.be/PfQhLcYqE88?v=VIDEOID", "https://youtu.be/rArS50LIgVc?v=VIDEOID"};
+    String[] addr = {"iQpGq4HguVs",
+            "pFscrs6qmDY",
+            "PfQhLcYqE88", "4r1tq1XBN0w"};
     Uri[] uri;
 
     private FestivalVideoAdapter adapter;
@@ -33,12 +33,13 @@ public class FestivalTabVideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_festival_tab_video, container, false);
-        uri = new Uri[addr.length];
+        /*uri = new Uri[addr.length];
         for(int i=0;i<addr.length;i++){
             uri[i] = Uri.parse(addr[i]);
         }
+        */
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_festival_tab_video);
-        adapter = new FestivalVideoAdapter(getContext(), uri, addr);
+        adapter = new FestivalVideoAdapter(getContext(), addr);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
