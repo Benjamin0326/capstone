@@ -8,10 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.FestivalPagerAdapter;
 import com.android.capstone.yolo.adapter.ProfilePagerAdapter;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +23,8 @@ public class ProfileFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ProfilePagerAdapter pagerAdapter;
+    private CircleImageView thumbnail;
+    private TextView name, info;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -31,6 +36,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        thumbnail = (CircleImageView) rootView.findViewById(R.id.thumbnail_profile);
+        name = (TextView) rootView.findViewById(R.id.text_profile_name);
+        info = (TextView) rootView.findViewById(R.id.text_profile_info);
 
         tabLayout = (TabLayout) rootView.findViewById(R.id.tab_profile);
         tabLayout.addTab(tabLayout.newTab().setText("음악 리스트"));

@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.android.capstone.yolo.layer.profile.ProfileTabWritingFragment">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_profile_tab_writing"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="30sp"
-        android:text="Writing Tab" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

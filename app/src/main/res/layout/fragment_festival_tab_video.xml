@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/framelayout_youtube_video"
     tools:context="com.android.capstone.yolo.layer.festival.FestivalTabVideoFragment">
 
     <android.support.v7.widget.RecyclerView

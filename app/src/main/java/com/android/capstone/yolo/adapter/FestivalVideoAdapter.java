@@ -10,12 +10,14 @@ import android.media.Image;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.layer.festival.FestivalInfoFragment;
 import com.android.capstone.yolo.layer.festival.GetFilePathFromDevice;
 import com.android.capstone.yolo.layer.festival.YoutubeActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -93,9 +96,32 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                /*
                 Intent intent = new Intent(context, YoutubeActivity.class);
+
                 intent.putExtra("videId", videoResources[pos]);
                 context.startActivity(intent);
+                */
+                YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_youtube_video, youTubePlayerFragment).commit();
+
+                youTubePlayerFragment.initialize(API_KEY, new YouTubePlayer.OnInitializedListener() {
+                    @Override
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                        if (!b) {
+                            youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                            youTubePlayer.loadVideo(videoResources[pos]);
+                            youTubePlayer.play();
+                        }
+                    }
+
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                        String errorMessage = youTubeInitializationResult.toString();
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+                        Log.d("errorMessage:", errorMessage);
+                    }
+                });
 
                 //context.startActivity(new Intent(Intent.ACTION_VIEW,videoUris[pos]));
                 //String data = dummyData[pos];
@@ -137,7 +163,6 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
         public ViewHolder(View view){
             super(view);
             img_pic = (ImageView) view.findViewById(R.id.youtube_item_festival_video);
-
         }
 
     }
