@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/image_item_profile_music"
-        android:layout_width="125dp"
-        android:layout_height="75dp"/>
+        android:layout_width="100dp"
+        android:layout_height="65dp"/>
 
     <LinearLayout
         android:layout_marginLeft="10dp"
@@ -27,6 +27,7 @@
         <co.lujun.androidtagview.TagContainerLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             app:container_background_color = "@android:color/transparent"
             android:id="@+id/tag__item_profile_music">
 

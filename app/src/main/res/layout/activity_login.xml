@@ -14,6 +14,7 @@
         android:layout_margin="75dp">
     <EditText
         android:hint="      ID"
+        android:maxLines="1"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="25dp"
         android:id="@+id/edit_login_mail"
@@ -23,6 +24,7 @@
         <EditText
             android:hint="  Password"
             android:layout_marginBottom="25dp"
+            android:maxLines="1"
             android:id="@+id/edit_login_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ android:paddingTop="@dimen/com_list_paddingUpdown"
 android:paddingBottom="@dimen/com_list_paddingUpdown"
 android:paddingLeft="@dimen/com_list_paddingSide"
 android:paddingRight="@dimen/com_list_paddingSide"
+    android:layout_margin="10dp"
 android:orientation="horizontal">
 
 <de.hdodenhof.circleimageview.CircleImageView
