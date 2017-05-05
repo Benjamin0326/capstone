@@ -1,6 +1,8 @@
 package com.android.capstone.yolo.layer.profile;
 
 
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,8 +15,11 @@ import android.widget.TextView;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.FestivalPagerAdapter;
 import com.android.capstone.yolo.adapter.ProfilePagerAdapter;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +44,13 @@ public class ProfileFragment extends Fragment {
         thumbnail = (CircleImageView) rootView.findViewById(R.id.thumbnail_profile);
         name = (TextView) rootView.findViewById(R.id.text_profile_name);
         info = (TextView) rootView.findViewById(R.id.text_profile_info);
+
+        String id = getIdPreferences();
+        if(id!=null)
+            name.setText(id);
+        Uri imageUri = getUriPreferences();
+        if(imageUri!=null)
+            Picasso.with(getActivity()).load(imageUri).into(thumbnail);
 
         tabLayout = (TabLayout) rootView.findViewById(R.id.tab_profile);
         tabLayout.addTab(tabLayout.newTab().setText("음악 리스트"));
@@ -69,5 +81,30 @@ public class ProfileFragment extends Fragment {
 
         return rootView;
     }
+
+
+    private Uri getUriPreferences(){
+        SharedPreferences pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        String tmp = pref.getString("profile", "");
+        if(tmp.compareTo("")==0){
+            return null;
+        }
+        else{
+            Uri uri = Uri.parse(tmp);
+            return uri;
+        }
+    }
+
+    private String getIdPreferences(){
+        SharedPreferences pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        String tmp = pref.getString("id", "");
+        if(tmp.compareTo("")==0){
+            return null;
+        }
+        else{
+            return tmp;
+        }
+    }
+
 
 }
