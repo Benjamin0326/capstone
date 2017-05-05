@@ -7,4 +7,13 @@
     <dimen name="com_list_title_text">20dp</dimen>
     <dimen name="com_list_sub_text">10dp</dimen>
     <dimen name="com_list_thumbnail_size">35dp</dimen>
+
+    <dimen name="explore_history_item_height">40dp</dimen>
+    <dimen name="explore_history_item_padding_updown">12dp</dimen>
+    <dimen name="explore_tab_margin">8dp</dimen>
+    <dimen name="explore_padding_top">9dp</dimen>
+    <dimen name="explore_padding_side">8dp</dimen>
+    <dimen name="explore_margin_side">5dp</dimen>
+    <dimen name="explore_margin_top">6dp</dimen>
+    <dimen name="explore_item_padding">8dp</dimen>
 </resources>

@@ -19,9 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".layer.community.main.CommunityBoardActivity" />
-        <activity android:name=".layer.community.detail.BoardDetailActivity" />
+        <activity android:name=".layer.community.CommunityBoardActivity" />
+        <activity android:name=".layer.community.BoardDetailActivity" />
         <activity android:name=".layer.festival.YoutubeActivity"></activity>
+        <activity android:name=".layer.community.BoardPostActivity"/>
+        <activity android:name=".layer.search.SearchActivity"/>
     </application>
 
 </manifest>

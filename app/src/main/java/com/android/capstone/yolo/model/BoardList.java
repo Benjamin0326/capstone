@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BoardList {
     public long id;
-    public String title, writer, type;
+    public String title, writer, type, date;
     public Date timestamp;
 
     public void setId(long id) {
@@ -45,5 +45,13 @@ public class BoardList {
 
     public String getType() {
         return type;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

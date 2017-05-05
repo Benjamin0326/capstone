@@ -10,8 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.android.capstone.yolo.layer.community.CommunityListFrag;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
-import com.android.capstone.yolo.layer.community.list.CommunityListFrag;
+import com.android.capstone.yolo.layer.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         fragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_search:
-
+                        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 return true;

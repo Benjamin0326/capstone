@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/explore_history_item_height"
+    android:id="@+id/historyItemLayout"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/explore_history_item_padding_updown"
+    android:paddingBottom="@dimen/explore_history_item_padding_updown"
+    android:paddingLeft="@dimen/explore_padding_side"
+    android:paddingRight="@dimen/explore_padding_side">
+
+    <TextView
+        android:id="@+id/historyItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:includeFontPadding="false"
+        android:textAppearance="@style/AppTheme.TextAppearance.Content"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>

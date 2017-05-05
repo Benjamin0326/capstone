@@ -1,4 +1,4 @@
-package com.android.capstone.yolo.layer.community.list;
+package com.android.capstone.yolo.layer.community;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.widget.ListView;
 
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.CommunityListAdapter;
-import com.android.capstone.yolo.layer.community.main.CommunityBoardActivity;
 import com.android.capstone.yolo.model.CommunityList;
 import com.android.capstone.yolo.scenario.scenario;
 

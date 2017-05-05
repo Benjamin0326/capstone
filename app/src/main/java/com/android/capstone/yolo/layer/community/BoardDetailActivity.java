@@ -1,4 +1,4 @@
-package com.android.capstone.yolo.layer.community.detail;
+package com.android.capstone.yolo.layer.community;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,7 +39,7 @@ public class BoardDetailActivity extends AppCompatActivity{
 
     public void getPost(){
         long postID = getIntent().getExtras().getLong("postID");
-        Post post = scenario.getBoardDetali(postID);
+        Post post = scenario.getBoardDetail(postID);
 
         title.setText(post.getTitle());
         writer.setText(post.getWriter());

@@ -21,4 +21,7 @@ public interface CommunityService {
 
     @GET("/api/board/detail/{id}")
     Call<Post> getBoardDetail(@Path("id") long id);
+
+    @GET("/api/board/")
+    Call<List<BoardList>> tempBoard();
 }
