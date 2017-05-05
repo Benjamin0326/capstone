@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.android.capstone.yolo.layer.login.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="75dp">
+    <EditText
+        android:hint="      ID"
+        android:maxLines="1"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/edit_login_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+        <EditText
+            android:hint="  Password"
+            android:layout_marginBottom="25dp"
+            android:maxLines="1"
+            android:id="@+id/edit_login_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+
+    <Button
+        android:layout_marginTop="25dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✔"
+        android:textColor="@android:color/white"
+        android:id="@+id/btn_login"/>
+
+        <Button
+            android:layout_marginTop="15dp"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="JOIN"
+            android:id="@+id/btn_join"/>
+
+    </LinearLayout>
+</LinearLayout>

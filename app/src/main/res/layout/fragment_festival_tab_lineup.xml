@@ -5,6 +5,7 @@
     tools:context="com.android.capstone.yolo.layer.festival.FestivalTabLineupFragment">
 
     <android.support.v7.widget.RecyclerView
+        android:layout_margin="30dp"
         android:id="@+id/recycler_festival_tab_lineup"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

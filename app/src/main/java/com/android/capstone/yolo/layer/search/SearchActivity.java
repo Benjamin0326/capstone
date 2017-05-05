@@ -23,7 +23,6 @@ import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
 import com.android.capstone.yolo.model.CommunityList;
 import com.android.capstone.yolo.model.SearchResult;
 import com.android.capstone.yolo.scenario.scenario;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,6 @@ public class SearchActivity extends AppCompatActivity{
     FrameLayout container;
     EditText searchText;
     ImageView searchBtn;
-    MaterialSpinner selectBoard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,8 +100,8 @@ public class SearchActivity extends AppCompatActivity{
         for(int i=0; i<communityList.size(); i++)
             boardList.add(communityList.get(i).getTitle());
 
-        selectBoard.setItems(boardList);
-        selectBoard.setSelectedIndex(0);
+        //selectBoard.setItems(boardList);
+        //selectBoard.setSelectedIndex(0);
     }
 
     public void initSearchHistory(){
