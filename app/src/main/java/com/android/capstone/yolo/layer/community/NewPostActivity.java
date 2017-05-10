@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.android.capstone.yolo.R;
 
-public class BoardPostActivity extends AppCompatActivity{
+public class NewPostActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

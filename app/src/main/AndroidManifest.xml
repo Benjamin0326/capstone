@@ -23,7 +23,7 @@
         <activity android:name=".layer.community.CommunityBoardActivity" />
         <activity android:name=".layer.community.BoardDetailActivity" />
         <activity android:name=".layer.festival.YoutubeActivity"></activity>
-        <activity android:name=".layer.community.BoardPostActivity"/>
+        <activity android:name=".layer.community.NewPostActivity"/>
         <activity android:name=".layer.search.SearchActivity"/>
         <activity android:name=".layer.login.LoginActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

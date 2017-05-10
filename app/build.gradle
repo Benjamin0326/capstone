@@ -38,4 +38,5 @@ dependencies {
     compile 'co.lujun:androidtagview:1.1.1'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     testCompile 'junit:junit:4.12'
+    compile 'com.jaredrummler:material-spinner:1.1.0'
 }
