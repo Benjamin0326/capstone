@@ -4,18 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.CommunityListAdapter;
+import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.CommunityList;
-import com.android.capstone.yolo.scenario.scenario;
+import com.android.capstone.yolo.service.FestivalService;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommunityListFrag extends Fragment{
     ListView listView;
@@ -39,7 +46,8 @@ public class CommunityListFrag extends Fragment{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CommunityList list = (CommunityList) adapter.getItem(i);
                 Intent intent = new Intent((getActivity()), CommunityBoardActivity.class);
-                intent.putExtra("communityID", list.id);
+                intent.putExtra("communityID", list.getId());
+                Log.d("TEST", "id : " + list.getId());
                 startActivity(intent);
             }
         });
@@ -50,11 +58,6 @@ public class CommunityListFrag extends Fragment{
     }
 
     public void getCommunityList(){
-        List<CommunityList> lists = scenario.getCommunityList();
-        adapter.setSource(lists);
-
-        /*
-        // apply after server
         FestivalService service = network.buildRetrofit().create(FestivalService.class);
         Call<List<CommunityList>> communityListCall = service.getCommunityList();
 
@@ -76,6 +79,6 @@ public class CommunityListFrag extends Fragment{
                 Log.i("TEST","err : "+ t.getMessage());
             }
         });
-        */
+
     }
 }

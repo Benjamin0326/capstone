@@ -16,12 +16,9 @@ public interface CommunityService {
     @GET("/notifications/{id}/read")
     Observable<Void> read(@Path("id") long id);
 
+    @GET("/api/board/festival/{id}")
+    Call<List<BoardList>> getBoardList(@Path("id") String id);
+
     @GET("/api/board/{id}")
-    Call<List<BoardList>> getBoardList(@Path("id") long id);
-
-    @GET("/api/board/detail/{id}")
-    Call<Post> getBoardDetail(@Path("id") long id);
-
-    @GET("/api/board/")
-    Call<List<BoardList>> tempBoard();
+    Call<Post> getBoardDetail(@Path("id") String id);
 }

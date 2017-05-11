@@ -39,7 +39,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/com_list_sub"
+            android:id="@+id/com_list_date"
+            android:textSize="@dimen/com_list_sub_text"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/com_list_location"
             android:textSize="@dimen/com_list_sub_text"
             android:includeFontPadding="false"
             android:textColor="@android:color/darker_gray" />

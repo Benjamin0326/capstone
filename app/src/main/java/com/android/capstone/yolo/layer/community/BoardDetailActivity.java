@@ -3,16 +3,22 @@ package com.android.capstone.yolo.layer.community;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.Post;
-import com.android.capstone.yolo.scenario.scenario;
+import com.android.capstone.yolo.service.CommunityService;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BoardDetailActivity extends AppCompatActivity{
     TextView title, type, writer, content, date;
@@ -38,7 +44,8 @@ public class BoardDetailActivity extends AppCompatActivity{
     }
 
     public void getPost(){
-        long postID = getIntent().getExtras().getLong("postID");
+        String postID = getIntent().getExtras().getString("postID");
+        /*
         Post post = scenario.getBoardDetail(postID);
 
         title.setText(post.getTitle());
@@ -54,7 +61,7 @@ public class BoardDetailActivity extends AppCompatActivity{
                 layout.addView(imageView);
             }
         }
-        /*
+        */
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<Post> postCall = service.getBoardDetail(postID);
         postCall.enqueue(new Callback<Post>() {
@@ -63,14 +70,14 @@ public class BoardDetailActivity extends AppCompatActivity{
                 if(response.isSuccessful()){
                     title.setText(response.body().getTitle());
                     content.setText(response.body().getContent());
-                    writer.setText(response.body().getWriter());
-                    date.setText(FORMAT.format(post.getDate()));
-                    type.setText("["+response.body().getType()+"]");
+                    writer.setText(response.body().getUser());
+                    date.setText(response.body().getDate());
+                    type.setText("["+response.body().getTag()+"]");
 
-                    if(response.body().getImage().size() > 0){
-                        for(int i = 0; i<response.body().getImage().size(); i++){
+                    if(response.body().getImg().length > 0){
+                        for(int i = 0; i<response.body().getImg().length; i++){
                             ImageView imageView = new ImageView(getApplicationContext());
-                            Picasso.with(getApplicationContext()).load(response.body().getImage().get(i)).into(imageView);
+                            Picasso.with(getApplicationContext()).load(response.body().getImg()[i]).into(imageView);
                             layout.addView(imageView);
                         }
                     }
@@ -84,6 +91,5 @@ public class BoardDetailActivity extends AppCompatActivity{
                 Log.d("TEST", "err msg : " + t.getMessage());
             }
         });
-        */
     }
 }

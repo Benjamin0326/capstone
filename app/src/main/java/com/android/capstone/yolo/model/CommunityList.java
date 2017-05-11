@@ -1,40 +1,53 @@
 package com.android.capstone.yolo.model;
 
 public class CommunityList {
-    public long id;
-    public String title;
-    public String sub;
-    public String path;
+    public String _id, title, startDate, endDate, location, icon;
 
-    public void setPath(String path) {
-        this.path = path;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setSub(String sub) {
-        this.sub = sub;
+    public String getIcon() {
+        return icon;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getStartDate() {
+        return startDate;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public String getSub() {
-        return sub;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
-    public long getId() {
-        return id;
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

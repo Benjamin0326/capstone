@@ -1,54 +1,42 @@
 package com.android.capstone.yolo.model;
 
-import java.util.Date;
-
 public class BoardList {
-    public long id;
-    public String title, writer, type, date;
-    public Date timestamp;
+    public String _id, title, user, tag, date;
 
-    public void setId(long id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setWriter(String writer) {
-        this.writer = writer;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public long getId() {
-        return id;
+    public String getId() {
+        return _id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public String getUser() {
+        return user;
     }
 
-    public String getWriter() {
-        return writer;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public String getTag() {
+        return tag;
     }
 
     public String getDate() {

@@ -57,34 +57,9 @@ public class CommunityBoardActivity extends AppCompatActivity{
     }
 
     public void initView(){
-        long boardID = getIntent().getExtras().getInt("communityID");
-
-        //List<BoardList> lists = scenario.getBoardList(boardID);
-        //adapter.setSource(lists);
-
-        /*
+        String boardID = getIntent().getExtras().getString("communityID");
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<List<BoardList>> boardListCall = service.getBoardList(boardID);
-        boardListCall.enqueue(new Callback<List<BoardList>>() {
-            @Override
-            public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {
-                if(response.isSuccessful()){
-                    adapter.setSource(response.body());
-                    return;
-                }
-                int code = response.code();
-                Log.d("TEST", "err code : " + code);
-            }
-
-            @Override
-            public void onFailure(Call<List<BoardList>> call, Throwable t) {
-                Log.d("TEST", "err : " + t.getMessage());
-            }
-        });
-        */
-
-        CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<List<BoardList>> boardListCall = service.tempBoard();
         boardListCall.enqueue(new Callback<List<BoardList>>() {
             @Override
             public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {

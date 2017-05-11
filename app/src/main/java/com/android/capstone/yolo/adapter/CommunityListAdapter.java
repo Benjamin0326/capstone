@@ -55,14 +55,16 @@ public class CommunityListAdapter extends BaseAdapter{
 
         convertView = View.inflate(parent.getContext(), R.layout.item_community_list, null);
         TextView title = (TextView) convertView.findViewById(R.id.com_list_title);
-        TextView sub = (TextView) convertView.findViewById(R.id.com_list_sub);
+        TextView date = (TextView) convertView.findViewById(R.id.com_list_date);
+        TextView location = (TextView) convertView.findViewById(R.id.com_list_location);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.com_list_thumbnail);
 
         CommunityList list = lists.get(position);
 
         title.setText(list.title);
-        sub.setText(list.sub);
-        Picasso.with(context).load(list.getPath()).into(imageView);
+        date.setText(list.startDate + " ~ " + list.endDate);
+        location.setText(" / " + list.location);
+        Picasso.with(context).load(list.getIcon()).into(imageView);
 
         return convertView;
     }

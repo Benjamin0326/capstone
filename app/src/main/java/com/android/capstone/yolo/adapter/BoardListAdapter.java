@@ -1,7 +1,6 @@
 package com.android.capstone.yolo.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -63,8 +62,8 @@ public class BoardListAdapter extends BaseAdapter{
         BoardList list = lists.get(position);
 
         title.setText(list.title);
-        type.setText("["+list.getType()+"]");
-        writer.setText(list.getWriter());
+        type.setText("["+list.getTag()+"]");
+        writer.setText(list.getUser());
         //date.setText(FORMAT.format(list.getTimestamp()));
         date.setText(list.getDate());
 

@@ -1,55 +1,45 @@
 package com.android.capstone.yolo.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 public class Post {
-    public long id;
-    public String title, content, type, writer;
-    public ArrayList<String> image;
-    public Date date;
+    public String _id, title, content, tag, user, date, img[];
 
-    public void setId(long id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setImg(String[] img) {
+        this.img = img;
     }
 
-    public void setImage(ArrayList<String> image) {
-        this.image = image;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public void setWriter(String writer) {
-        this.writer = writer;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getType() {
-        return type;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public long getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -57,12 +47,16 @@ public class Post {
         return content;
     }
 
-    public ArrayList<String> getImage() {
-        return image;
+    public String getTag() {
+        return tag;
     }
 
-    public String getWriter() {
-        return writer;
+    public String getUser() {
+        return user;
+    }
+
+    public String[] getImg() {
+        return img;
     }
 }
 

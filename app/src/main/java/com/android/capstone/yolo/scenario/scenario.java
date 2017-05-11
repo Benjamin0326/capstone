@@ -6,7 +6,6 @@ import com.android.capstone.yolo.model.Post;
 import com.android.capstone.yolo.model.SearchResult;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class scenario {
@@ -14,7 +13,7 @@ public class scenario {
     public static List<CommunityList> getCommunityList(){
 
         ArrayList<CommunityList> lists = new ArrayList<>();
-
+/*
         CommunityList item1 = new CommunityList();
         item1.setTitle("Ultra Music Festival 2017");
         item1.setSub("sub title");
@@ -29,13 +28,13 @@ public class scenario {
 
         lists.add(item1);
         lists.add(item2);
-
+*/
         return lists;
     }
 
     public static Post getBoardDetail(long id){
-
         Post post = new Post();
+        /*
         post.setId(id);
         post.setTitle("Hello world!");
         post.setType("type1");
@@ -52,14 +51,14 @@ public class scenario {
         images.add(image1);
         images.add(image2);
         post.setImage(images);
-
+*/
         return post;
     }
 
     public static List<BoardList> getBoardList(long id){
 
         ArrayList<BoardList> lists = new ArrayList<>();
-
+/*
         BoardList item1 = new BoardList();
         item1.setId(1);
         item1.setTitle("hello world");
@@ -108,7 +107,7 @@ public class scenario {
         lists.add(item4);
         lists.add(item5);
         lists.add(item6);
-
+*/
         return lists;
     }
 
@@ -117,7 +116,7 @@ public class scenario {
         SearchResult result = new SearchResult();
 
         ArrayList<BoardList> lists = new ArrayList<>();
-
+/*
         BoardList item1 = new BoardList();
         item1.setId(1);
         item1.setTitle("hello world");
@@ -168,7 +167,7 @@ public class scenario {
         lists.add(item6);
 
         result.setBoardLists(lists);
-
+*/
         return result;
     }
 }
