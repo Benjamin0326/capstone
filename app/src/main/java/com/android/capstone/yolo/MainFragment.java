@@ -2,8 +2,8 @@ package com.android.capstone.yolo;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +38,14 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         pager = (ClickableViewPager) rootView.findViewById(R.id.pager_festival_list);
-        adapter = new FestivalListAdapter(getActivity().getSupportFragmentManager(), img_festival.length, img_festival, getActivity());
+        //adapter = new FestivalListAdapter(getActivity().getSupportFragmentManager(), img_festival.length, img_festival, getActivity());
+        adapter = new FestivalListAdapter(getChildFragmentManager(), img_festival.length, img_festival, getActivity());
         pager.setAdapter(adapter);
         pager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Fragment fr = new FestivalInfoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, fr).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
             }
         });
         return rootView;

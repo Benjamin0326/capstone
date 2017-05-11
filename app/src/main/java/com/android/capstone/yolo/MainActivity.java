@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.action_community:
                         fr = new CommunityListFrag();
-                        fragmentManager.beginTransaction().replace(R.id.container_fragment, fr).commit();
+                        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_home:
                         fr=new MainFragment();
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                         fr=new ProfileFragment();
-                        fragmentManager.beginTransaction().replace(R.id.container_fragment, fr).commit();
+                        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_search:
                         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);

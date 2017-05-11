@@ -39,7 +39,7 @@ public class FestivalInfoFragment extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) rootView.findViewById(R.id.pager_festival_info);
-        pagerAdapter = new FestivalPagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
+        pagerAdapter = new FestivalPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

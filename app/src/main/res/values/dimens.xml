@@ -16,4 +16,6 @@
     <dimen name="explore_margin_side">5dp</dimen>
     <dimen name="explore_margin_top">6dp</dimen>
     <dimen name="explore_item_padding">8dp</dimen>
+
+    <dimen name="new_post_image_size">60dp</dimen>
 </resources>
