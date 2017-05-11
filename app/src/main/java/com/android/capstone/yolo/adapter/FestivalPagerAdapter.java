@@ -1,5 +1,6 @@
 package com.android.capstone.yolo.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,26 +16,41 @@ import com.android.capstone.yolo.layer.festival.FestivalTabVideoFragment;
 
 public class FestivalPagerAdapter extends FragmentStatePagerAdapter {
     int numOfTabs;
+    int position;
 
-    public FestivalPagerAdapter(FragmentManager fm, int numOfTabs) {
+    public FestivalPagerAdapter(FragmentManager fm, int numOfTabs, int _position) {
         super(fm);
         this.numOfTabs = numOfTabs;
+        this.position = _position;
     }
 
     @Override
     public Fragment getItem(int position) {
+        Bundle args;
         switch (position) {
             case 0:
+                 args = new Bundle();
+                args.putInt("position", position);
                 FestivalTabInfoFragment tab1 = new FestivalTabInfoFragment(); // Fragment 는 알아서 만들자
+                tab1.setArguments(args);
                 return tab1;
             case 1:
+                args = new Bundle();
+                args.putInt("position", position);
                 FestivalTabPictureFragment tab2 = new FestivalTabPictureFragment();
+                tab2.setArguments(args);
                 return tab2;
             case 2:
+                args = new Bundle();
+                args.putInt("position", position);
                 FestivalTabVideoFragment tab3 = new FestivalTabVideoFragment();
+                tab3.setArguments(args);
                 return tab3;
             case 3:
+                args = new Bundle();
+                args.putInt("position", position);
                 FestivalTabLineupFragment tab4 = new FestivalTabLineupFragment();
+                tab4.setArguments(args);
                 return tab4;
             default:
                 return null;
