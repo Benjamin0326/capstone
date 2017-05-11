@@ -59,6 +59,7 @@ public class MainFragment extends Fragment {
                 Fragment fr = new FestivalInfoFragment();
                 Bundle args = new Bundle();
                 args.putInt("position", position);
+
                 fr.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
             }
