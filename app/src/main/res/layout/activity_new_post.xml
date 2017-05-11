@@ -106,6 +106,14 @@
             android:background="@color/colorPrimaryDark"
             android:id="@+id/newPostBtn">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="Post"
+                android:layout_gravity="center"
+                android:textSize="20dp"/>
+
         </FrameLayout>
 
     </LinearLayout>
