@@ -154,7 +154,10 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
     //startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.youtube.com/watch?v=Hxy8BZGQ5Jo")));
     @Override
     public int getItemCount() {
-        return videoResources.length;
+        if(videoResources!=null)
+            return videoResources.length;
+        else
+            return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

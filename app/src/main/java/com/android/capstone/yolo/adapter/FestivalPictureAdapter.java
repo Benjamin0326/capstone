@@ -23,10 +23,10 @@ import java.net.URL;
 
 public class FestivalPictureAdapter extends RecyclerView.Adapter<FestivalPictureAdapter.ViewHolder>{
 
-    private Uri[] imageResources;
+    private String[] imageResources;
     private Context context;
 
-    public FestivalPictureAdapter(Context _context, Uri[] _imageResources){
+    public FestivalPictureAdapter(Context _context, String[] _imageResources){
         context = _context;
         imageResources = _imageResources;
     }
@@ -56,19 +56,19 @@ public class FestivalPictureAdapter extends RecyclerView.Adapter<FestivalPicture
                 textView.setText(pos+"번째 사진입니다.");
 
                 ImageView imageView = (ImageView) dialog.findViewById(R.id.img_dialog_festival_picture);
-                Picasso.with(context).load(imageResources[pos]).into(imageView);
+                Picasso.with(context).load(imageResources[pos+2]).into(imageView);
 
                 dialog.show();
 
             }
         };
-        Picasso.with(context).load(imageResources[pos]).into(holder.img_pic);
+        Picasso.with(context).load(imageResources[pos+2]).into(holder.img_pic);
         holder.img_pic.setOnClickListener(listener);
     }
 
     @Override
     public int getItemCount() {
-        return imageResources.length;
+        return imageResources.length-2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

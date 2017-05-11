@@ -3,13 +3,26 @@ package com.android.capstone.yolo.layer.festival;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.adapter.FestivalListAdapter;
+import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.FestivalList;
+import com.android.capstone.yolo.service.FestivalService;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -19,6 +32,8 @@ public class FestivalTabInfoFragment extends Fragment {
 
     private ImageView img;
     private TextView text;
+    private List<FestivalList> festivalLists;
+    private int position;
 
     public FestivalTabInfoFragment() {
         // Required empty public constructor
@@ -30,6 +45,7 @@ public class FestivalTabInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_festival_tab_info, container, false);
 
+        position = getArguments().getInt("position", 0);
         img = (ImageView) rootView.findViewById(R.id.img_festival_info);
         text = (TextView) rootView.findViewById(R.id.text_festival_info);
         img.setImageResource(R.drawable.festivalinfo);
@@ -40,7 +56,33 @@ public class FestivalTabInfoFragment extends Fragment {
                 "청춘을 가지에 군영과 할지라도 뜨거운지라, 기관과 것이다. 꾸며 가슴이 철환하였는가 따뜻한 거친 있으랴? 것이다.보라, 가슴에 같이, 안고, 노년에게서 많이 때문이다. 바이며, 노래하며 청춘 튼튼하며, 듣기만 어디 것이다. 때에, 열락의 별과 같이, 돋고, 것이다. 어디 보는 시들어 것이다. 이상, 위하여 충분히 무엇을 황금시대다. 보이는 착목한는 고행을 보라. 열락의 온갖 위하여서, 구하지 사람은 되는 그들을 끓는 황금시대다. 우리는 보이는 가는 맺어, 거친 품고 운다. 이상, 것은 많이 있을 가치를 동산에는 때문이다.\n" +
                 "\n" +
                 "청춘에서만 위하여, 하는 끓는다. 청춘이 끝에 설레는 커다란 보배를 피가 청춘의 피다. 대한 대중을 천자만홍이 찬미를 없으면 주는 피고, 우리의 것이다. 대고, 찾아 찬미를 이 귀는 우리 오직 칼이다. 반짝이는 노년에게서 무한한 싹이 길지 보는 이것은 보라. 피가 이상 열락의 새가 꾸며 인도하겠다는 것이다. 미묘한 같지 심장은 동산에는 사막이다. 긴지라 그들에게 얼마나 열매를 넣는 우리 봄날의 봄바람이다. 부패를 대한 열매를 앞이 황금시대다. 풍부하게 위하여, 영원히 눈에 못하다 있다.");
+        getFestivalInfoList();
         return rootView;
+    }
+    public void getFestivalInfoList(){
+        FestivalService service = network.buildRetrofit().create(FestivalService.class);
+        Call<List<FestivalList>> festivalListCall = service.getFestival();
+
+        festivalListCall.enqueue(new Callback<List<FestivalList>>() {
+            @Override
+            public void onResponse(Call<List<FestivalList>> call, Response<List<FestivalList>> response) {
+                if(response.isSuccessful()){
+                    festivalLists = response.body();
+                    Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+                    text.setText(festivalLists.get(position).getContent());
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+            }
+
+            @Override
+            public void onFailure(Call<List<FestivalList>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Failed to load thumbnails", Toast.LENGTH_LONG).show();
+                Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
+
     }
 
 }
