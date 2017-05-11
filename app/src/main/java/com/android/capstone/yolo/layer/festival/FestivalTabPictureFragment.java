@@ -54,7 +54,7 @@ public class FestivalTabPictureFragment extends Fragment {
             uri[i] = Uri.parse(addr[i]);
         }
         View rootView =  inflater.inflate(R.layout.fragment_festival_tab_picture, container, false);
-        position = getArguments().getInt("position", 0);
+        position = getArguments().getInt("position", 999);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_festival_tab_picture);
         adapter = new FestivalPictureAdapter(getContext(), addr);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);

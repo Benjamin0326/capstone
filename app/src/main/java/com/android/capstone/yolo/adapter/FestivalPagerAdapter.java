@@ -16,12 +16,12 @@ import com.android.capstone.yolo.layer.festival.FestivalTabVideoFragment;
 
 public class FestivalPagerAdapter extends FragmentStatePagerAdapter {
     int numOfTabs;
-    int position;
+    int pos;
 
     public FestivalPagerAdapter(FragmentManager fm, int numOfTabs, int _position) {
         super(fm);
         this.numOfTabs = numOfTabs;
-        this.position = _position;
+        this.pos = _position;
     }
 
     @Override
@@ -30,25 +30,25 @@ public class FestivalPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                  args = new Bundle();
-                args.putInt("position", position);
+                args.putInt("position", pos);
                 FestivalTabInfoFragment tab1 = new FestivalTabInfoFragment(); // Fragment 는 알아서 만들자
                 tab1.setArguments(args);
                 return tab1;
             case 1:
                 args = new Bundle();
-                args.putInt("position", position);
+                args.putInt("position", pos);
                 FestivalTabPictureFragment tab2 = new FestivalTabPictureFragment();
                 tab2.setArguments(args);
                 return tab2;
             case 2:
                 args = new Bundle();
-                args.putInt("position", position);
+                args.putInt("position", pos);
                 FestivalTabVideoFragment tab3 = new FestivalTabVideoFragment();
                 tab3.setArguments(args);
                 return tab3;
             case 3:
                 args = new Bundle();
-                args.putInt("position", position);
+                args.putInt("position", pos);
                 FestivalTabLineupFragment tab4 = new FestivalTabLineupFragment();
                 tab4.setArguments(args);
                 return tab4;

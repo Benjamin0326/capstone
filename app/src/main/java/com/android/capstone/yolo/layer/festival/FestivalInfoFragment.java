@@ -47,7 +47,7 @@ public class FestivalInfoFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("정보"));
         tabLayout.addTab(tabLayout.newTab().setText("사진"));
         tabLayout.addTab(tabLayout.newTab().setText("영상"));
-        tabLayout.addTab(tabLayout.newTab().setText("라인업"));
+        //tabLayout.addTab(tabLayout.newTab().setText("라인업"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         int id = getArguments().getInt("position", 0);
