@@ -1,16 +1,17 @@
 package com.android.capstone.yolo.layer.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,12 +21,18 @@ import android.widget.ListView;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
+import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.model.CommunityList;
-import com.android.capstone.yolo.model.SearchResult;
 import com.android.capstone.yolo.scenario.scenario;
+import com.android.capstone.yolo.service.SearchService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.android.capstone.yolo.R.id.searchEditText;
 
@@ -61,6 +68,15 @@ public class SearchActivity extends AppCompatActivity{
         boardListAdapter = new BoardListAdapter(getApplicationContext());
         resultBoardList = (ListView) findViewById(R.id.resultBoardList);
         resultBoardList.setAdapter(boardListAdapter);
+        resultBoardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                BoardList boardList = (BoardList) boardListAdapter.getItem(i);
+                Intent intent = new Intent(getApplicationContext(), SearchDetailActivity.class);
+                intent.putExtra("resultID", boardList.getId());
+                startActivity(intent);
+            }
+        });
 
         searchTab = (LinearLayout) findViewById(R.id.searchTab);
         searchHistoryLayout = (LinearLayout) findViewById(R.id.searchHistoryLayout);
@@ -125,7 +141,7 @@ public class SearchActivity extends AppCompatActivity{
 
         hideKeyboard(searchText);
 
-        SearchResult result = scenario.search(query);
+        //SearchResult result = scenario.search(query);
 
         if (searchHistoryLayout.getVisibility() == View.VISIBLE) {
 
@@ -133,8 +149,7 @@ public class SearchActivity extends AppCompatActivity{
             searchResultLayout.setVisibility(View.VISIBLE);
         }
 
-        boardListAdapter.setSource(result.getBoardLists());
-        updateSearchHistory(query);
+
         /*
         SearchService service = network.buildRetrofit().create(SearchService.class);
         Call<SearchResult> call = service.search(query);
@@ -152,7 +167,25 @@ public class SearchActivity extends AppCompatActivity{
                 Log.d("TEST", "err : " + t.getMessage().toString());
             }
         });
-        */
+*/
+        SearchService searchService = network.buildRetrofit().create(SearchService.class);
+        Call<List<BoardList>> call = searchService.tempSearch();
+        call.enqueue(new Callback<List<BoardList>>() {
+            @Override
+            public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {
+                if(response.isSuccessful()){
+                    List<BoardList> lists = response.body();
+                    boardListAdapter.setSource(lists);
+                    updateSearchHistory(query);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BoardList>> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void updateSearchHistory(String keyword) {
@@ -175,14 +208,14 @@ public class SearchActivity extends AppCompatActivity{
             adapter.setSource(historys);
         }
     }
-
+/*
     public void moveToResultView(){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.exploreContainer, new SearchResultFragment());
+        transaction.add(R.id.exploreContainer, new SearchDetailActivity());
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
+*/
     public void hideKeyboard(View view) {
 
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -209,7 +242,7 @@ public class SearchActivity extends AppCompatActivity{
 
         if (searchResultLayout.getVisibility() == View.VISIBLE) {
 
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(SearchResultFragment.class.getName());
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(SearchDetailActivity.class.getName());
 
             if (fragment != null) {
 

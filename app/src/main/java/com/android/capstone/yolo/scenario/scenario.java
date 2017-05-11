@@ -116,58 +116,50 @@ public class scenario {
         SearchResult result = new SearchResult();
 
         ArrayList<BoardList> lists = new ArrayList<>();
-/*
+
         BoardList item1 = new BoardList();
-        item1.setId(1);
+        item1.set_id("1");
         item1.setTitle("hello world");
-        item1.setWriter("John");
-        item1.setType("type3");
-        item1.setTimestamp(new Date());
+        item1.setUser("John");
+        item1.setTag("");
+        item1.setDate("2017-05-04");
 
         BoardList item2 = new BoardList();
-        item2.setId(2);
-        item2.setTitle("good bye");
-        item2.setWriter("Mike");
-        item2.setType("type1");
-        item2.setTimestamp(new Date());
+        item1.set_id("1");
+        item1.setTitle("hello world");
+        item1.setUser("John");
+        item1.setTag("");
+        item1.setDate("2017-05-04");
 
         BoardList item3 = new BoardList();
-        item3.setId(3);
-        item3.setTitle("How are you?");
-        item3.setWriter("Alice");
-        item3.setType("type2");
-        item3.setTimestamp(new Date());
+        item1.set_id("1");
+        item1.setTitle("hello world");
+        item1.setUser("John");
+        item1.setTag("");
+        item1.setDate("2017-05-04");
 
         BoardList item4 = new BoardList();
-        item4.setId(4);
-        item4.setTitle("I'm fine, and you?");
-        item4.setWriter("Tiger");
-        item4.setType("type1");
-        item4.setTimestamp(new Date());
+        item1.set_id("1");
+        item1.setTitle("hello world");
+        item1.setUser("John");
+        item1.setTag("");
+        item1.setDate("2017-05-04");
 
         BoardList item5 = new BoardList();
-        item5.setId(5);
-        item5.setTitle("Baaaaaammmmm");
-        item5.setWriter("Joooon");
-        item5.setType("type2");
-        item5.setTimestamp(new Date());
-
-        BoardList item6 = new BoardList();
-        item6.setId(6);
-        item6.setTitle("!@#$!%!^!");
-        item6.setWriter("Hyo Jong");
-        item6.setType("type3");
-        item6.setTimestamp(new Date());
+        item1.set_id("1");
+        item1.setTitle("hello world");
+        item1.setUser("John");
+        item1.setTag("");
+        item1.setDate("2017-05-04");
 
         lists.add(item1);
         lists.add(item2);
         lists.add(item3);
         lists.add(item4);
         lists.add(item5);
-        lists.add(item6);
 
         result.setBoardLists(lists);
-*/
+
         return result;
     }
 }

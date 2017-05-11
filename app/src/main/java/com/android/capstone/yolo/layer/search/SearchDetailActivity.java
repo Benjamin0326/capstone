@@ -1,4 +1,4 @@
-package com.android.capstone.yolo.layer.community;
+package com.android.capstone.yolo.layer.search;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,30 +18,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoardDetailActivity extends AppCompatActivity{
+public class SearchDetailActivity extends AppCompatActivity{
     TextView title, type, writer, content, date;
     LinearLayout layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board_detail);
+        setContentView(R.layout.activity_search_detail);
 
         initView();
         getPost();
     }
 
     public void initView(){
-        title = (TextView) findViewById(R.id.detail_title);
-        writer = (TextView) findViewById(R.id.detail_writer);
-        type = (TextView) findViewById(R.id.detail_type);
-        content = (TextView) findViewById(R.id.detail_content);
-        date = (TextView) findViewById(R.id.detail_date);
-        layout = (LinearLayout) findViewById(R.id.detail_content_layout);
+        title = (TextView) findViewById(R.id.search_result_title);
+        writer = (TextView) findViewById(R.id.search_result_writer);
+        type = (TextView) findViewById(R.id.search_result_type);
+        content = (TextView) findViewById(R.id.search_result_content);
+        date = (TextView) findViewById(R.id.search_result_date);
+        layout = (LinearLayout) findViewById(R.id.search_result_content_layout);
     }
 
     public void getPost(){
-        String postID = getIntent().getExtras().getString("postID");
+        String resultID = getIntent().getExtras().getString("resultID");
         /*
         Post post = scenario.getBoardDetail(postID);
 
@@ -60,7 +60,7 @@ public class BoardDetailActivity extends AppCompatActivity{
         }
         */
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<Post> postCall = service.getBoardDetail(postID);
+        Call<Post> postCall = service.getBoardDetail(resultID);
         postCall.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
