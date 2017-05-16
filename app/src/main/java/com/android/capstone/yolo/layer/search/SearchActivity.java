@@ -59,7 +59,11 @@ public class SearchActivity extends AppCompatActivity{
         setContentView(R.layout.activity_search);
 
         MainActivity.menuFlag = 1;
-        int tmp = (int)MainActivity.menuStack.pop();
+        int tmp;
+        if(MainActivity.menuStack.size()!=0)
+             tmp = (int)MainActivity.menuStack.pop();
+        else
+            tmp = R.id.action_home;
         MainActivity.bottomNavigationView.setSelectedItemId(tmp);
 
         container = (FrameLayout) findViewById(R.id.exploreContainer);
