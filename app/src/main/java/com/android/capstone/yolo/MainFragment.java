@@ -62,7 +62,6 @@ public class MainFragment extends Fragment {
 
                 fr.setArguments(args);
                 MainActivity.remainBackStack=true;
-                MainActivity.menuFlag=1;
                 getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
             }
         });

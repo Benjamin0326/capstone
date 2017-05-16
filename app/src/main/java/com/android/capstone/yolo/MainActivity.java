@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
             if(remainBackStack){
                 super.onBackPressed();
                 remainBackStack=false;
-                bottomNavigationView.setSelectedItemId(R.id.action_home);
                 return;
             }
             if (doubleBackToExitPressedOnce) {

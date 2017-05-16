@@ -1,6 +1,7 @@
 package com.android.capstone.yolo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.layer.festival.YoutubeActivity;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 import com.squareup.picasso.Picasso;
@@ -24,13 +26,13 @@ import co.lujun.androidtagview.TagContainerLayout;
 public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapter.ViewHolder> {
 
     private Context context;
-    private Uri[] image_uri;
+    private String[] music_img;
     private String[] music_name;
     private String[][] music_tag;
 
-    public ProfileMusicAdapter(Context _context, Uri[] _image_uri, String[] _music_name, String[][] _music_tag){
+    public ProfileMusicAdapter(Context _context, String[] _music_img, String[] _music_name, String[][] _music_tag){
         context = _context;
-        image_uri = _image_uri;
+        music_img = _music_img;
         music_name = _music_name;
         music_tag = _music_tag;
     }
@@ -48,7 +50,9 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
         ImageView.OnClickListener img_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, YoutubeActivity.class);
+                intent.putExtra("vidieId", music_img[pos]);
+                context.startActivity(intent);
             }
         };
         TextView.OnClickListener tv_listener = new View.OnClickListener() {
@@ -58,7 +62,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
             }
         };
 
-        Picasso.with(context).load(image_uri[pos]).fit().centerCrop().into(holder.img_music);
+        Picasso.with(context).load("http://img.youtube.com/vi/"+music_img[pos]+"/default.jpg").fit().centerCrop().into(holder.img_music);
         holder.img_music.setOnClickListener(img_listener);
         holder.tv_music_name.setText(music_name[pos]);
         holder.tv_music_name.setOnClickListener(tv_listener);

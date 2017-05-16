@@ -20,6 +20,9 @@ public class ProfileTabMusicFragment extends Fragment {
 
     private ProfileMusicAdapter adapter;
     private RecyclerView recyclerView;
+    String[] addr = {"iQpGq4HguVs",
+            "pFscrs6qmDY",
+            "PfQhLcYqE88", "4r1tq1XBN0w"};
     private String[] img_music = {"https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Girl_Talk_Producing_Live.jpg/250px-Girl_Talk_Producing_Live.jpg",
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Girl_Talk_Producing_Live.jpg/250px-Girl_Talk_Producing_Live.jpg",
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Girl_Talk_Producing_Live.jpg/250px-Girl_Talk_Producing_Live.jpg",
@@ -45,7 +48,7 @@ public class ProfileTabMusicFragment extends Fragment {
             img_uri_music[i] = Uri.parse(img_music[i]);
         }
 
-        adapter = new ProfileMusicAdapter(getContext(), img_uri_music, music_name, music_tag);
+        adapter = new ProfileMusicAdapter(getContext(), addr, music_name, music_tag);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
