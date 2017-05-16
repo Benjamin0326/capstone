@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static Stack menuStack = new Stack();
     public static int menuFlag = 0;
     private boolean doubleBackToExitPressedOnce=false;
+    public static boolean remainBackStack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
                             menuFlag=0;
                             break;
                         }
-
                         while(menuStack.size()>0){
                             menuStack.pop();
                         }
@@ -119,8 +119,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if(menuStack.size()==0) {
+            if(remainBackStack){
+                super.onBackPressed();
+                remainBackStack=false;
+                bottomNavigationView.setSelectedItemId(R.id.action_home);
+                return;
+            }
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;

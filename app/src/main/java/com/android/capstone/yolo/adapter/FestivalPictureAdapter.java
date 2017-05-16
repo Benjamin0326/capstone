@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.layer.festival.GalleryActivity;
 import com.squareup.picasso.Picasso;
 
 import java.net.URL;
@@ -48,18 +51,29 @@ public class FestivalPictureAdapter extends RecyclerView.Adapter<FestivalPicture
             public void onClick(View view) {
                 //String data = dummyData[pos];
                 //Toast.makeText(context, pos+" clicked", Toast.LENGTH_SHORT).show();
+                /*
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_festival_item_picture);
-                dialog.setTitle(pos+" 번째 사진");
+                dialog.setTitle((pos+1)+" 번째 사진");
 
-                TextView textView = (TextView) dialog.findViewById(R.id.text_dialog_festival_picture);
-                textView.setText(pos+"번째 사진입니다.");
+                //TextView textView = (TextView) dialog.findViewById(R.id.text_dialog_festival_picture);
+                //textView.setText(pos+"번째 사진입니다.");
 
                 ImageView imageView = (ImageView) dialog.findViewById(R.id.img_dialog_festival_picture);
                 Picasso.with(context).load(imageResources[pos+2]).into(imageView);
-
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                Window window = dialog.getWindow();
+                lp.copyFrom(window.getAttributes());
+//This makes the dialog take up the full width
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialog.onWindowAttributesChanged(lp);
+                window.setAttributes(lp);
                 dialog.show();
-
+                */
+                Intent intent = new Intent(context, GalleryActivity.class);
+                intent.putExtra("gallery", imageResources[pos+2]);
+                context.startActivity(intent);
             }
         };
         Picasso.with(context).load(imageResources[pos+2]).into(holder.img_pic);
