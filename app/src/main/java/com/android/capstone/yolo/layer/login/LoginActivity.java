@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
@@ -25,12 +26,22 @@ public class LoginActivity extends AppCompatActivity {
         btn_join = (Button) findViewById(R.id.btn_join);
         id = (EditText) findViewById(R.id.edit_login_mail);
         pw = (EditText) findViewById(R.id.edit_login_pw);
-        text_id = id.getText().toString();
-        text_pw = pw.getText().toString();
+
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                text_id = id.getText().toString();
+                if(text_id.length()==0) {
+                    Toast.makeText(LoginActivity.this, "ID를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                text_pw = pw.getText().toString();
+                if(text_pw.length()==0){
+                    Toast.makeText(LoginActivity.this, "Password를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 intent = new Intent();
                 intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
                 setResult(RESULT_OK, intent);

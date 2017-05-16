@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class JoinActivity extends AppCompatActivity {
     private Uri mCropImageUri, resultUri;
     private Button btn_join;
     private EditText id, pw, confirm_pw;
+    private String strId, strPw, strConfirmPw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,8 @@ public class JoinActivity extends AppCompatActivity {
         id = (EditText) findViewById(R.id.edit_join_mail);
         pw = (EditText) findViewById(R.id.edit_join_pw);
         confirm_pw = (EditText) findViewById(R.id.edit_join_confirm_pw);
+
+
         cropImage = (CircleImageView) findViewById(R.id.image_crop);
         cropImage.setBorderColor(Color.WHITE);
         cropImage.setOnClickListener(new View.OnClickListener() {
@@ -48,9 +52,34 @@ public class JoinActivity extends AppCompatActivity {
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveUriPreferences(resultUri);
-                saveIDPreferences(id.getText().toString());
-                finish();
+
+                strId=id.getText().toString();
+                if(strId.length()==0) {
+                    Toast.makeText(JoinActivity.this, "ID를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                strPw=pw.getText().toString();
+                if(strPw.length()==0) {
+                    Toast.makeText(JoinActivity.this, "Password를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                strConfirmPw=confirm_pw.getText().toString();
+                if(strConfirmPw.length()==0) {
+                    Toast.makeText(JoinActivity.this, "Confirom Password를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(strPw.compareTo(strConfirmPw)!=0){
+                    Toast.makeText(JoinActivity.this, "Password가 서로 다릅니다.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else {
+                    if(resultUri!=null)
+                        saveUriPreferences(resultUri);
+                    saveIDPreferences(id.getText().toString());
+                    finish();
+                }
             }
         });
 

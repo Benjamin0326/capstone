@@ -3,6 +3,7 @@ package com.android.capstone.yolo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.android.capstone.yolo.layer.community.CommunityListFrag;
 import com.android.capstone.yolo.layer.login.LoginActivity;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     public static Stack menuStack = new Stack();
     public static int menuFlag = 0;
+    private boolean doubleBackToExitPressedOnce=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +70,22 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_home:
-                        menuStack.push(R.id.action_home);
                         if(menuFlag==1){
                             menuFlag=0;
                             break;
                         }
+
+                        while(menuStack.size()>0){
+                            menuStack.pop();
+                        }
+                        int cnt = fragmentManager.getBackStackEntryCount();
+                        for(int i=0; i<cnt; i++){
+                            fragmentManager.popBackStack();
+                        }
+
                         fr=new MainFragment();
                         fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
+
                         break;
                     case R.id.action_music:
                         if(menuFlag==1){
@@ -106,10 +119,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if(menuStack.size()==0)
-            return;
+
+        if(menuStack.size()==0) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+        }
         else{
+            super.onBackPressed();
             menuStack.pop();
             if(menuStack.size()==0){
                 menuFlag = 1;
