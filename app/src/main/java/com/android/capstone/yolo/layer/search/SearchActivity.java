@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
@@ -56,6 +57,10 @@ public class SearchActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        MainActivity.menuFlag = 1;
+        int tmp = (int)MainActivity.menuStack.pop();
+        MainActivity.bottomNavigationView.setSelectedItemId(tmp);
 
         container = (FrameLayout) findViewById(R.id.exploreContainer);
 
