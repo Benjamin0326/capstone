@@ -3,13 +3,14 @@ package com.android.capstone.yolo.layer.community;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.component.network;
@@ -22,7 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CommunityBoardActivity extends AppCompatActivity{
+public class CommunityBoardActivity extends BaseActivity{
+    TextView title;
     ListView boardList;
     BoardListAdapter adapter;
     ImageView postBtn;
@@ -32,6 +34,7 @@ public class CommunityBoardActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_board);
         boardList = (ListView) findViewById(R.id.board_list);
+        title = (TextView) findViewById(R.id.com_board_title);
         adapter = new BoardListAdapter(getApplicationContext());
         boardList.setAdapter(adapter);
         boardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,13 +61,13 @@ public class CommunityBoardActivity extends AppCompatActivity{
 
     public void initView(){
         String boardID = getIntent().getExtras().getString("communityID");
+        title.setText(getIntent().getExtras().getString("communityTitle"));
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<List<BoardList>> boardListCall = service.getBoardList(boardID);
         boardListCall.enqueue(new Callback<List<BoardList>>() {
             @Override
             public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {
                 if(response.isSuccessful()){
-                    Log.d("TEST", response.body().toString());
                     adapter.setSource(response.body());
                     return;
                 }

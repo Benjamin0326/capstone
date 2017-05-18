@@ -47,7 +47,7 @@ public class CommunityListFrag extends Fragment{
                 CommunityList list = (CommunityList) adapter.getItem(i);
                 Intent intent = new Intent((getActivity()), CommunityBoardActivity.class);
                 intent.putExtra("communityID", list.getId());
-                Log.d("TEST", "id : " + list.getId());
+                intent.putExtra("communityTitle", list.getTitle());
                 startActivity(intent);
             }
         });

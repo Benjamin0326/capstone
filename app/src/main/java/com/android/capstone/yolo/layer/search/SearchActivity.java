@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.community.BoardDetailActivity;
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.model.CommunityList;
 import com.android.capstone.yolo.scenario.scenario;
@@ -37,7 +38,7 @@ import retrofit2.Response;
 
 import static com.android.capstone.yolo.R.id.searchEditText;
 
-public class SearchActivity extends AppCompatActivity{
+public class SearchActivity extends BaseActivity {
     private final String SEARCH_HISTORY = "SEARCH_HISTORY";
     private final int HISTORY_MAX_NUM = 10;
     private boolean isSearched = false;
@@ -73,6 +74,14 @@ public class SearchActivity extends AppCompatActivity{
         adapter = new SearchHistoryAdapter(getApplicationContext());
         historyList = (ListView) findViewById(R.id.searchHistoryList);
         historyList.setAdapter(adapter);
+        historyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String query = adapter.getItem(i).toString();
+                searchText.setText(query);
+                search(query);
+            }
+        });
 
         boardListAdapter = new BoardListAdapter(getApplicationContext());
         resultBoardList = (ListView) findViewById(R.id.resultBoardList);
@@ -81,8 +90,9 @@ public class SearchActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 BoardList boardList = (BoardList) boardListAdapter.getItem(i);
-                Intent intent = new Intent(getApplicationContext(), SearchDetailActivity.class);
-                intent.putExtra("resultID", boardList.getId());
+                //Intent intent = new Intent(getApplicationContext(), SearchDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
+                intent.putExtra("postID", boardList.getId());
                 startActivity(intent);
             }
         });

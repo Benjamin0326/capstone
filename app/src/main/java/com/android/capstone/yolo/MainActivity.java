@@ -9,7 +9,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -20,7 +19,7 @@ import com.android.capstone.yolo.layer.search.SearchActivity;
 
 import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;

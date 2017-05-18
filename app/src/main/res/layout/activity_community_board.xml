@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/white">
+        android:layout_height="@dimen/com_list_tab_height"
+        android:background="@color/colorPrimary">
 
-        <ListView
-            android:paddingTop="5dp"
-            android:id="@+id/board_list"
-            android:layout_width="match_parent" android:layout_height="match_parent">
-        </ListView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/com_board_title"
+            android:includeFontPadding="false"
+            android:layout_gravity="center"
+            android:textSize="@dimen/com_list_tab_text"
+            android:textColor="@android:color/white"/>
+    </FrameLayout>
 
-    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/post_btn"
-        android:layout_gravity="right|bottom"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/drawable_post_button"
-        android:src="@drawable/postbutton" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@android:color/white">
 
-</FrameLayout>
+            <ListView
+                android:id="@+id/board_list"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+            </ListView>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/post_btn"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/drawable_post_button"
+            android:src="@drawable/postbutton" />
+
+    </FrameLayout>
+
+</LinearLayout>

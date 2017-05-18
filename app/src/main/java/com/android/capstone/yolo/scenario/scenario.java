@@ -3,6 +3,7 @@ package com.android.capstone.yolo.scenario;
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.model.CommunityList;
 import com.android.capstone.yolo.model.Post;
+import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.model.SearchResult;
 
 import java.util.ArrayList;
@@ -161,5 +162,36 @@ public class scenario {
         result.setBoardLists(lists);
 
         return result;
+    }
+
+    public static List<Reply> getReply(String id){
+        ArrayList<Reply> lists = new ArrayList<>();
+
+        Reply reply1 = new Reply();
+        reply1.set_id("1");
+        reply1.setContent("hello world");
+        reply1.setDate("2017-05-01");
+        reply1.setUser("김효종");
+        reply1.setPath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe7PLxy9kOB5NWAF2iT7OhKDAfKai4Iey-Yl6qZRG0JJthqSns-Q");
+
+        Reply reply2 = new Reply();
+        reply2.set_id("2");
+        reply2.setContent("nice to meet you");
+        reply2.setDate("2017-05-18");
+        reply2.setUser("수지");
+        reply2.setPath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe7PLxy9kOB5NWAF2iT7OhKDAfKai4Iey-Yl6qZRG0JJthqSns-Q");
+
+        Reply reply3 = new Reply();
+        reply3.set_id("3");
+        reply3.setContent("Wow");
+        reply3.setDate("2017-05-11");
+        reply3.setUser("김성철");
+        reply3.setPath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe7PLxy9kOB5NWAF2iT7OhKDAfKai4Iey-Yl6qZRG0JJthqSns-Q");
+
+        lists.add(reply1);
+        lists.add(reply2);
+        lists.add(reply3);
+
+        return lists;
     }
 }

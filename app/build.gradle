@@ -39,4 +39,5 @@ dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     compile 'com.jaredrummler:material-spinner:1.1.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.tsengvn:Typekit:1.0.0'
 }

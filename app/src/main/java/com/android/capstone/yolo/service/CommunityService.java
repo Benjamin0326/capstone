@@ -4,6 +4,7 @@ import android.database.Observable;
 
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.model.Post;
+import com.android.capstone.yolo.model.Reply;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface CommunityService {
 
     @GET("/api/board/{id}")
     Call<Post> getBoardDetail(@Path("id") String id);
+
+    @GET("/api/board/comment/{id}")
+    Call<List<Reply>> getReply(@Path("id") String id);
 }

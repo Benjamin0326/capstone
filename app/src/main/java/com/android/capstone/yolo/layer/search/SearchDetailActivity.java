@@ -41,7 +41,7 @@ public class SearchDetailActivity extends AppCompatActivity{
     }
 
     public void getPost(){
-        String resultID = getIntent().getExtras().getString("resultID");
+        String resultID = getIntent().getExtras().getString("postID");
         /*
         Post post = scenario.getBoardDetail(postID);
 

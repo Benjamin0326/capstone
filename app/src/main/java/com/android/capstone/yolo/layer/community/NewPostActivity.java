@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.R;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -37,7 +38,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class NewPostActivity extends AppCompatActivity{
+public class NewPostActivity extends BaseActivity {
     public static final String[] categoryList = {"select category", "type1", "type2", "type3"};
     final int RESULT_GALLERY = 1;
     MaterialSpinner category;
