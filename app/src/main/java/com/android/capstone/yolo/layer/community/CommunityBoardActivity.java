@@ -44,22 +44,16 @@ public class CommunityBoardActivity extends BaseActivity{
         boardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (floatingActionMenu.isOpened())
+                    floatingActionMenu.close(true);
+
                 BoardList boardList = (BoardList) adapter.getItem(i);
                 Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
                 intent.putExtra("postID", boardList.getId());
                 startActivity(intent);
             }
         });
-/*
-        postBtn = (ImageView) findViewById(R.id.post_btn);
-        postBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
+
         floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         postBtn = (FloatingActionButton) findViewById(R.id.menu_write_post);
         postBtn.setOnClickListener(new View.OnClickListener() {
@@ -108,5 +102,13 @@ public class CommunityBoardActivity extends BaseActivity{
                 Log.d("TEST", "err : " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (floatingActionMenu.isOpened())
+            floatingActionMenu.close(true);
+        else
+            super.onBackPressed();
     }
 }
