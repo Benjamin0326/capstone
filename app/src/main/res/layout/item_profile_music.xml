@@ -22,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
+            android:includeFontPadding="false"
             android:text="Sample Music"/>
 
         <co.lujun.androidtagview.TagContainerLayout

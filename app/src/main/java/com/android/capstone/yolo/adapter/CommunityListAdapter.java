@@ -63,7 +63,7 @@ public class CommunityListAdapter extends BaseAdapter{
 
         title.setText(list.title);
         date.setText(list.startDate + " ~ " + list.endDate);
-        location.setText(" / " + list.location);
+        location.setText(list.location);
         Picasso.with(context).load(list.getIcon()).into(imageView);
 
         return convertView;

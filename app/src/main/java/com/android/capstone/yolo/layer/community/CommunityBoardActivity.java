@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,8 +13,11 @@ import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.search.SearchActivity;
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.service.CommunityService;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
@@ -27,7 +29,9 @@ public class CommunityBoardActivity extends BaseActivity{
     TextView title;
     ListView boardList;
     BoardListAdapter adapter;
-    ImageView postBtn;
+    //ImageView postBtn;
+    FloatingActionMenu floatingActionMenu;
+    FloatingActionButton postBtn, searchBtn;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,12 +50,36 @@ public class CommunityBoardActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
-
+/*
         postBtn = (ImageView) findViewById(R.id.post_btn);
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
+                startActivity(intent);
+            }
+        });
+        */
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        postBtn = (FloatingActionButton) findViewById(R.id.menu_write_post);
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (floatingActionMenu.isOpened())
+                    floatingActionMenu.close(true);
+
+                Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
+                startActivity(intent);
+            }
+        });
+        searchBtn = (FloatingActionButton) findViewById(R.id.menu_search);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (floatingActionMenu.isOpened())
+                    floatingActionMenu.close(true);
+
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(intent);
             }
         });

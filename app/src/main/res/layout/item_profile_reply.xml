@@ -10,6 +10,7 @@
         android:id="@+id/text_profile_reply_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:includeFontPadding="false"
         android:textSize = "15sp"
         />
 
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_below="@id/text_profile_reply_category"
+        android:includeFontPadding="false"
         android:text="Sample Text(Subject)"/>
 
     <TextView
@@ -26,6 +28,7 @@
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:includeFontPadding="false"
         android:text="1999. 09. 09"/>
 
     <View

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:id="@+id/layout_commands"
             android:background="@android:color/white">
 
             <ListView
@@ -36,15 +38,40 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/post_btn"
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/drawable_post_button"
-            android:src="@drawable/postbutton" />
+            android:elevation="4dp"
+            app:menu_colorNormal="@color/color_fab"
+            app:menu_colorPressed="?attr/colorPrimary"
+            app:layout_anchor="@id/layout_commands"
+            app:layout_anchorGravity="top|right">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/menu_write_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_fab_write_post"
+                app:fab_colorNormal="@color/color_fab"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_size="mini"
+                app:fab_label="@string/label_write_post"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/menu_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_search"
+                app:fab_colorNormal="@color/color_fab"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_size="mini"
+                app:fab_label="@string/label_search" />
+
+        </com.github.clans.fab.FloatingActionMenu>
 
     </FrameLayout>
 

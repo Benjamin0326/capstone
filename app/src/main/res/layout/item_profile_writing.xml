@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
+        android:includeFontPadding="false"
         android:textSize = "15sp"
         />
 
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:includeFontPadding="false"
         android:layout_below="@id/text_profile_writing_category"
         android:text="Sample Text(Subject)"/>
 
@@ -27,6 +29,7 @@
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:includeFontPadding="false"
         android:text="1999. 09. 09"/>
 
     <View

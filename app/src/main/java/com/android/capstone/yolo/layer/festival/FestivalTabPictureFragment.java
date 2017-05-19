@@ -17,7 +17,6 @@ import com.android.capstone.yolo.adapter.FestivalPictureAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.FestivalList;
 import com.android.capstone.yolo.service.FestivalService;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

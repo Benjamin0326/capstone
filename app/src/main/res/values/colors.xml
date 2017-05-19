@@ -6,4 +6,5 @@
     <color name="colorPrimaryBlue">#56BCD3</color>
     <color name="lightGray">#d3d3d3</color>
     <color name="menu">#FFFFFF</color>
+    <color name="color_fab">#B951CF</color>
 </resources>
