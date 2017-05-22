@@ -68,7 +68,7 @@ public class FestivalPictureAdapter extends RecyclerView.Adapter<FestivalPicture
                 context.startActivity(intent);
             }
         };
-        Picasso.with(context).load(imageResources[pos+2]).into(holder.img_pic);
+        Picasso.with(context).load(imageResources[pos+2]).resize(400,400).centerCrop().into(holder.img_pic);
         holder.img_pic.setOnClickListener(listener);
     }
 

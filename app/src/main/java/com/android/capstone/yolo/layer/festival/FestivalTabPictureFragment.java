@@ -56,7 +56,7 @@ public class FestivalTabPictureFragment extends Fragment {
         position = getArguments().getInt("position", 999);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_festival_tab_picture);
         adapter = new FestivalPictureAdapter(getContext(), addr);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         getFestivalInfoList();

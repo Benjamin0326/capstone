@@ -71,6 +71,8 @@ public class FestivalTabVideoFragment extends Fragment {
                 if(response.isSuccessful()){
                     festivalLists = response.body();
                     adapter = new FestivalVideoAdapter(getContext(), festivalLists.get(position).getVedio());
+                    for(int i=0;i<festivalLists.get(position).getVedio().length;i++)
+                        Log.d("Video Resources:", festivalLists.get(position).getVedio()[i]);
                     recyclerView.setAdapter(adapter);
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
