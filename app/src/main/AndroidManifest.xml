@@ -31,7 +31,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".layer.login.JoinActivity" />
         <activity android:name=".layer.search.SearchDetailActivity" />
-        <activity android:name=".layer.festival.GalleryActivity"></activity>
+        <activity android:name=".layer.festival.GalleryActivity" />
     </application>
 
 </manifest>

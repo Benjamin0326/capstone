@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ProfilePagerAdapter;
 import com.squareup.picasso.Picasso;
@@ -100,7 +101,7 @@ public class ProfileFragment extends Fragment {
 
 
     private Uri getUriPreferences(){
-        SharedPreferences pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences(MainActivity.PREF, MODE_PRIVATE);
         String tmp = pref.getString("profile", "");
         if(tmp.compareTo("")==0){
             return null;
@@ -112,7 +113,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private String getIdPreferences(){
-        SharedPreferences pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences(MainActivity.PREF, MODE_PRIVATE);
         String tmp = pref.getString("id", "");
         if(tmp.compareTo("")==0){
             return null;

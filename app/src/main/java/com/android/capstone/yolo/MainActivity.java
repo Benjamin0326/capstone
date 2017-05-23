@@ -28,6 +28,8 @@ public class MainActivity extends BaseActivity {
     public static final int SUCCESS_LOGIN = 1234;
     public static final int FAIL_LOGIN = 4321;
     public static final String RETURN_RESULT = "FLAG";
+    public static final String PREF = "YOLO_PREF";
+    public static SharedPreferences pref;
     private Intent intent;
     public static Stack menuStack = new Stack();
     public static int menuFlag = 0;
@@ -39,7 +41,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         token = getPreferences();
-        if(token.compareTo("none")==0){
+        if(token==null){
             intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, CHECK_LOGIN);
         }
@@ -81,12 +83,15 @@ public class MainActivity extends BaseActivity {
                         for(int i=0; i<cnt; i++){
                             fragmentManager.popBackStack();
                         }
-
                         fr=new MainFragment();
                         fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
 
                         break;
                     case R.id.action_music:
+                        if(remainBackStack){
+                            remainBackStack=false;
+                            break;
+                        }
                         if(menuFlag==1){
                             menuFlag=0;
                             break;
@@ -112,8 +117,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private String getPreferences(){
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        return pref.getString("token", "none");
+        pref = getSharedPreferences(PREF, MODE_PRIVATE);
+        return pref.getString("token", null);
     }
 
     @Override

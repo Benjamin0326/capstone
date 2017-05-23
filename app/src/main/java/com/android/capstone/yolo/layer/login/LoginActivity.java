@@ -1,9 +1,11 @@
 package com.android.capstone.yolo.layer.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,16 @@ import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.Login;
+import com.android.capstone.yolo.model.UserInfo;
+import com.android.capstone.yolo.service.LoginService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     private Intent intent;
     private String text_id, text_pw;
     private Boolean doubleBackToExitPressedOnce=false;
+    private Login loginInfo;
+    //private UserInfo userInfo = new UserInfo();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +59,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Password를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
                     return;
                 }
+                postLogin();
+                /*
                 intent = new Intent();
                 intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
                 setResult(RESULT_OK, intent);
                 finish();
+                */
             }
         });
 
@@ -76,5 +94,45 @@ public class LoginActivity extends AppCompatActivity {
             }
         }, 2000);
 
+    }
+
+    public void postLogin(){
+
+        LoginService service = network.buildRetrofit().create(LoginService.class);
+        Call<String> loginCall = service.postLogin("", text_id, text_pw);
+
+        loginCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    String tmp = response.body();
+
+                    Log.d("Login Info : ", tmp);
+                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                    //}
+                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+
+                    intent = new Intent();
+                    intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
+                    setResult(RESULT_OK, intent);
+                    SharedPreferences.Editor editor = MainActivity.pref.edit();
+                    editor.putString("token", tmp);
+                    editor.putString("id", text_id);
+                    editor.commit();
+                    finish();
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+                Toast.makeText(LoginActivity.this, "err code : " + code, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Failed to Access", Toast.LENGTH_LONG).show();
+                Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
     }
 }

@@ -46,6 +46,7 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
     private Context context;
     public static final String API_KEY = "AIzaSyBz948TjD7Wo993-0TbSh3wMf5nqYGZCh0";
 
+
     public FestivalVideoAdapter(Context _context, String[] _videoResources){
         context = _context;
         //videoUris = _videoUris;

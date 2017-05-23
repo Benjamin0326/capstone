@@ -11,25 +11,34 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.Login;
+import com.android.capstone.yolo.service.LoginService;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class JoinActivity extends AppCompatActivity {
 
     private CircleImageView cropImage;
     private Uri mCropImageUri, resultUri;
     private Button btn_join;
-    private EditText id, pw, confirm_pw;
-    private String strId, strPw, strConfirmPw;
+    private EditText id, pw, confirm_pw, name;
+    private String strId, strPw, strConfirmPw, strName;
+    private Login loginInfo = new Login();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +47,7 @@ public class JoinActivity extends AppCompatActivity {
         id = (EditText) findViewById(R.id.edit_join_mail);
         pw = (EditText) findViewById(R.id.edit_join_pw);
         confirm_pw = (EditText) findViewById(R.id.edit_join_confirm_pw);
+        name = (EditText) findViewById(R.id.edit_join_name);
 
 
         cropImage = (CircleImageView) findViewById(R.id.image_crop);
@@ -56,6 +66,11 @@ public class JoinActivity extends AppCompatActivity {
                 strId=id.getText().toString();
                 if(strId.length()==0) {
                     Toast.makeText(JoinActivity.this, "ID를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                strName=name.getText().toString();
+                if(strName.length()==0) {
+                    Toast.makeText(JoinActivity.this, "Name을 다시 확인해주세요.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 strPw=pw.getText().toString();
@@ -78,7 +93,8 @@ public class JoinActivity extends AppCompatActivity {
                     if(resultUri!=null)
                         saveUriPreferences(resultUri);
                     saveIDPreferences(id.getText().toString());
-                    finish();
+                    postJoin();
+                    //finish();
                 }
             }
         });
@@ -147,6 +163,36 @@ public class JoinActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("id", _id);
         editor.commit();
+    }
+
+    public void postJoin(){
+        LoginService service = network.buildRetrofit().create(LoginService.class);
+        Call<Login> joinCall = service.postJoin(strName, strId, strPw);
+
+        joinCall.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                if(response.isSuccessful()){
+                    loginInfo = response.body();
+
+                    Log.d("Join Info : ", loginInfo.getMessage()+"\n"+loginInfo.getStatus_code()+"\n"+loginInfo.getUser_token());
+                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                    //}
+                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+                    finish();
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                Toast.makeText(JoinActivity.this, "Failed to Access", Toast.LENGTH_LONG).show();
+                Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
     }
 
 }
