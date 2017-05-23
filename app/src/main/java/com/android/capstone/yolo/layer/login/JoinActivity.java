@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.Login;
@@ -152,7 +153,7 @@ public class JoinActivity extends AppCompatActivity {
         CropImage.startPickImageActivity(this);
     }
     private void saveUriPreferences(Uri _uri){
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(MainActivity.PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("profile", _uri.toString());
         editor.commit();

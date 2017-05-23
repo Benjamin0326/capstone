@@ -3,6 +3,7 @@ package com.android.capstone.yolo.layer.profile;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -14,12 +15,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ProfilePagerAdapter;
+import com.android.capstone.yolo.layer.login.LoginActivity;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -28,6 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+import static com.android.capstone.yolo.MainActivity.CHECK_LOGIN;
 import static com.theartofdev.edmodo.cropper.CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE;
 
 /**
@@ -59,6 +63,32 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onSelectImageClick(thumbnail);
+            }
+        });
+
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_profile_menu);
+                dialog.setTitle("Profile Menu");
+
+                //TextView textView = (TextView) dialog.findViewById(R.id.text_dialog_festival_picture);
+                //textView.setText(pos+"번째 사진입니다.");
+                Button btn = (Button) dialog.findViewById(R.id.btn_dialog_logout);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences.Editor editor = MainActivity.pref.edit();
+                        editor.clear();
+                        editor.commit();
+                        MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
+                        dialog.cancel();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivityForResult(intent, CHECK_LOGIN);
+                    }
+                });
+                dialog.show();
             }
         });
 
@@ -176,8 +206,7 @@ public class ProfileFragment extends Fragment {
         startActivityForResult(CropImage.getPickImageChooserIntent(getContext()), PICK_IMAGE_CHOOSER_REQUEST_CODE);
     }
     private void saveUriPreferences(Uri _uri){
-        SharedPreferences pref = getActivity().getSharedPreferences("pref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
+        SharedPreferences.Editor editor = MainActivity.pref.edit();
         editor.putString("profile", _uri.toString());
         editor.commit();
     }
