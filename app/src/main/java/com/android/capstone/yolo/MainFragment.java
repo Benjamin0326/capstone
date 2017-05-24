@@ -71,7 +71,7 @@ public class MainFragment extends Fragment {
 
     public void getFestivalInfoList(){
         FestivalService service = network.buildRetrofit().create(FestivalService.class);
-        Call<List<FestivalList>> festivalListCall = service.getFestival();
+        Call<List<FestivalList>> festivalListCall = service.getFestival(MainActivity.token);
 
         festivalListCall.enqueue(new Callback<List<FestivalList>>() {
             @Override

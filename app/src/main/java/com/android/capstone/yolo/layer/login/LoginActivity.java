@@ -99,15 +99,15 @@ public class LoginActivity extends AppCompatActivity {
     public void postLogin(){
 
         LoginService service = network.buildRetrofit().create(LoginService.class);
-        Call<String> loginCall = service.postLogin("", text_id, text_pw);
+        Call<Login> loginCall = service.postLogin("", text_id, text_pw);
 
-        loginCall.enqueue(new Callback<String>() {
+        loginCall.enqueue(new Callback<Login>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Login> call, Response<Login> response) {
                 if(response.isSuccessful()){
-                    String tmp = response.body();
+                    loginInfo = response.body();
 
-                    Log.d("Login Info : ", tmp);
+                    Log.d("Login Info : ", loginInfo.getUser_token());
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                     //}
@@ -117,7 +117,8 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
                     setResult(RESULT_OK, intent);
                     SharedPreferences.Editor editor = MainActivity.pref.edit();
-                    editor.putString("token", tmp);
+                    MainActivity.token = loginInfo.getUser_token();
+                    editor.putString("token", loginInfo.getUser_token());
                     editor.putString("id", text_id);
                     editor.commit();
                     finish();
@@ -129,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Login> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Failed to Access", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
             }

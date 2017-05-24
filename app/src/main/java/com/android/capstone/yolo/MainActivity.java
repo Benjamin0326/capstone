@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.android.capstone.yolo.layer.community.CommunityListFrag;
 import com.android.capstone.yolo.layer.login.LoginActivity;
+import com.android.capstone.yolo.layer.music.MusicFragment;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.layer.search.SearchActivity;
 
@@ -23,7 +24,7 @@ public class MainActivity extends BaseActivity {
 
     public static BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
-    private String token;
+    public static String token;
     public static final int CHECK_LOGIN = 4444;
     public static final int SUCCESS_LOGIN = 1234;
     public static final int FAIL_LOGIN = 4321;
@@ -88,14 +89,13 @@ public class MainActivity extends BaseActivity {
 
                         break;
                     case R.id.action_music:
-                        if(remainBackStack){
-                            remainBackStack=false;
-                            break;
-                        }
+                        menuStack.push(R.id.action_music);
                         if(menuFlag==1){
                             menuFlag=0;
                             break;
                         }
+                        fr = new MusicFragment();
+                        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container_fragment, fr).commit();
                         break;
                     case R.id.action_profile:
                         menuStack.push(R.id.action_profile);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.FestivalPictureAdapter;
 import com.android.capstone.yolo.adapter.FestivalVideoAdapter;
@@ -77,7 +78,7 @@ public class FestivalTabVideoFragment extends Fragment {
 
     public void getFestivalInfoList(){
         FestivalService service = network.buildRetrofit().create(FestivalService.class);
-        Call<List<FestivalList>> festivalListCall = service.getFestival();
+        Call<List<FestivalList>> festivalListCall = service.getFestival(MainActivity.token);
 
         festivalListCall.enqueue(new Callback<List<FestivalList>>() {
             @Override

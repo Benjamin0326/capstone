@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.capstone.yolo.layer.music.MusicTabRankFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="50dp"
+        android:id="@+id/recycler_tab_music_rank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>

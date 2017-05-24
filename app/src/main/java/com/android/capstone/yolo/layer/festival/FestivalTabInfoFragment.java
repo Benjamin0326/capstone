@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.FestivalListAdapter;
 import com.android.capstone.yolo.component.network;
@@ -54,7 +55,7 @@ public class FestivalTabInfoFragment extends Fragment {
     }
     public void getFestivalInfoList(){
         FestivalService service = network.buildRetrofit().create(FestivalService.class);
-        Call<List<FestivalList>> festivalListCall = service.getFestival();
+        Call<List<FestivalList>> festivalListCall = service.getFestival(MainActivity.token);
 
         festivalListCall.enqueue(new Callback<List<FestivalList>>() {
             @Override

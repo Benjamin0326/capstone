@@ -5,7 +5,7 @@ package com.android.capstone.yolo.model;
  */
 
 public class Login {
-    private String status_code, message, user_token;
+    private String status_code, message, token;
 
     public void setStatus_code(String _status_code){
         status_code = _status_code;
@@ -14,7 +14,7 @@ public class Login {
         message = _message;
     }
     public void setUser_token(String _user_token){
-        user_token = _user_token;
+        token = _user_token;
     }
     public String getStatus_code(){
         return status_code;
@@ -23,6 +23,6 @@ public class Login {
         return message;
     }
     public String getUser_token(){
-        return user_token;
+        return token;
     }
 }

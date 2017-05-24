@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface FestivalService {
 
@@ -21,5 +22,5 @@ public interface FestivalService {
     Call<List<CommunityList>> getCommunityList();
 
     @GET("/api/festival")
-    Call<List<FestivalList>> getFestival();
+    Call<List<FestivalList>> getFestival(@Query("access_token") String token);
 }
