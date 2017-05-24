@@ -9,22 +9,31 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.community.CommunityListFrag;
 import com.android.capstone.yolo.layer.login.LoginActivity;
 import com.android.capstone.yolo.layer.music.MusicFragment;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.layer.search.SearchActivity;
+import com.android.capstone.yolo.model.Login;
+import com.android.capstone.yolo.service.LoginService;
 
 import java.util.Stack;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
 
     public static BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
     public static String token;
+    private Login loginInfo;
     public static final int CHECK_LOGIN = 4444;
     public static final int SUCCESS_LOGIN = 1234;
     public static final int FAIL_LOGIN = 4321;
@@ -45,6 +54,10 @@ public class MainActivity extends BaseActivity {
         if(token==null){
             intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, CHECK_LOGIN);
+        }else{
+            String id = pref.getString("id", null);
+            String pw = pref.getString("pw", null);
+            postLogin(id, pw);
         }
 
         fragmentManager = getSupportFragmentManager();
@@ -176,5 +189,40 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    public void postLogin(String id, String pw){
+
+        LoginService service = network.buildRetrofit().create(LoginService.class);
+        Call<Login> loginCall = service.postLogin("", id, pw);
+        loginCall.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                if(response.isSuccessful()){
+                    loginInfo = response.body();
+
+                    Log.d("Login Info : ", loginInfo.getUser_token());
+                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                    //}
+                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+
+                    SharedPreferences.Editor editor = pref.edit();
+                    MainActivity.token = loginInfo.getUser_token();
+                    editor.putString("token", loginInfo.getUser_token());
+                    editor.commit();
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+                Toast.makeText(MainActivity.this, "err code : " + code, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed to Access", Toast.LENGTH_LONG).show();
+                Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
     }
 }

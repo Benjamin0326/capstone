@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.token = loginInfo.getUser_token();
                     editor.putString("token", loginInfo.getUser_token());
                     editor.putString("id", text_id);
+                    editor.putString("pw", text_pw);
                     editor.commit();
                     finish();
                     return;
