@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.model.Post;
+
+import java.util.List;
 
 /**
  * Created by sung9 on 2017-05-04.
@@ -16,15 +19,11 @@ import com.android.capstone.yolo.R;
 public class ProfileWritingAdapter extends RecyclerView.Adapter<ProfileWritingAdapter.ViewHolder> {
 
     private Context context;
-    private String[] subject;
-    private String[] category;
-    private String[] date;
+    private List<Post> post;
 
-    public ProfileWritingAdapter(Context _context, String[] _subject, String[] _category, String[] _date){
+    public ProfileWritingAdapter(Context _context, List<Post> _post){
         context = _context;
-        subject = _subject;
-        category = _category;
-        date = _date;
+        post = _post;
     }
 
     @Override
@@ -44,17 +43,19 @@ public class ProfileWritingAdapter extends RecyclerView.Adapter<ProfileWritingAd
             }
         };
 
-        holder.tv_category.setText(category[pos]);
+        holder.tv_category.setText(post.get(pos).getTag());
         holder.tv_category.setOnClickListener(listener);
-        holder.tv_subject.setText(subject[pos]);
+        holder.tv_subject.setText(post.get(pos).getTitle());
         holder.tv_subject.setOnClickListener(listener);
-        holder.tv_date.setText(date[pos]);
+        holder.tv_date.setText(post.get(pos).getDate());
         holder.tv_date.setOnClickListener(listener);
     }
 
     @Override
     public int getItemCount() {
-        return subject.length;
+        if(post==null)
+            return 0;
+        return post.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

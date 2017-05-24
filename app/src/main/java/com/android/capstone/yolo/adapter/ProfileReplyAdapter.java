@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.model.Reply;
+
+import java.util.List;
 
 /**
  * Created by sung9 on 2017-05-04.
@@ -16,15 +19,14 @@ import com.android.capstone.yolo.R;
 public class ProfileReplyAdapter extends RecyclerView.Adapter<ProfileReplyAdapter.ViewHolder> {
 
     private Context context;
-    private String[] reply;
+    private List<Reply> reply;
+    //private String[] reply;
     //private String[] category;
     private String[] date;
 
-    public ProfileReplyAdapter(Context _context, String[] _reply, String[] _date){
+    public ProfileReplyAdapter(Context _context, List<Reply> _reply){
         context = _context;
         reply = _reply;
-        //category = _category;
-        date = _date;
     }
 
     @Override
@@ -46,15 +48,18 @@ public class ProfileReplyAdapter extends RecyclerView.Adapter<ProfileReplyAdapte
 
         //holder.tv_category.setText(category[pos]);
         //holder.tv_category.setOnClickListener(listener);
-        holder.tv_reply.setText(reply[pos]);
+        holder.tv_reply.setText(reply.get(pos).getContent());
         holder.tv_reply.setOnClickListener(listener);
-        holder.tv_date.setText(date[pos]);
+        holder.tv_date.setText(reply.get(pos).getDate());
         holder.tv_date.setOnClickListener(listener);
     }
 
     @Override
     public int getItemCount() {
-        return reply.length;
+
+        if(reply==null)
+            return 0;
+        return reply.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
