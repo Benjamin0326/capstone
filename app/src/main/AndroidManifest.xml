@@ -32,6 +32,7 @@
         <activity android:name=".layer.login.JoinActivity" />
         <activity android:name=".layer.search.SearchDetailActivity" />
         <activity android:name=".layer.festival.GalleryActivity" />
+        <activity android:name=".layer.community.NewReplyActivity"/>
     </application>
 
 </manifest>

@@ -1,10 +1,13 @@
 package com.android.capstone.yolo.layer.community;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ public class BoardDetailActivity extends BaseActivity{
     RecyclerView replyList;
     ReplyAdapter replyAdapter;
     LinearLayout layout;
+    FrameLayout replyButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +53,14 @@ public class BoardDetailActivity extends BaseActivity{
         replyList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
         replyAdapter = new ReplyAdapter(getApplicationContext());
         replyList.setAdapter(replyAdapter);
+        replyButton = (FrameLayout) findViewById(R.id.detail_reply_button);
+        replyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NewReplyActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void getPost(){
