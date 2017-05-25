@@ -11,7 +11,7 @@ public class network extends Application {
 
         Retrofit.Builder builder = new Retrofit.Builder();
 
-        builder.baseUrl("http://ec2-52-79-215-229.ap-northeast-2.compute.amazonaws.com:3000");
+        builder.baseUrl("http://ec2-52-79-215-229.ap-northeast-2.compute.amazonaws.com");
         builder.addConverterFactory(GsonConverterFactory.create());
 
         return builder.build();

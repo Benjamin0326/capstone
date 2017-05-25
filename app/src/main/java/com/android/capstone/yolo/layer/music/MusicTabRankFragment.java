@@ -63,6 +63,9 @@ public class MusicTabRankFragment extends Fragment {
             public void onResponse(Call<List<Music>> call, Response<List<Music>> response) {
                 if(response.isSuccessful()){
                     music = response.body();
+                    for(int i=0;i<music.size();i++){
+                        music.get(i).set_Like("0");
+                    }
                     adapter = new MusicRankAdapter(getContext(), music);
 
                     recyclerView.setAdapter(adapter);
@@ -78,11 +81,10 @@ public class MusicTabRankFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Music>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failed to load thumbnails", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
             }
         });
     }
-
 }
 

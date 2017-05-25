@@ -2,27 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    >
+    android:layout_margin="10dp">
     <LinearLayout
-        android:id="@+id/music_chart_tmp_layout"
+        android:id="@+id/music_like_chart_tmp_layout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal">
     <TextView
-        android:id="@+id/text_music_rank"
         android:gravity="center"
         android:layout_margin="2dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:text="1"
+        android:layout_weight="1"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"/>
 
     <ImageView
-        android:id="@+id/img_music_cover"
+        android:id="@+id/img_music_cover_like"
         android:layout_margin="2dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -36,7 +33,7 @@
         android:orientation="vertical"
         android:layout_weight="5">
         <TextView
-            android:id="@+id/text_music_name"
+            android:id="@+id/text_music_name_like"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Music Name"
@@ -44,27 +41,20 @@
             android:maxLines="1"
             android:textColor="@android:color/black"/>
         <TextView
-            android:id="@+id/text_artist_name"
+            android:id="@+id/text_artist_name_like"
             android:maxLines="1"
-            android:textSize="11sp"
+            android:textSize="11dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Artist Name"/>
     </LinearLayout>
 
-    <ImageView
-        android:background="@android:color/transparent"
-        android:id="@+id/img_music_like"
-        android:src="@mipmap/icon_item_action_like_deselected"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        <ImageView
+            android:background="@android:color/transparent"
+            android:id="@+id/img_music_like_like"
+            android:src="@mipmap/icon_item_action_like_deselected"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
     </LinearLayout>
-
-    <View
-        android:layout_below="@id/music_chart_tmp_layout"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:visibility="gone"
-        android:background="@android:color/black"/>
 </RelativeLayout>

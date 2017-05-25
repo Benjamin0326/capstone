@@ -13,55 +13,53 @@ import android.widget.Toast;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.layer.festival.YoutubeActivity;
 import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.service.MusicService;
 import com.squareup.picasso.Picasso;
 
-
 import java.util.List;
 
-import co.lujun.androidtagview.TagContainerLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by sung9 on 2017-05-24.
+ * Created by sung9 on 2017-05-25.
  */
 
-public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.ViewHolder> {
+public class MusicLikeRankAdapter extends RecyclerView.Adapter<MusicLikeRankAdapter.ViewHolder> {
 
     private Context context;
     private List<Music> music;
 
-    public MusicRankAdapter(Context _context, List<Music> _music){
+    public MusicLikeRankAdapter(Context _context, List<Music> _music){
         context = _context;
         music = _music;
     }
 
     @Override
-    public MusicRankAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_music_chart, parent, false);
-        MusicRankAdapter.ViewHolder holder = new MusicRankAdapter.ViewHolder(v);
+    public MusicLikeRankAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_music_my_like, parent, false);
+        MusicLikeRankAdapter.ViewHolder holder = new MusicLikeRankAdapter.ViewHolder(v);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final MusicRankAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final MusicLikeRankAdapter.ViewHolder holder, int position) {
         final int pos = position;
-        final MusicRankAdapter.ViewHolder tmpHolder = holder;
 
         ImageView.OnClickListener img_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(music.get(pos).get_Like().compareTo("0")==0){
-                    postMusicLike(pos);
+                    //postMusicLike(pos);
                     holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
                 }
+                /*
                 else{
                     holder.img_like.setImageResource(R.mipmap.icon_item_action_like_deselected);
                 }
+                */
             }
         };
         TextView.OnClickListener tv_listener = new View.OnClickListener() {
@@ -75,7 +73,7 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
         //holder.img_music.setOnClickListener(img_listener);
         holder.tv_music_name.setText(music.get(pos).getTitle());
         holder.tv_artist_name.setText(music.get(pos).getArtist());
-        holder.tv_rank.setText(music.get(pos).getRank());
+        //holder.tv_rank.setText(music.get(pos).getRank());
         if(music.get(pos).get_Like().compareTo("1")==0){
             holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
         }
@@ -96,14 +94,15 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView img_music, img_like;
-        private TextView tv_music_name, tv_artist_name, tv_rank;
+        private TextView tv_music_name, tv_artist_name;
+        //private TextView tv_rank;
         public ViewHolder(View view){
             super(view);
-            img_music = (ImageView) view.findViewById(R.id.img_music_cover);
-            tv_music_name = (TextView) view.findViewById(R.id.text_music_name);
-            tv_artist_name = (TextView) view.findViewById(R.id.text_artist_name);
-            tv_rank = (TextView) view.findViewById(R.id.text_music_rank);
-            img_like = (ImageView) view.findViewById(R.id.img_music_like);
+            img_music = (ImageView) view.findViewById(R.id.img_music_cover_like);
+            tv_music_name = (TextView) view.findViewById(R.id.text_music_name_like);
+            tv_artist_name = (TextView) view.findViewById(R.id.text_artist_name_like);
+            //tv_rank = (TextView) view.findViewById(R.id.text_music_rank);
+            img_like = (ImageView) view.findViewById(R.id.img_music_like_like);
         }
     }
 

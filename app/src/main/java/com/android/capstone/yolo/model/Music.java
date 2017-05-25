@@ -5,7 +5,22 @@ package com.android.capstone.yolo.model;
  */
 
 public class Music {
-    private String title, artist, albumtitle, albumcover, rank;
+    private String _id, title, artist, albumtitle, albumcover, rank, _like;
+
+    public void set_Like(String __like){
+        _like = __like;
+    }
+
+    public String get_Like(){
+        return _like;
+    }
+
+    public void set_id(String __id){
+        _id = __id;
+    }
+    public String get_id(){
+        return _id;
+    }
     public void setRank(String _rank){
         rank = _rank;
     }

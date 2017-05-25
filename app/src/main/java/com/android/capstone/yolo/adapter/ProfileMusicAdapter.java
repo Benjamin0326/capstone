@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.layer.festival.YoutubeActivity;
+import com.android.capstone.yolo.model.Music;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import co.lujun.androidtagview.TagContainerLayout;
 
@@ -26,15 +29,12 @@ import co.lujun.androidtagview.TagContainerLayout;
 public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapter.ViewHolder> {
 
     private Context context;
-    private String[] music_img;
-    private String[] music_name;
-    private String[][] music_tag;
+    private List<Music> music;
+    private String videoId = "iQpGq4HguVs";
 
-    public ProfileMusicAdapter(Context _context, String[] _music_img, String[] _music_name, String[][] _music_tag){
+    public ProfileMusicAdapter(Context _context, List<Music> _music){
         context = _context;
-        music_img = _music_img;
-        music_name = _music_name;
-        music_tag = _music_tag;
+        music = _music;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, YoutubeActivity.class);
-                intent.putExtra("vidieId", music_img[pos]);
+                intent.putExtra("vidieId", videoId);
                 context.startActivity(intent);
             }
         };
@@ -62,29 +62,33 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
             }
         };
 
-        Picasso.with(context).load("http://img.youtube.com/vi/"+music_img[pos]+"/default.jpg").fit().centerCrop().into(holder.img_music);
+        Picasso.with(context).load(music.get(pos).getAlbumcover()).fit().centerCrop().into(holder.img_music);
         holder.img_music.setOnClickListener(img_listener);
-        holder.tv_music_name.setText(music_name[pos]);
+        holder.tv_music_name.setText(music.get(pos).getTitle());
         holder.tv_music_name.setOnClickListener(tv_listener);
-        holder.tag_music.setTags(music_tag[pos]);
+        holder.tv_music_artist.setText(music.get(pos).getArtist());
+        //holder.tag_music.setTags(music_tag[pos]);
         //holder.tag_music.setOnClickListener(tag_listener);
-        Log.i("Tag Test", music_tag[pos].toString());
+        //Log.i("Tag Test", music_tag[pos].toString());
     }
 
     @Override
     public int getItemCount() {
-        return music_name.length;
+        if(music==null)
+            return 0;
+        return music.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView img_music;
-        private TextView tv_music_name;
+        private TextView tv_music_name, tv_music_artist;
         private TagContainerLayout tag_music;
         public ViewHolder(View view){
             super(view);
             img_music = (ImageView) view.findViewById(R.id.image_item_profile_music);
             tv_music_name = (TextView) view.findViewById(R.id.text_item_profile_music_name);
+            tv_music_artist = (TextView) view.findViewById(R.id.text_item_profile_music_artist);
             tag_music = (TagContainerLayout) view.findViewById(R.id.tag__item_profile_music);
         }
 

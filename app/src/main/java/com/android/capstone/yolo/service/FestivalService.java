@@ -19,7 +19,7 @@ public interface FestivalService {
     Observable<Void> read(@Path("id") long id);
 
     @GET("/api/festival")
-    Call<List<CommunityList>> getCommunityList();
+    Call<List<CommunityList>> getCommunityList(@Query("access_token") String token);
 
     @GET("/api/festival")
     Call<List<FestivalList>> getFestival(@Query("access_token") String token);

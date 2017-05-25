@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.CommunityListAdapter;
 import com.android.capstone.yolo.component.network;
@@ -59,7 +60,7 @@ public class CommunityListFrag extends Fragment{
 
     public void getCommunityList(){
         FestivalService service = network.buildRetrofit().create(FestivalService.class);
-        Call<List<CommunityList>> communityListCall = service.getCommunityList();
+        Call<List<CommunityList>> communityListCall = service.getCommunityList(MainActivity.token);
 
         communityListCall.enqueue(new Callback<List<CommunityList>>() {
             @Override
