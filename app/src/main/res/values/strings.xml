@@ -15,4 +15,6 @@
 
     <string name="label_write_post">new post</string>
     <string name="label_search">search</string>
+    <string name="reply_hint"><font size="10">댓글을 입력하세요..</font></string>
+    <string name="no_reply">등록된 댓글이 없습니다.</string>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.BaseActivity;
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.component.network;
@@ -29,9 +30,10 @@ public class CommunityBoardActivity extends BaseActivity{
     TextView title;
     ListView boardList;
     BoardListAdapter adapter;
-    //ImageView postBtn;
     FloatingActionMenu floatingActionMenu;
     FloatingActionButton postBtn, searchBtn;
+    String communityID;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class CommunityBoardActivity extends BaseActivity{
                 BoardList boardList = (BoardList) adapter.getItem(i);
                 Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
                 intent.putExtra("postID", boardList.getId());
+                Log.d("TEST", "boardID : " + boardList.getId());
                 startActivity(intent);
             }
         });
@@ -63,6 +66,7 @@ public class CommunityBoardActivity extends BaseActivity{
                     floatingActionMenu.close(true);
 
                 Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
+                intent.putExtra("communityID", communityID);
                 startActivity(intent);
             }
         });
@@ -82,10 +86,10 @@ public class CommunityBoardActivity extends BaseActivity{
     }
 
     public void initView(){
-        String boardID = getIntent().getExtras().getString("communityID");
+        communityID = getIntent().getExtras().getString("communityID");
         title.setText(getIntent().getExtras().getString("communityTitle"));
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<List<BoardList>> boardListCall = service.getBoardList(boardID);
+        Call<List<BoardList>> boardListCall = service.getBoardList(communityID, MainActivity.token);
         boardListCall.enqueue(new Callback<List<BoardList>>() {
             @Override
             public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {

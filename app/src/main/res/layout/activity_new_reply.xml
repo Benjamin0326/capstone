@@ -16,25 +16,40 @@
             android:textSize="@dimen/com_list_tab_text"
             android:textColor="@android:color/white"
             android:id="@+id/reply_cnt"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/drawable_navigate_before"
+            android:id="@+id/reply_back"/>
     </FrameLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"
-        android:orientation="vertical"
+        android:layout_weight="11"
         android:background="@android:color/white"
         android:layout_marginTop="5dp"
         android:paddingBottom="@dimen/board_deteail_padding_updown"
         android:paddingLeft="@dimen/board_detail_padding_side"
         android:paddingRight="@dimen/board_detail_padding_side">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/com_list_sub_text"
+            android:id="@+id/no_reply"
+            android:text="@string/no_reply"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/new_reply_list"/>
+            android:id="@+id/new_reply_list"
+            android:visibility="gone"/>
 
-    </LinearLayout>
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -47,21 +62,23 @@
             android:layout_gravity="center_vertical"
             android:background="@android:color/transparent"
             android:id="@+id/new_reply"
-            android:hint="댓글을 입력하세요.."
+            android:hint="@string/reply_hint"
             android:textCursorDrawable="@null"
-            android:singleLine="true"
             android:paddingLeft="5dp"
             android:includeFontPadding="false"
             android:gravity="center_vertical"
             android:paddingRight="5dp"/>
 
-        <ImageView
+        <TextView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/searchImage"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/search"/>
+            android:textSize="@dimen/com_list_sub_text"
+            android:includeFontPadding="false"
+            android:text="등록"
+            android:id="@+id/reply_post_btn"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp" />
 
     </FrameLayout>
 
