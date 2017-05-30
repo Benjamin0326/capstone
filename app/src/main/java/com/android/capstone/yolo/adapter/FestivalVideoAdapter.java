@@ -97,12 +97,13 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                /*
+
                 Intent intent = new Intent(context, YoutubeActivity.class);
 
                 intent.putExtra("videId", videoResources[pos]);
                 context.startActivity(intent);
-                */
+
+                /*
                 YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_youtube_video, youTubePlayerFragment).commit();
 
@@ -122,7 +123,9 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
                         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
                         Log.d("errorMessage:", errorMessage);
                     }
+
                 });
+                */
 
                 //context.startActivity(new Intent(Intent.ACTION_VIEW,videoUris[pos]));
                 //String data = dummyData[pos];
