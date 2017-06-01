@@ -51,7 +51,7 @@ public class MusicLikeRankAdapter extends RecyclerView.Adapter<MusicLikeRankAdap
         ImageView.OnClickListener img_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(music.get(pos).get_Like().compareTo("0")==0){
+                if(music.get(pos).getLike()[0].compareTo("0")==0){
                     //postMusicLike(pos);
                     holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
                 }
@@ -74,7 +74,7 @@ public class MusicLikeRankAdapter extends RecyclerView.Adapter<MusicLikeRankAdap
         holder.tv_music_name.setText(music.get(pos).getTitle());
         holder.tv_artist_name.setText(music.get(pos).getArtist());
         //holder.tv_rank.setText(music.get(pos).getRank());
-        if(music.get(pos).get_Like().compareTo("1")==0){
+        if(music.get(pos).getLike()[0].compareTo("1")==0){
             holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
         }
         holder.img_like.setOnClickListener(img_listener);
@@ -118,7 +118,8 @@ public class MusicLikeRankAdapter extends RecyclerView.Adapter<MusicLikeRankAdap
                     Music tmp_music = response.body();
                     Log.d("Music Like Test : ", tmp_music.get_id()+" "+tmp_music.getTitle());
                     Toast.makeText(context, "좋아요가 반영되었습니다.", Toast.LENGTH_LONG).show();
-                    music.get(pos).set_Like("1");
+                    String[] tmp = {"1"};
+                    music.get(pos).setLike(tmp);
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                     //}

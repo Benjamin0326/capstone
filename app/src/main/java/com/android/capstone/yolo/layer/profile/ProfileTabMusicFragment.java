@@ -78,9 +78,6 @@ public class ProfileTabMusicFragment extends Fragment {
             public void onResponse(Call<List<Music>> call, Response<List<Music>> response) {
                 if(response.isSuccessful()){
                     music = response.body();
-                    for(int i=0;i<music.size();i++){
-                        music.get(i).set_Like("1");
-                    }
                     adapter = new ProfileMusicAdapter(getContext(), music);
 
                     recyclerView.setAdapter(adapter);

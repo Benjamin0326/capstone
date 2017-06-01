@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.festival.YoutubeActivity;
 import com.android.capstone.yolo.model.Music;
+import com.android.capstone.yolo.model.YoutubeVideo;
+import com.android.capstone.yolo.service.MusicService;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 import com.squareup.picasso.Picasso;
@@ -21,6 +25,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import co.lujun.androidtagview.TagContainerLayout;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by sung9 on 2017-05-04.
@@ -30,7 +37,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
 
     private Context context;
     private List<Music> music;
-    private String videoId = "iQpGq4HguVs";
+    //private String videoId = "iQpGq4HguVs";
 
     public ProfileMusicAdapter(Context _context, List<Music> _music){
         context = _context;
@@ -50,9 +57,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
         ImageView.OnClickListener img_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, YoutubeActivity.class);
-                intent.putExtra("vidieId", videoId);
-                context.startActivity(intent);
+                getYoutubeVideoId(pos);
             }
         };
         TextView.OnClickListener tv_listener = new View.OnClickListener() {
@@ -92,5 +97,44 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
             tag_music = (TagContainerLayout) view.findViewById(R.id.tag__item_profile_music);
         }
 
+    }
+
+    public void getYoutubeVideoId(final int pos){
+        //Log.d("Music ID & Token : ", music.get(pos).get_id()+" "+MainActivity.token);
+        MusicService service = network.buildRetrofit().create(MusicService.class);
+        Call<YoutubeVideo> videoIdCall = service.getVideoId(music.get(pos).getArtist(), music.get(pos).getTitle());
+
+        videoIdCall.enqueue(new Callback<YoutubeVideo>() {
+            @Override
+            public void onResponse(Call<YoutubeVideo> call, Response<YoutubeVideo> response) {
+                if(response.isSuccessful()){
+                    YoutubeVideo tmp_video = response.body();
+                    if(tmp_video.getVideoId()==null){
+                        Toast.makeText(context, "Youtube 비디오를 찾을 수 없습니다.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    Log.d("Youtube Video : ", tmp_video.getVideoId());
+                    //Toast.makeText(context, "좋아요가 반영되었습니다.", Toast.LENGTH_LONG).show();
+                    //String[] tmp = {"1"};
+                    //music.get(pos).setLike(tmp);
+                    Intent intent = new Intent(context, YoutubeActivity.class);
+                    intent.putExtra("vidieId", tmp_video.getVideoId());
+                    context.startActivity(intent);
+                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                    //}
+                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+            }
+
+            @Override
+            public void onFailure(Call<YoutubeVideo> call, Throwable t) {
+                Toast.makeText(context, "Failed to Like", Toast.LENGTH_LONG).show();
+                Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
     }
 }
