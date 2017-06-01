@@ -43,12 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+<!--
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:includeFontPadding="false"
             android:id="@+id/newPostCategory" />
-
+-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.Post;
@@ -60,7 +61,7 @@ public class SearchDetailActivity extends AppCompatActivity{
         }
         */
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<Post> postCall = service.getBoardDetail(resultID);
+        Call<Post> postCall = service.getBoardDetail(resultID, MainActivity.token);
         postCall.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {

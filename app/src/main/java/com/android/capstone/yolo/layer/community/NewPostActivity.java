@@ -13,11 +13,9 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +25,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.BaseActivity;
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.BoardList;
+import com.android.capstone.yolo.service.CommunityService;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.File;
@@ -37,9 +39,12 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewPostActivity extends BaseActivity {
-    public static final String[] categoryList = {"select category", "type1", "type2", "type3"};
+    //public static final String[] categoryList = {"select category", "type1", "type2", "type3"};
     final int RESULT_GALLERY = 1;
     MaterialSpinner category;
     ImageView backBtn, uploadImageBtn;
@@ -64,7 +69,6 @@ public class NewPostActivity extends BaseActivity {
         postBtn = (FrameLayout) findViewById(R.id.newPostBtn);
         title = (EditText) findViewById(R.id.newPostTitle);
         content = (EditText) findViewById(R.id.newPostContent);
-        category = (MaterialSpinner) findViewById(R.id.newPostCategory);
         imageListLayout = (LinearLayout) findViewById(R.id.newPostImageList);
         photo = new ArrayList<>();
 
@@ -87,16 +91,24 @@ public class NewPostActivity extends BaseActivity {
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CommunityService service = network.buildRetrofit().create(CommunityService.class);
+                Call<BoardList> call = service.postText(getIntent().getExtras().getString("communityID"), "자유", title.getText().toString(), content.getText().toString(), MainActivity.token);
+                call.enqueue(new Callback<BoardList>() {
+                    @Override
+                    public void onResponse(Call<BoardList> call, Response<BoardList> response) {
+                        if(response.isSuccessful()){
+                            //TODO boardID로 이미지 call
+                            Log.d("TEST", "input board ID : " + response.body());
+                        }else{
+                            Log.d("TEST", "??? " + response.code() + ",  "+ response.errorBody() + ", " + response.message());
+                        }
+                    }
 
-            }
-        });
-
-        category.setItems(categoryList);
-        category.setSelectedIndex(0);
-        category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                    @Override
+                    public void onFailure(Call<BoardList> call, Throwable t) {
+                        Log.d("TEST", "err : " + t.getMessage().toString());
+                    }
+                });
             }
         });
     }

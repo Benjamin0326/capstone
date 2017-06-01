@@ -13,13 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.BaseActivity;
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ReplyAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.Post;
-import com.android.capstone.yolo.scenario.scenario;
+import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.CommunityService;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +33,8 @@ public class BoardDetailActivity extends BaseActivity{
     RecyclerView replyList;
     ReplyAdapter replyAdapter;
     LinearLayout layout;
-    FrameLayout replyButton;
+    FrameLayout replyButton, replyLayout;
+    String postID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,16 +62,20 @@ public class BoardDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NewReplyActivity.class);
+                intent.putExtra("replyCnt", replyAdapter.getItemCount());
+                intent.putExtra("boardID", postID);
                 startActivity(intent);
             }
         });
+        replyLayout = (FrameLayout) findViewById(R.id.board_no_reply);
     }
 
     public void getPost(){
-        final String postID = getIntent().getExtras().getString("postID");
+        postID = getIntent().getExtras().getString("postID");
+        Log.d("TEST", "boardID : " + postID);
 
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<Post> postCall = service.getBoardDetail(postID);
+        Call<Post> postCall = service.getBoardDetail(postID, MainActivity.token);
         postCall.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
@@ -84,8 +92,8 @@ public class BoardDetailActivity extends BaseActivity{
                             Picasso.with(getApplicationContext()).load(response.body().getImg()[i]).into(imageView);
                             layout.addView(imageView);
                         }
-                        getReply(postID);
                     }
+                    getReply(postID);
                     return;
                 }
                 Log.d("TEST", "err code : " + response.code());
@@ -99,14 +107,19 @@ public class BoardDetailActivity extends BaseActivity{
     }
 
     public void getReply(String id){
-        /*
+
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<List<Reply>> call = service.getReply(id);
+        Call<List<Reply>> call = service.getReply(id, MainActivity.token);
         call.enqueue(new Callback<List<Reply>>() {
             @Override
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
+                    Log.d("TEST", "reply : " + response.body());
                     replyAdapter.setSource(response.body());
+                    if(replyAdapter.getItemCount() > 0){
+                        replyLayout.setVisibility(View.GONE);
+                        replyList.setVisibility(View.VISIBLE);
+                    }
                     return;
                 }
                 Log.d("TEST", "err : " + response.code());
@@ -117,7 +130,7 @@ public class BoardDetailActivity extends BaseActivity{
                 Log.d("TEST", "err msg : " + t.getMessage().toString());
             }
         });
-        */
+
         /*
         List<Reply> temp = scenario.getReply(id);
         for(int i=0; i<temp.size(); i++){
@@ -126,6 +139,6 @@ public class BoardDetailActivity extends BaseActivity{
             Log.d("TEST", temp.get(i).getContent() + "");
             Log.d("TEST", temp.get(i).getPath() + "");
         }*/
-        replyAdapter.setSource(scenario.getReply(id));
+        //replyAdapter.setSource(scenario.getReply(id));
     }
 }
