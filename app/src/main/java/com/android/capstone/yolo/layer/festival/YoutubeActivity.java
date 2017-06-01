@@ -20,7 +20,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube);
         Intent intent = getIntent();
-        final String vidieId = intent.getExtras().getString("videId");
+        final String videoId = intent.getExtras().getString("videoId");
 
         player = (YouTubePlayerView) findViewById(R.id.youtube_player);
         player.initialize(FestivalVideoAdapter.API_KEY, new YouTubePlayer.OnInitializedListener() {
@@ -28,7 +28,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 if (!b) {
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-                    youTubePlayer.loadVideo(vidieId);
+                    youTubePlayer.loadVideo(videoId);
                     youTubePlayer.play();
                 }
             }

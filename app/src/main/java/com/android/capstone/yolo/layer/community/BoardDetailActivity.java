@@ -115,8 +115,8 @@ public class BoardDetailActivity extends BaseActivity{
             @Override
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
+                    replyAdapter.setSource(response.body());
                     if(replyAdapter.getItemCount() > 0){
-                        replyAdapter.setSource(response.body());
                         replyLayout.setVisibility(View.GONE);
                         replyList.setVisibility(View.VISIBLE);
                     }
