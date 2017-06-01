@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.FestivalVideoAdapter;
 import com.android.capstone.yolo.adapter.MusicRankAdapter;
@@ -56,16 +57,13 @@ public class MusicTabRankFragment extends Fragment {
 
     public void getMusicChart(){
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<Music>> musicChartListCall = service.getRank();
+        Call<List<Music>> musicChartListCall = service.getRank(MainActivity.token);
 
         musicChartListCall.enqueue(new Callback<List<Music>>() {
             @Override
             public void onResponse(Call<List<Music>> call, Response<List<Music>> response) {
                 if(response.isSuccessful()){
                     music = response.body();
-                    for(int i=0;i<music.size();i++){
-                        music.get(i).set_Like("0");
-                    }
                     adapter = new MusicRankAdapter(getContext(), music);
 
                     recyclerView.setAdapter(adapter);
