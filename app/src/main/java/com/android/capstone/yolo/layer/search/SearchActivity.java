@@ -156,10 +156,8 @@ public class SearchActivity extends BaseActivity {
     public void initSearchHistory(){
         historys = new ArrayList<>();
         preferences = getApplicationContext().getSharedPreferences(SEARCH_HISTORY, Context.MODE_PRIVATE);
-        Log.d("TEST", "size : " + preferences.getAll().size());
         for(int i=0; i<Math.min(preferences.getAll().size(), HISTORY_MAX_NUM - 1); i++){
             String history = new String(preferences.getString(""+i, null));
-            Log.d("TEST", "item : " + history);
             historys.add(history);
         }
         adapter.setSource(historys);

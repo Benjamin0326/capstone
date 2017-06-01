@@ -2,7 +2,6 @@ package com.android.capstone.yolo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +39,6 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
     }
 
     public void setSource(List<Reply> list) {
-        for(int i=0; i<list.size(); i++)
-            Log.d("TEST", "itme : " + list.get(i));
         this.lists = list;
         this.notifyDataSetChanged();
     }

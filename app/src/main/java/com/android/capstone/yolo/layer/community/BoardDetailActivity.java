@@ -73,7 +73,6 @@ public class BoardDetailActivity extends BaseActivity{
 
     public void getPost(){
         postID = getIntent().getExtras().getString("postID");
-        Log.d("TEST", "boardID : " + postID);
 
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<Post> postCall = service.getBoardDetail(postID, MainActivity.token);
@@ -115,8 +114,8 @@ public class BoardDetailActivity extends BaseActivity{
             @Override
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
+                    replyAdapter.setSource(response.body());
                     if(replyAdapter.getItemCount() > 0){
-                        replyAdapter.setSource(response.body());
                         replyLayout.setVisibility(View.GONE);
                         replyList.setVisibility(View.VISIBLE);
                     }
@@ -133,15 +132,5 @@ public class BoardDetailActivity extends BaseActivity{
                 Log.d("TEST", "err msg : " + t.getMessage().toString());
             }
         });
-
-        /*
-        List<Reply> temp = scenario.getReply(id);
-        for(int i=0; i<temp.size(); i++){
-            Log.d("TEST", temp.get(i).getUser() + "");
-            Log.d("TEST", temp.get(i).getDate() + "");
-            Log.d("TEST", temp.get(i).getContent() + "");
-            Log.d("TEST", temp.get(i).getPath() + "");
-        }*/
-        //replyAdapter.setSource(scenario.getReply(id));
     }
 }
