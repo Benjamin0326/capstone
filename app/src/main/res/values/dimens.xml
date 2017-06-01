@@ -25,4 +25,7 @@
     <dimen name="board_deteail_padding_updown">8dp</dimen>
     <dimen name="board_detail_padding_side">12dp</dimen>
     <dimen name="board_detail_reply_button">40dp</dimen>
+
+    <dimen name="dialog_category_padding_side">10dp</dimen>
+    <dimen name="dialog_category_padding_updown">5dp</dimen>
 </resources>

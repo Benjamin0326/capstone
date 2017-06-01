@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
@@ -52,7 +53,6 @@ public class CommunityBoardActivity extends BaseActivity{
                 BoardList boardList = (BoardList) adapter.getItem(i);
                 Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
                 intent.putExtra("postID", boardList.getId());
-                Log.d("TEST", "boardID : " + boardList.getId());
                 startActivity(intent);
             }
         });
@@ -97,8 +97,10 @@ public class CommunityBoardActivity extends BaseActivity{
                     adapter.setSource(response.body());
                     return;
                 }
-                int code = response.code();
-                Log.d("TEST", "err code : " + code);
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

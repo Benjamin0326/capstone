@@ -40,9 +40,8 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
     }
 
     public void setSource(List<Reply> list) {
-        Log.d("TEST", "set source ");
-        for(int i =0; i<list.size(); i++)
-            Log.d("TEST", "user : " + list.get(i).getUser());
+        for(int i=0; i<list.size(); i++)
+            Log.d("TEST", "itme : " + list.get(i));
         this.lists = list;
         this.notifyDataSetChanged();
     }
@@ -55,7 +54,6 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
 
     @Override
     public void onBindViewHolder(ReplyViewHolder holder, int position) {
-        Log.d("TEST", "set text " + lists.get(position).getUser());
         holder.writer.setText(lists.get(position).getUser());
         holder.date.setText(lists.get(position).getDate());
         holder.content.setText(lists.get(position).getContent());

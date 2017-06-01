@@ -70,8 +70,10 @@ public class CommunityListFrag extends Fragment{
                     adapter.setSource(lists);
                     return;
                 }
-                int code = response.code();
-                Log.d("TEST", "err code : " + code);
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

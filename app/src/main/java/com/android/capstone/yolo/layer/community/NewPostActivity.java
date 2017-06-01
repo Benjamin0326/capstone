@@ -1,8 +1,11 @@
 package com.android.capstone.yolo.layer.community;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -22,6 +25,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.BaseActivity;
@@ -30,7 +34,6 @@ import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.service.CommunityService;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,15 +47,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewPostActivity extends BaseActivity {
-    //public static final String[] categoryList = {"select category", "type1", "type2", "type3"};
     final int RESULT_GALLERY = 1;
-    MaterialSpinner category;
     ImageView backBtn, uploadImageBtn;
     List<MultipartBody.Part> photo;
-    FrameLayout postBtn;
+    FrameLayout postBtn, categorySpinner;
     LinearLayout imageListLayout;
     EditText title, content;
     Uri uri;
+    Dialog categoryDialog;
+    TextView categoryText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +74,16 @@ public class NewPostActivity extends BaseActivity {
         content = (EditText) findViewById(R.id.newPostContent);
         imageListLayout = (LinearLayout) findViewById(R.id.newPostImageList);
         photo = new ArrayList<>();
+        categorySpinner = (FrameLayout) findViewById(R.id.newPostCategory);
+        categoryText = (TextView) findViewById(R.id.category_text);
+
+        categorySpinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoryDialog = createDialog();
+                categoryDialog.show();
+            }
+        });
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,15 +105,18 @@ public class NewPostActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 CommunityService service = network.buildRetrofit().create(CommunityService.class);
-                Call<BoardList> call = service.postText(getIntent().getExtras().getString("communityID"), "자유", title.getText().toString(), content.getText().toString(), MainActivity.token);
+                Call<BoardList> call = service.postText(getIntent().getExtras().getString("communityID"), categoryText.getText().toString(), title.getText().toString(), content.getText().toString(), MainActivity.token);
                 call.enqueue(new Callback<BoardList>() {
                     @Override
                     public void onResponse(Call<BoardList> call, Response<BoardList> response) {
                         if(response.isSuccessful()){
                             //TODO boardID로 이미지 call
                             Log.d("TEST", "input board ID : " + response.body());
-                        }else{
-                            Log.d("TEST", "??? " + response.code() + ",  "+ response.errorBody() + ", " + response.message());
+                            return;
+                        }
+
+                        if(response.code() >= 500) {
+                            Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -111,6 +127,20 @@ public class NewPostActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    private AlertDialog createDialog() {
+        final String[] str = getResources().getStringArray(R.array.cagetory);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setSingleChoiceItems(str, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                categoryText.setText(str[item]);
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     @Override

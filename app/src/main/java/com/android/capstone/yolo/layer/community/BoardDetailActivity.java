@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
@@ -114,15 +115,17 @@ public class BoardDetailActivity extends BaseActivity{
             @Override
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
-                    Log.d("TEST", "reply : " + response.body());
-                    replyAdapter.setSource(response.body());
                     if(replyAdapter.getItemCount() > 0){
+                        replyAdapter.setSource(response.body());
                         replyLayout.setVisibility(View.GONE);
                         replyList.setVisibility(View.VISIBLE);
                     }
                     return;
                 }
-                Log.d("TEST", "err : " + response.code());
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

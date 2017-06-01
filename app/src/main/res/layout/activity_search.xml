@@ -82,10 +82,28 @@
             android:id="@+id/searchResultLayout"
             android:orientation="vertical">
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/selectBoard" />
+                android:paddingLeft="@dimen/dialog_category_padding_side"
+                android:paddingRight="@dimen/dialog_category_padding_side"
+                android:id="@+id/search_category">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_category_text"
+                    android:layout_gravity="center|center_vertical"
+                    android:includeFontPadding="false"
+                    android:hint="카테고리를 선택하세요.."/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@mipmap/icon_category_button"/>
+
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"

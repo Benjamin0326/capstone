@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <string-array name="cagetory">
-            <item>게시판 선택</item>
-            <item>노래</item>
-            <item>정보</item>
-            <item>질문</item>
-            <item>모임</item>
-            <item>후기</item>
-            <item>티켓</item>
-            <item>자유</item>
+            <item>자유게시판</item>
+            <item>정보·꿀팁</item>
+            <item>페스티벌 후기</item>
+            <item>질문·답변</item>
+            <item>이 노래 뭐에요?</item>
+            <item>같이 갈 사람?</item>
+            <item>매매·양도</item>
         </string-array>
     </resources>

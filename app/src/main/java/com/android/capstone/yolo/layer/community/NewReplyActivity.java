@@ -80,14 +80,17 @@ public class NewReplyActivity extends BaseActivity{
             @Override
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
-                    replyAdapter.setSource(response.body());
                     if(replyAdapter.getItemCount() > 0){
+                        replyAdapter.setSource(response.body());
                         noReply.setVisibility(View.GONE);
                         replyList.setVisibility(View.VISIBLE);
                     }
                     return;
                 }
-                Log.d("TEST", "err : " + response.code());
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -100,13 +103,16 @@ public class NewReplyActivity extends BaseActivity{
     public void newReply(){
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<Void> call = service.postReply(postID, replyText.getText().toString(), MainActivity.token);
-        Log.d("TEST", "" + postID + ", " + MainActivity.token + ", " + replyText.getText().toString());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "댓글이 등록되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
+                }
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 

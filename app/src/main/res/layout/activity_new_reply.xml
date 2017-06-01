@@ -74,7 +74,6 @@
             android:layout_height="25dp"
             android:layout_gravity="center_vertical|right"
             android:textSize="@dimen/com_list_sub_text"
-            android:includeFontPadding="false"
             android:text="등록"
             android:id="@+id/reply_post_btn"
             android:textStyle="bold"

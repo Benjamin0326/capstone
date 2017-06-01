@@ -1,6 +1,8 @@
 package com.android.capstone.yolo.layer.search;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
@@ -25,8 +28,6 @@ import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.community.BoardDetailActivity;
 import com.android.capstone.yolo.model.BoardList;
-import com.android.capstone.yolo.model.CommunityList;
-import com.android.capstone.yolo.scenario.scenario;
 import com.android.capstone.yolo.service.SearchService;
 
 import java.util.ArrayList;
@@ -47,12 +48,13 @@ public class SearchActivity extends BaseActivity {
     SearchHistoryAdapter adapter;
     BoardListAdapter boardListAdapter;
     ListView historyList, resultBoardList;
-    ArrayList<String> historys, boardList;
-    List<CommunityList> communityList;
+    ArrayList<String> historys;
     LinearLayout searchHistoryLayout, searchTab, searchResultLayout;
-    FrameLayout container;
+    FrameLayout container, categoryLayout;
     EditText searchText;
     ImageView searchBtn;
+    TextView categoryText;
+    AlertDialog categoryDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,7 +92,6 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 BoardList boardList = (BoardList) boardListAdapter.getItem(i);
-                //Intent intent = new Intent(getApplicationContext(), SearchDetailActivity.class);
                 Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
                 intent.putExtra("postID", boardList.getId());
                 startActivity(intent);
@@ -102,8 +103,6 @@ public class SearchActivity extends BaseActivity {
         searchResultLayout = (LinearLayout) findViewById(R.id.searchResultLayout);
         searchText = (EditText) findViewById(searchEditText);
         searchBtn = (ImageView) findViewById(R.id.searchImage);
-        //selectBoard = (MaterialSpinner) findViewById(R.id.selectBoard);
-
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +119,17 @@ public class SearchActivity extends BaseActivity {
                 }
             }
         });
+
+        categoryText = (TextView) findViewById(R.id.search_category_text);
+        categoryLayout = (FrameLayout) findViewById(R.id.search_category);
+        categoryLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoryDialog = createDialog();
+                categoryDialog.show();
+            }
+        });
+
         initView();
     }
 
@@ -129,14 +139,18 @@ public class SearchActivity extends BaseActivity {
         searchText.requestFocus();
     }
 
-    public void initSpinner(){
-        communityList = scenario.getCommunityList();
-        boardList = new ArrayList<>();
-        for(int i=0; i<communityList.size(); i++)
-            boardList.add(communityList.get(i).getTitle());
+    private AlertDialog createDialog() {
+        final String[] str = getResources().getStringArray(R.array.cagetory);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setSingleChoiceItems(str, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                categoryText.setText(str[item]);
+                dialog.dismiss();
+            }
+        });
 
-        //selectBoard.setItems(boardList);
-        //selectBoard.setSelectedIndex(0);
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     public void initSearchHistory(){
