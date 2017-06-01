@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.model.Reply;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
         holder.writer.setText(lists.get(position).getUser());
         holder.date.setText(lists.get(position).getDate());
         holder.content.setText(lists.get(position).getContent());
-        Picasso.with(context).load(lists.get(position).getPath()).into(holder.profile);
+        //Picasso.with(context).load(lists.get(position).getPath()).into(holder.profile);
     }
 
     @Override

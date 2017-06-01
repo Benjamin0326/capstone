@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.community.CommunityListFrag;
 import com.android.capstone.yolo.layer.login.LoginActivity;
+import com.android.capstone.yolo.layer.login.SplashActivity;
 import com.android.capstone.yolo.layer.music.MusicFragment;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.layer.search.SearchActivity;
@@ -50,6 +51,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        startActivity(intent);
+
         token = getPreferences();
         if(token==null){
             intent = new Intent(this, LoginActivity.class);

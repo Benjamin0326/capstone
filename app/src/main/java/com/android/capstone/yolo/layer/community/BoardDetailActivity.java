@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BoardDetailActivity extends BaseActivity{
-    TextView title, type, writer, content, date;
+    TextView title, type, writer, content, date, boardTitle;
     RecyclerView replyList;
     ReplyAdapter replyAdapter;
     LinearLayout layout;
@@ -47,6 +47,8 @@ public class BoardDetailActivity extends BaseActivity{
     }
 
     public void initView(){
+        boardTitle = (TextView) findViewById(R.id.board_detail_title);
+        boardTitle.setText(getIntent().getExtras().getString("communityTitle"));
         title = (TextView) findViewById(R.id.detail_title);
         writer = (TextView) findViewById(R.id.detail_writer);
         type = (TextView) findViewById(R.id.detail_type);

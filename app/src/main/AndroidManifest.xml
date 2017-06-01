@@ -45,6 +45,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".layer.community.NewReplyActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".layer.login.SplashActivity"/>
     </application>
 
 </manifest>

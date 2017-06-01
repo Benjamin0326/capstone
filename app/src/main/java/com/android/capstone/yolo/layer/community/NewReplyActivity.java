@@ -67,6 +67,7 @@ public class NewReplyActivity extends BaseActivity{
 
         replyList = (RecyclerView) findViewById(R.id.new_reply_list);
         replyList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        replyList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
         replyAdapter = new ReplyAdapter(getApplicationContext());
         replyList.setAdapter(replyAdapter);
 
@@ -84,7 +85,6 @@ public class NewReplyActivity extends BaseActivity{
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
                     replyAdapter.setSource(response.body());
-                    Log.d("Reply Cnt : ", response.body().size()+"");
                     if(replyAdapter.getItemCount() > 0){
                         noReply.setVisibility(View.GONE);
                         replyList.setVisibility(View.VISIBLE);

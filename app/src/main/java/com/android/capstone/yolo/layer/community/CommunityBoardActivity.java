@@ -53,6 +53,7 @@ public class CommunityBoardActivity extends BaseActivity{
                 BoardList boardList = (BoardList) adapter.getItem(i);
                 Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
                 intent.putExtra("postID", boardList.getId());
+                intent.putExtra("communityTitle", getIntent().getExtras().getString("communityTitle"));
                 startActivity(intent);
             }
         });
