@@ -88,7 +88,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<FestivalList>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failed to load thumbnails", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
             }
         });

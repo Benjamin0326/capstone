@@ -2,6 +2,7 @@ package com.android.capstone.yolo.layer.community;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -65,10 +66,12 @@ public class NewReplyActivity extends BaseActivity{
         noReply = (TextView) findViewById(R.id.no_reply);
 
         replyList = (RecyclerView) findViewById(R.id.new_reply_list);
+        replyList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         replyAdapter = new ReplyAdapter(getApplicationContext());
         replyList.setAdapter(replyAdapter);
 
         postID = getIntent().getExtras().getString("boardID");
+        Log.d("Post Id : ", postID);
         getReply(postID);
     }
 
@@ -80,8 +83,9 @@ public class NewReplyActivity extends BaseActivity{
             @Override
             public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
                 if(response.isSuccessful()) {
+                    replyAdapter.setSource(response.body());
+                    Log.d("Reply Cnt : ", response.body().size()+"");
                     if(replyAdapter.getItemCount() > 0){
-                        replyAdapter.setSource(response.body());
                         noReply.setVisibility(View.GONE);
                         replyList.setVisibility(View.VISIBLE);
                     }

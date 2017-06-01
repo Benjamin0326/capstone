@@ -100,7 +100,7 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
 
                 Intent intent = new Intent(context, YoutubeActivity.class);
 
-                intent.putExtra("videId", videoResources[pos]);
+                intent.putExtra("videoId", videoResources[pos]);
                 context.startActivity(intent);
 
                 /*
