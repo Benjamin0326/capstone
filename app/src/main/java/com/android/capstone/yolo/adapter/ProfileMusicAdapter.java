@@ -109,6 +109,10 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
             public void onResponse(Call<YoutubeVideo> call, Response<YoutubeVideo> response) {
                 if(response.isSuccessful()){
                     YoutubeVideo tmp_video = response.body();
+                    if(tmp_video.getVideoId()==null){
+                        Toast.makeText(context, "Youtube 비디오를 찾을 수 없습니다.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     Log.d("Youtube Video : ", tmp_video.getVideoId());
                     //Toast.makeText(context, "좋아요가 반영되었습니다.", Toast.LENGTH_LONG).show();
                     //String[] tmp = {"1"};
