@@ -34,6 +34,7 @@ public class CommunityBoardActivity extends BaseActivity{
     FloatingActionMenu floatingActionMenu;
     FloatingActionButton postBtn, searchBtn;
     String communityID;
+    public final int POST_FLAG = 2;
 
 
     @Override
@@ -68,7 +69,7 @@ public class CommunityBoardActivity extends BaseActivity{
 
                 Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
                 intent.putExtra("communityID", communityID);
-                startActivity(intent);
+                startActivityForResult(intent, POST_FLAG);
             }
         });
         searchBtn = (FloatingActionButton) findViewById(R.id.menu_search);
@@ -89,6 +90,10 @@ public class CommunityBoardActivity extends BaseActivity{
     public void initView(){
         communityID = getIntent().getExtras().getString("communityID");
         title.setText(getIntent().getExtras().getString("communityTitle"));
+        getPostList();
+    }
+
+    public void getPostList(){
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<List<BoardList>> boardListCall = service.getBoardList(communityID, MainActivity.token);
         boardListCall.enqueue(new Callback<List<BoardList>>() {
@@ -117,5 +122,16 @@ public class CommunityBoardActivity extends BaseActivity{
             floatingActionMenu.close(true);
         else
             super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == POST_FLAG && resultCode == POST_FLAG){
+            getPostList();
+            return;
+        }
+        Toast.makeText(getApplicationContext(), "글 목록을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
     }
 }

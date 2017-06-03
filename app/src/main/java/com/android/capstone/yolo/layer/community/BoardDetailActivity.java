@@ -30,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BoardDetailActivity extends BaseActivity{
+    final int REPLY_FLAG = 2;
     TextView title, type, writer, content, date, boardTitle;
     RecyclerView replyList;
     ReplyAdapter replyAdapter;
@@ -67,7 +68,7 @@ public class BoardDetailActivity extends BaseActivity{
                 Intent intent = new Intent(getApplicationContext(), NewReplyActivity.class);
                 intent.putExtra("replyCnt", replyAdapter.getItemCount());
                 intent.putExtra("boardID", postID);
-                startActivity(intent);
+                startActivityForResult(intent, REPLY_FLAG);
             }
         });
         replyLayout = (FrameLayout) findViewById(R.id.board_no_reply);
@@ -134,5 +135,15 @@ public class BoardDetailActivity extends BaseActivity{
                 Log.d("TEST", "err msg : " + t.getMessage().toString());
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REPLY_FLAG && resultCode == REPLY_FLAG){
+            getReply(postID);
+            return;
+        }
+        Toast.makeText(getApplicationContext(), "댓글을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
     }
 }

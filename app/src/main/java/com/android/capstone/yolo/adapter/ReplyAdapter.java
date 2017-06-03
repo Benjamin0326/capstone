@@ -2,18 +2,26 @@ package com.android.capstone.yolo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.Profile;
 import com.android.capstone.yolo.model.Reply;
+import com.android.capstone.yolo.service.ProfileService;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 class ReplyViewHolder extends RecyclerView.ViewHolder{
     TextView writer, date, content;
@@ -49,11 +57,31 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
     }
 
     @Override
-    public void onBindViewHolder(ReplyViewHolder holder, int position) {
-        holder.writer.setText(lists.get(position).getUser());
+    public void onBindViewHolder(final ReplyViewHolder holder, final int position) {
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        Call<Profile> call = service.getProfile(lists.get(position).getUser());
+        call.enqueue(new Callback<Profile>() {
+            @Override
+            public void onResponse(Call<Profile> call, Response<Profile> response) {
+                if(response.isSuccessful()){
+                    Log.d("TEST", "user name : " + response.body().getName());
+                    holder.writer.setText(response.body().getName());
+                    //Picasso.with(context).load(response.body().getImagePath()).into(holder.profile);
+                    return;
+                }
+
+                if(response.code() >= 500) {
+                    Toast.makeText(context, "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Profile> call, Throwable t) {
+                Log.d("TEST", "err : " + t.getMessage());
+            }
+        });
         holder.date.setText(lists.get(position).getDate());
         holder.content.setText(lists.get(position).getContent());
-        //Picasso.with(context).load(lists.get(position).getPath()).into(holder.profile);
     }
 
     @Override
