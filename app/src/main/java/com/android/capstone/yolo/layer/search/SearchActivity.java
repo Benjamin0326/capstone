@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
@@ -209,11 +210,15 @@ public class SearchActivity extends BaseActivity {
                     boardListAdapter.setSource(lists);
                     updateSearchHistory(query);
                 }
+
+                if(response.code() >= 500){
+                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<BoardList>> call, Throwable t) {
-
+                Log.d("TEST", "err : " + t.getMessage().toString());
             }
         });
 
