@@ -3,58 +3,63 @@ package com.android.capstone.yolo.layer.community;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.BaseActivity;
-import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
-import com.android.capstone.yolo.adapter.BoardListAdapter;
-import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.adapter.CommunityPagerAdapter;
 import com.android.capstone.yolo.layer.search.SearchActivity;
-import com.android.capstone.yolo.model.BoardList;
-import com.android.capstone.yolo.service.CommunityService;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class CommunityBoardActivity extends BaseActivity{
-    TextView title;
-    ListView boardList;
-    BoardListAdapter adapter;
+    TabLayout tabLayout;
+    ViewPager viewPager;
     FloatingActionMenu floatingActionMenu;
     FloatingActionButton postBtn, searchBtn;
-    String communityID;
-
+    String communityID, communityTitle;
+    TextView title;
+    public final int POST_FLAG = 2;
+    CommunityPagerAdapter pagerAdapter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_board);
-        boardList = (ListView) findViewById(R.id.board_list);
-        title = (TextView) findViewById(R.id.com_board_title);
-        adapter = new BoardListAdapter(getApplicationContext());
-        boardList.setAdapter(adapter);
-        boardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (floatingActionMenu.isOpened())
-                    floatingActionMenu.close(true);
 
-                BoardList boardList = (BoardList) adapter.getItem(i);
-                Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
-                intent.putExtra("postID", boardList.getId());
-                intent.putExtra("communityTitle", getIntent().getExtras().getString("communityTitle"));
-                startActivity(intent);
+        initView();
+    }
+
+    public void initView(){
+        tabLayout = (TabLayout) findViewById(R.id.tab_community_board);
+        tabLayout.addTab(tabLayout.newTab().setText("전체 게시판"));
+        tabLayout.addTab(tabLayout.newTab().setText("인기 게시판"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        viewPager = (ViewPager) findViewById(R.id.pager_community_board);
+
+        pagerAdapter = new CommunityPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
@@ -68,7 +73,7 @@ public class CommunityBoardActivity extends BaseActivity{
 
                 Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
                 intent.putExtra("communityID", communityID);
-                startActivity(intent);
+                startActivityForResult(intent, POST_FLAG);
             }
         });
         searchBtn = (FloatingActionButton) findViewById(R.id.menu_search);
@@ -82,33 +87,11 @@ public class CommunityBoardActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
-
-        initView();
-    }
-
-    public void initView(){
+        title = (TextView) findViewById(R.id.com_board_title);
         communityID = getIntent().getExtras().getString("communityID");
-        title.setText(getIntent().getExtras().getString("communityTitle"));
-        CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<List<BoardList>> boardListCall = service.getBoardList(communityID, MainActivity.token);
-        boardListCall.enqueue(new Callback<List<BoardList>>() {
-            @Override
-            public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {
-                if(response.isSuccessful()){
-                    adapter.setSource(response.body());
-                    return;
-                }
-
-                if(response.code() >= 500) {
-                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<BoardList>> call, Throwable t) {
-                Log.d("TEST", "err : " + t.getMessage());
-            }
-        });
+        communityTitle = getIntent().getExtras().getString("communityTitle");
+        title.setText(communityTitle);
+        //getPostList();
     }
 
     @Override
@@ -117,5 +100,28 @@ public class CommunityBoardActivity extends BaseActivity{
             floatingActionMenu.close(true);
         else
             super.onBackPressed();
+    }
+
+    public boolean isFloatingMenuOpened(){
+        if(floatingActionMenu.isOpened())
+            return true;
+        return false;
+    }
+
+    public void closeFloatingMenu(){
+        floatingActionMenu.close(true);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == POST_FLAG && resultCode == POST_FLAG && viewPager.getCurrentItem() == 0){
+            pagerAdapter.getAllFragment().getPostList(communityID);
+            return;
+        }
+        Toast.makeText(getApplicationContext(), "글 목록을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
+
     }
 }

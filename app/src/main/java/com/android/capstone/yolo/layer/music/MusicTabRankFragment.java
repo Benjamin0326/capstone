@@ -13,13 +13,10 @@ import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
-import com.android.capstone.yolo.adapter.FestivalVideoAdapter;
 import com.android.capstone.yolo.adapter.MusicRankAdapter;
-import com.android.capstone.yolo.adapter.ProfileMusicAdapter;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.model.FestivalList;
+import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.Music;
-import com.android.capstone.yolo.service.FestivalService;
 import com.android.capstone.yolo.service.MusicService;
 
 import java.util.List;
@@ -50,6 +47,7 @@ public class MusicTabRankFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_tab_music_rank);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(layoutManager);
         getMusicChart();
         return rootView;

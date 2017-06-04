@@ -26,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewReplyActivity extends BaseActivity{
+    final int REPLY_FLAG = 2;
     ReplyAdapter replyAdapter;
     ImageView backBtn;
     RecyclerView replyList;
@@ -72,7 +73,6 @@ public class NewReplyActivity extends BaseActivity{
         replyList.setAdapter(replyAdapter);
 
         postID = getIntent().getExtras().getString("boardID");
-        Log.d("Post Id : ", postID);
         getReply(postID);
     }
 
@@ -112,6 +112,7 @@ public class NewReplyActivity extends BaseActivity{
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "댓글이 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                    setResult(REPLY_FLAG);
                     finish();
                 }
 

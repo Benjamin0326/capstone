@@ -48,6 +48,7 @@ import retrofit2.Response;
 
 public class NewPostActivity extends BaseActivity {
     final int RESULT_GALLERY = 1;
+    final int POST_FLAG = 2;
     ImageView backBtn, uploadImageBtn;
     List<MultipartBody.Part> photo;
     FrameLayout postBtn, categorySpinner;
@@ -104,29 +105,50 @@ public class NewPostActivity extends BaseActivity {
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommunityService service = network.buildRetrofit().create(CommunityService.class);
-                Call<BoardList> call = service.postText(getIntent().getExtras().getString("communityID"), categoryText.getText().toString(), title.getText().toString(), content.getText().toString(), MainActivity.token);
-                call.enqueue(new Callback<BoardList>() {
-                    @Override
-                    public void onResponse(Call<BoardList> call, Response<BoardList> response) {
-                        if(response.isSuccessful()){
-                            //TODO boardID로 이미지 call
-                            Log.d("TEST", "input board ID : " + response.body());
-                            return;
+                if(inputCheck()) {
+                    CommunityService service = network.buildRetrofit().create(CommunityService.class);
+                    Call<BoardList> call = service.postText(getIntent().getExtras().getString("communityID"), categoryText.getText().toString(), title.getText().toString(), content.getText().toString(), MainActivity.token);
+                    call.enqueue(new Callback<BoardList>() {
+                        @Override
+                        public void onResponse(Call<BoardList> call, Response<BoardList> response) {
+                            if (response.isSuccessful()) {
+                                //TODO boardID로 이미지 call
+                                setResult(POST_FLAG);
+                                finish();
+                                return;
+                            }
+
+                            if (response.code() >= 500) {
+                                Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                            }
                         }
 
-                        if(response.code() >= 500) {
-                            Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<BoardList> call, Throwable t) {
+                            Log.d("TEST", "err : " + t.getMessage().toString());
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<BoardList> call, Throwable t) {
-                        Log.d("TEST", "err : " + t.getMessage().toString());
-                    }
-                });
+                    });
+                }
             }
         });
+    }
+
+    public boolean inputCheck(){
+        if(categoryText.getText().toString().length() == 0){
+            Toast.makeText(getApplicationContext(), "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(title.getText().toString().length() == 0){
+            Toast.makeText(getApplicationContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(content.getText().toString().length() == 0){
+            Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private AlertDialog createDialog() {
