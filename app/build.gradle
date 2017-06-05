@@ -40,5 +40,6 @@ dependencies {
     compile 'com.jaredrummler:material-spinner:1.1.0'
     compile 'com.tsengvn:Typekit:1.0.0'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'tyrantgit:explosionfield:1.0.1'
     testCompile 'junit:junit:4.12'
 }
