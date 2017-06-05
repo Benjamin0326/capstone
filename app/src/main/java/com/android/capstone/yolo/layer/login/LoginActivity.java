@@ -104,23 +104,30 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     loginInfo = response.body();
 
-                    Log.d("Login Info : ", loginInfo.getUser_token());
-                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
-                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
-                    //}
-                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+                    if(loginInfo!=null) {
+                        Log.d("Login Info : ", loginInfo.getUser_token());
+                        //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                        //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                        //}
+                        //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
 
-                    intent = new Intent();
-                    intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
-                    setResult(RESULT_OK, intent);
-                    SharedPreferences.Editor editor = MainActivity.pref.edit();
-                    MainActivity.token = loginInfo.getUser_token();
-                    editor.putString("token", loginInfo.getUser_token());
-                    editor.putString("id", text_id);
-                    editor.putString("pw", text_pw);
-                    editor.commit();
-                    finish();
-                    return;
+                        intent = new Intent();
+                        intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
+                        setResult(RESULT_OK, intent);
+                        SharedPreferences.Editor editor = MainActivity.pref.edit();
+                        MainActivity.token = loginInfo.getUser_token();
+                        editor.putString("token", loginInfo.getUser_token());
+                        editor.putString("id", text_id);
+                        editor.putString("pw", text_pw);
+                        editor.commit();
+                        finish();
+                        return;
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, "로그인에 실패했습니다.\n다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                 }
                 int code = response.code();
                 Log.d("TEST", "err code : " + code);
