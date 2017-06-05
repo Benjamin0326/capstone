@@ -58,6 +58,7 @@ public class CommunityBoardAllFragment extends Fragment{
     }
 
     public void getPostList(String id){
+        Log.d("TEST", "get post list " + id);
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<List<BoardList>> boardListCall = service.getBoardList(id, MainActivity.token);
         boardListCall.enqueue(new Callback<List<BoardList>>() {

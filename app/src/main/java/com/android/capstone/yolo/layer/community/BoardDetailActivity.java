@@ -89,6 +89,8 @@ public class BoardDetailActivity extends BaseActivity{
                     date.setText(response.body().getDate());
                     type.setText("["+response.body().getTag()+"]");
 
+                    Log.d("TEST", "imge size : " + response.body().getImg().length);
+
                     if(response.body().getImg().length > 0){
                         for(int i = 0; i<response.body().getImg().length; i++){
                             ImageView imageView = new ImageView(getApplicationContext());

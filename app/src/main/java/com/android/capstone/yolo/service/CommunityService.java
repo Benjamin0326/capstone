@@ -8,11 +8,15 @@ import com.android.capstone.yolo.model.Reply;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -37,4 +41,8 @@ public interface CommunityService {
     @FormUrlEncoded
     @POST("/api/board")
     Call<BoardList> postText(@Field("type") String type, @Field("tag") String tag, @Field("title") String title, @Field("content") String content, @Query("access_token") String token);
+
+    @Multipart
+    @PUT("/api/board/{id}")
+    Call<Void> postImage(@Path("id") String id, @Part List<MultipartBody.Part> image, @Query("access_token") String token);
 }
