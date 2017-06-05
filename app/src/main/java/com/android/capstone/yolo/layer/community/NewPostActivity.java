@@ -113,9 +113,16 @@ public class NewPostActivity extends BaseActivity {
                         public void onResponse(Call<BoardList> call, Response<BoardList> response) {
                             if (response.isSuccessful()) {
                                 //TODO boardID로 이미지 call
-                                setResult(POST_FLAG);
-                                finish();
-                                return;
+                                if(photo.size() == 0) {
+                                    setResult(POST_FLAG);
+                                    finish();
+                                    return;
+                                }
+
+                                if(response.body().getId()!="") {
+                                    postImage(response.body().getId());
+                                    return;
+                                }
                             }
 
                             if (response.code() >= 500) {
@@ -129,6 +136,30 @@ public class NewPostActivity extends BaseActivity {
                         }
                     });
                 }
+            }
+        });
+    }
+
+    public void postImage(String id){
+        CommunityService service = network.buildRetrofit().create(CommunityService.class);
+        Call<Void> call = service.postImage(id, photo, MainActivity.token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    Log.d("TEST", "image upload success " + response.body());
+                    setResult(POST_FLAG);
+                    finish();
+                }
+
+                if (response.code() >= 500) {
+                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("TEST", "err : " + t.getMessage().toString());
             }
         });
     }
