@@ -18,6 +18,7 @@ import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ReplyAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.BoardImage;
 import com.android.capstone.yolo.model.Post;
 import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.CommunityService;
@@ -37,6 +38,7 @@ public class BoardDetailActivity extends BaseActivity{
     LinearLayout layout;
     FrameLayout replyButton, replyLayout;
     String postID;
+    String[] images;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,14 +90,16 @@ public class BoardDetailActivity extends BaseActivity{
                     writer.setText(response.body().getUser());
                     date.setText(response.body().getDate());
                     type.setText("["+response.body().getTag()+"]");
+                    images = response.body().getImg();
 
-                    Log.d("TEST", "imge size : " + response.body().getImg().length);
-
-                    if(response.body().getImg().length > 0){
-                        for(int i = 0; i<response.body().getImg().length; i++){
-                            ImageView imageView = new ImageView(getApplicationContext());
-                            Picasso.with(getApplicationContext()).load(response.body().getImg()[i]).into(imageView);
-                            layout.addView(imageView);
+                    if(images!=null) {
+                        Log.d("TEST", "imge size : " + images.length);
+                        if (images.length > 0) {
+                            for (int i = 0; i < images.length; i++) {
+                                ImageView imageView = new ImageView(getApplicationContext());
+                                Picasso.with(getApplicationContext()).load(images[i]).into(imageView);
+                                layout.addView(imageView);
+                            }
                         }
                     }
                     getReply(postID);

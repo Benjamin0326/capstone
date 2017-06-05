@@ -2,13 +2,16 @@ package com.android.capstone.yolo.service;
 
 import android.database.Observable;
 
+import com.android.capstone.yolo.model.BoardImage;
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.model.Post;
 import com.android.capstone.yolo.model.Reply;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -17,6 +20,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -43,6 +47,7 @@ public interface CommunityService {
     Call<BoardList> postText(@Field("type") String type, @Field("tag") String tag, @Field("title") String title, @Field("content") String content, @Query("access_token") String token);
 
     @Multipart
-    @PUT("/api/board/{id}")
-    Call<Void> postImage(@Path("id") String id, @Part List<MultipartBody.Part> image, @Query("access_token") String token);
+    @POST("/api/board/image/{id}")
+    Call<BoardImage> postImage(@Path("id") String id, @PartMap Map<String, RequestBody> params, @Query("access_token") String token);
+
 }

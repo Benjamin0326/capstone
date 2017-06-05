@@ -32,12 +32,15 @@ import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.model.BoardImage;
 import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.service.CommunityService;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -50,13 +53,14 @@ public class NewPostActivity extends BaseActivity {
     final int RESULT_GALLERY = 1;
     final int POST_FLAG = 2;
     ImageView backBtn, uploadImageBtn;
-    List<MultipartBody.Part> photo;
+    Map<String, RequestBody> photo;
     FrameLayout postBtn, categorySpinner;
     LinearLayout imageListLayout;
     EditText title, content;
     Uri uri;
     Dialog categoryDialog;
     TextView categoryText;
+    int imageIdx = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +78,7 @@ public class NewPostActivity extends BaseActivity {
         title = (EditText) findViewById(R.id.newPostTitle);
         content = (EditText) findViewById(R.id.newPostContent);
         imageListLayout = (LinearLayout) findViewById(R.id.newPostImageList);
-        photo = new ArrayList<>();
+        photo = new HashMap<>();
         categorySpinner = (FrameLayout) findViewById(R.id.newPostCategory);
         categoryText = (TextView) findViewById(R.id.category_text);
 
@@ -97,7 +101,7 @@ public class NewPostActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
+                intent.setType("image/jpg");
                 startActivityForResult(intent, RESULT_GALLERY);
             }
         });
@@ -142,12 +146,21 @@ public class NewPostActivity extends BaseActivity {
 
     public void postImage(String id){
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<Void> call = service.postImage(id, photo, MainActivity.token);
-        call.enqueue(new Callback<Void>() {
+        Call<BoardImage> call = service.postImage(id, photo, MainActivity.token);
+        call.enqueue(new Callback<BoardImage>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<BoardImage> call, Response<BoardImage> response) {
                 if(response.isSuccessful()){
                     Log.d("TEST", "image upload success " + response.body());
+                    if(response.body().getImage()!=null) {
+                        Log.d("Image Upload : ", response.body().getImage().length + "");
+                        for(int i=0;i<response.body().getImage().length;i++){
+                            Log.d("Image Resources : ", response.body().getImage()[i]);
+                        }
+                    }
+                    else{
+                        Log.d("Image Test : ", "It's Zero!!!!");
+                    }
                     setResult(POST_FLAG);
                     finish();
                 }
@@ -158,7 +171,7 @@ public class NewPostActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<BoardImage> call, Throwable t) {
                 Log.d("TEST", "err : " + t.getMessage().toString());
             }
         });
@@ -218,7 +231,11 @@ public class NewPostActivity extends BaseActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     String url = getPath(this, uri);
                     File file = new File(url);
-                    photo.add(MultipartBody.Part.createFormData("photo", file.getPath(), RequestBody.create(MediaType.parse("image/jpeg"), file)));
+                    Log.d("Photo URL : ", url);
+                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    //photo.put("UploadFile\"; filename=\"photo"+ imageIdx++ +".jpg\"", fileBody);
+                    photo.put("UploadFile\"; filename=\""+file.getName()+"\"", fileBody);
+                    Log.d("Photo Path : ", fileBody.toString());
                     ImageView imageView = new ImageView(this);
                     imageView.setImageURI(uri);
                     imageView.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.new_post_image_size), (int) getResources().getDimension(R.dimen.new_post_image_size)));
