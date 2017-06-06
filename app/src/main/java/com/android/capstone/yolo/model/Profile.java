@@ -1,7 +1,7 @@
 package com.android.capstone.yolo.model;
 
 public class Profile {
-    String _id, name, imagePath;
+    String _id, name, img;
 
     public String get_id() {
         return _id;
@@ -11,12 +11,12 @@ public class Profile {
         this._id = _id;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getImg() {
+        return img;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImg(String _img) {
+        this.img = _img;
     }
 
     public String getName() {

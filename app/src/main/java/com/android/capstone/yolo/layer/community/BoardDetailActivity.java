@@ -18,13 +18,18 @@ import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ReplyAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.profile.UserProfileActivity;
 import com.android.capstone.yolo.model.Post;
+import com.android.capstone.yolo.model.ProfileImage;
+import com.android.capstone.yolo.model.ProfileImageByName;
 import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.CommunityService;
+import com.android.capstone.yolo.service.ProfileService;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +37,7 @@ import retrofit2.Response;
 public class BoardDetailActivity extends BaseActivity{
     final int REPLY_FLAG = 2;
     TextView title, type, writer, content, date, boardTitle;
+    CircleImageView user_profile;
     RecyclerView replyList;
     ReplyAdapter replyAdapter;
     LinearLayout layout;
@@ -49,6 +55,7 @@ public class BoardDetailActivity extends BaseActivity{
     }
 
     public void initView(){
+        user_profile = (CircleImageView) findViewById(R.id.board_detail_profile);
         boardTitle = (TextView) findViewById(R.id.board_detail_title);
         boardTitle.setText(getIntent().getExtras().getString("communityTitle"));
         title = (TextView) findViewById(R.id.detail_title);
@@ -73,6 +80,9 @@ public class BoardDetailActivity extends BaseActivity{
             }
         });
         replyLayout = (FrameLayout) findViewById(R.id.board_no_reply);
+
+
+
     }
 
     public void getPost(){
@@ -82,7 +92,7 @@ public class BoardDetailActivity extends BaseActivity{
         Call<Post> postCall = service.getBoardDetail(postID, MainActivity.token);
         postCall.enqueue(new Callback<Post>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<Post> call, final Response<Post> response) {
                 if(response.isSuccessful()){
                     title.setText(response.body().getTitle());
                     content.setText(response.body().getContent());
@@ -100,6 +110,7 @@ public class BoardDetailActivity extends BaseActivity{
                             }
                         }
                     }
+                    getUserProfile(response.body().getUser());
                     getReply(postID);
                     return;
                 }
@@ -109,6 +120,42 @@ public class BoardDetailActivity extends BaseActivity{
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
                 Log.d("TEST", "err msg : " + t.getMessage());
+            }
+        });
+    }
+
+    public void getUserProfile(String id){
+
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        Call<ProfileImageByName> call = service.getUserImageByName(id, MainActivity.token);
+        call.enqueue(new Callback<ProfileImageByName>() {
+            @Override
+            public void onResponse(Call<ProfileImageByName> call, final Response<ProfileImageByName> response) {
+                if(response.isSuccessful()) {
+                    Log.d("Test : ", response.body().get_id()+"\n"+response.body().getImage());
+                    Picasso.with(getApplicationContext()).load(response.body().getImage()).into(user_profile);
+
+                    CircleImageView.OnClickListener img_listener = new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+                            intent.putExtra("userId", response.body().get_id());
+                            startActivity(intent);
+                        }
+                    };
+
+                    user_profile.setOnClickListener(img_listener);
+                    return;
+                }
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getApplicationContext(), "Profile Image Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileImageByName> call, Throwable t) {
+                Log.d("TEST", "err msg : " + t.getMessage().toString());
             }
         });
     }

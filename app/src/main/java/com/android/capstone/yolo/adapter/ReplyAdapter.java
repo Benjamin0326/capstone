@@ -1,6 +1,7 @@
 package com.android.capstone.yolo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.model.Profile;
+import com.android.capstone.yolo.layer.profile.UserProfileActivity;
+import com.android.capstone.yolo.model.ProfileImage;
 import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.ProfileService;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,15 +62,27 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
 
     @Override
     public void onBindViewHolder(final ReplyViewHolder holder, final int position) {
-        ProfileService service = network.buildRetrofit().create(ProfileService.class);
-        Call<Profile> call = service.getProfile(lists.get(position).getUser());
-        call.enqueue(new Callback<Profile>() {
+        CircleImageView.OnClickListener img_listener = new View.OnClickListener(){
             @Override
-            public void onResponse(Call<Profile> call, Response<Profile> response) {
+            public void onClick(View v) {
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra("userId", lists.get(position).getUser());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        };
+        holder.profile.setOnClickListener(img_listener);
+
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        Call<ProfileImage> call = service.getProfile(lists.get(position).getUser(), MainActivity.token);
+        call.enqueue(new Callback<ProfileImage>() {
+            @Override
+            public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
                 if(response.isSuccessful()){
                     Log.d("TEST", "user name : " + response.body().getName());
                     holder.writer.setText(response.body().getName());
-                    //Picasso.with(context).load(response.body().getImagePath()).into(holder.profile);
+                    Log.d("TEST", "Image Resource : "+response.body().getImage());
+                    Picasso.with(context).load(response.body().getImage()).into(holder.profile);
                     return;
                 }
 
@@ -76,7 +92,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
             }
 
             @Override
-            public void onFailure(Call<Profile> call, Throwable t) {
+            public void onFailure(Call<ProfileImage> call, Throwable t) {
                 Log.d("TEST", "err : " + t.getMessage());
             }
         });

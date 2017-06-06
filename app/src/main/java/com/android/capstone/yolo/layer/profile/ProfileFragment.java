@@ -69,6 +69,7 @@ public class ProfileFragment extends Fragment {
     private TextView name, info;
     private Uri mCropImageUri;
     private MultipartBody.Part photo;
+    public static String userName;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -207,6 +208,10 @@ public class ProfileFragment extends Fragment {
                     Log.d("Profile Image Info : ", tmp.getImage());
                     Picasso.with(getActivity()).load(tmp.getImage()).into(thumbnail);
                     info.setText(tmp.getName());
+                    SharedPreferences.Editor editor = MainActivity.pref.edit();
+                    editor.putString("name", response.body().getName());
+                    editor.commit();
+                    userName = response.body().getName();
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                     //}

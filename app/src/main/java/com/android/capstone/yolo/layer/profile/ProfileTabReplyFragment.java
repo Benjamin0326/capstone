@@ -1,6 +1,7 @@
 package com.android.capstone.yolo.layer.profile;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,11 +18,14 @@ import com.android.capstone.yolo.adapter.ProfileReplyAdapter;
 import com.android.capstone.yolo.adapter.ProfileWritingAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.Post;
+import com.android.capstone.yolo.model.ProfileImageByName;
 import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.ProfileService;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +45,7 @@ public class ProfileTabReplyFragment extends Fragment {
     */
     private String[] date;
     private List<Reply> reply;
+    private String userId;
 
     public ProfileTabReplyFragment() {
         // Required empty public constructor
@@ -58,12 +63,41 @@ public class ProfileTabReplyFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-        getMyComment();
+
+        getUserProfile();
+
         return rootView;
     }
-    public void getMyComment(){
+
+    public void getUserProfile(){
+
         ProfileService service = network.buildRetrofit().create(ProfileService.class);
-        Call<List<Reply>> myCommentListCall = service.getMyComment(MainActivity.pref.getString("id",null));
+        Call<ProfileImageByName> call = service.getUserImageByName(ProfileFragment.userName, MainActivity.token);
+        call.enqueue(new Callback<ProfileImageByName>() {
+            @Override
+            public void onResponse(Call<ProfileImageByName> call, final Response<ProfileImageByName> response) {
+                if(response.isSuccessful()) {
+                    Log.d("Test : ", response.body().get_id()+"\n"+response.body().getImage());
+                    userId = response.body().get_id();
+                    getMyComment(userId);
+                    return;
+                }
+
+                if(response.code() >= 500) {
+                    Toast.makeText(getContext(), "Profile Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileImageByName> call, Throwable t) {
+                Log.d("TEST", "err msg : " + t.getMessage().toString());
+            }
+        });
+    }
+
+    public void getMyComment(String id){
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        Call<List<Reply>> myCommentListCall = service.getMyComment(id, MainActivity.token);
         //Call<List<Reply>> myCommentListCall = service.getMyComment("김효종");
 
         myCommentListCall.enqueue(new Callback<List<Reply>>() {

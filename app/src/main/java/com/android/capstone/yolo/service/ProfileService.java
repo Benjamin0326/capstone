@@ -3,6 +3,7 @@ package com.android.capstone.yolo.service;
 import com.android.capstone.yolo.model.Post;
 import com.android.capstone.yolo.model.Profile;
 import com.android.capstone.yolo.model.ProfileImage;
+import com.android.capstone.yolo.model.ProfileImageByName;
 import com.android.capstone.yolo.model.Reply;
 
 import java.util.List;
@@ -31,12 +32,15 @@ public interface ProfileService {
     @GET("/api/user/me")
     Call<ProfileImage> getUserImage(@Query("access_token") String token);
 
+    @GET("/api/user/username/{id}")
+    Call<ProfileImageByName> getUserImageByName(@Path("id") String id, @Query("access_token") String token);
+
     @GET("/api/board/user/{id}")
-    Call<List<Post>> getMyBoard(@Path("id") String id);
+    Call<List<Post>> getMyBoard(@Path("id") String id, @Query("access_token") String token);
 
     @GET("/api/comment/user/{id}")
-    Call<List<Reply>> getMyComment(@Path("id") String id);
+    Call<List<Reply>> getMyComment(@Path("id") String id, @Query("access_token") String token);
 
     @GET("/api/user/{id}")
-    Call<Profile> getProfile(@Path("id") String id);
+    Call<ProfileImage> getProfile(@Path("id") String id, @Query("access_token") String token);
 }

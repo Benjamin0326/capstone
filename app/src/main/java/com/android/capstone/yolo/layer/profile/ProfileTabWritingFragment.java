@@ -61,7 +61,7 @@ public class ProfileTabWritingFragment extends Fragment {
 
     public void getMyBoard(){
         ProfileService service = network.buildRetrofit().create(ProfileService.class);
-        Call<List<Post>> myBoardListCall = service.getMyBoard(MainActivity.pref.getString("id",null));
+        Call<List<Post>> myBoardListCall = service.getMyBoard(ProfileFragment.userName, MainActivity.token);
         //Call<List<Post>> myBoardListCall = service.getMyBoard("김성철");
 
         myBoardListCall.enqueue(new Callback<List<Post>>() {
