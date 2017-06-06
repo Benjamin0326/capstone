@@ -230,7 +230,7 @@ public class NewPostActivity extends BaseActivity {
             case 1: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     String url = getPath(this, uri);
-                    File file = new File(url);
+                    File file = new File(uri.getPath());
                     Log.d("Photo URL : ", url);
                     RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
                     //photo.put("UploadFile\"; filename=\"photo"+ imageIdx++ +".jpg\"", fileBody);
