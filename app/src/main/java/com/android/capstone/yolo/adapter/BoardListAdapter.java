@@ -64,7 +64,6 @@ public class BoardListAdapter extends BaseAdapter{
         title.setText(list.title);
         type.setText("["+list.getTag()+"]");
         writer.setText(list.getUser());
-        //date.setText(FORMAT.format(list.getTimestamp()));
         date.setText(list.getDate());
 
         return convertView;

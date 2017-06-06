@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,7 +118,6 @@ public class CommunityBoardActivity extends BaseActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == POST_FLAG && resultCode == POST_FLAG && viewPager.getCurrentItem() == 0){
-            Log.d("TEST", "activity result");
             pagerAdapter.getAllFragment().getPostList(communityID);
             return;
         }

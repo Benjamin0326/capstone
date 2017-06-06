@@ -54,7 +54,7 @@ public class SearchActivity extends BaseActivity {
     FrameLayout container, categoryLayout;
     EditText searchText;
     ImageView searchBtn;
-    TextView categoryText;
+    TextView categoryText, resultCount, noResult;
     AlertDialog categoryDialog;
 
     @Override
@@ -131,6 +131,9 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
+        resultCount = (TextView) findViewById(R.id.search_result_cnt);
+        noResult = (TextView) findViewById(R.id.search_no_result);
+
         initView();
     }
 
@@ -173,47 +176,32 @@ public class SearchActivity extends BaseActivity {
 
         hideKeyboard(searchText);
 
-        //SearchResult result = scenario.search(query);
-
         if (searchHistoryLayout.getVisibility() == View.VISIBLE) {
 
             searchHistoryLayout.setVisibility(View.GONE);
             searchResultLayout.setVisibility(View.VISIBLE);
         }
 
-
-        /*
         SearchService service = network.buildRetrofit().create(SearchService.class);
-        Call<SearchResult> call = service.search(query);
-        call.enqueue(new Callback<SearchResult>() {
-            @Override
-            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
-                if(response.isSuccessful()){
-                    response.body();
-                    updateSearchHistory(query);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SearchResult> call, Throwable t) {
-                Log.d("TEST", "err : " + t.getMessage().toString());
-            }
-        });
-*/
-        SearchService searchService = network.buildRetrofit().create(SearchService.class);
-        Call<List<BoardList>> call = searchService.tempSearch();
+        Call<List<BoardList>> call = service.search(query, MainActivity.token);
         call.enqueue(new Callback<List<BoardList>>() {
             @Override
             public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {
                 if(response.isSuccessful()){
-                    List<BoardList> lists = response.body();
-                    boardListAdapter.setSource(lists);
                     updateSearchHistory(query);
+                    resultCount.setText(response.body().size() + " 건");
+                    if(response.body().size() > 0) {
+                        resultBoardList.setVisibility(View.VISIBLE);
+                        noResult.setVisibility(View.GONE);
+                        boardListAdapter.setSource(response.body());
+                        return;
+                    }
+                    resultBoardList.setVisibility(View.GONE);
+                    noResult.setVisibility(View.VISIBLE);
+                    return;
                 }
 
-                if(response.code() >= 500){
-                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "Error " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -221,7 +209,6 @@ public class SearchActivity extends BaseActivity {
                 Log.d("TEST", "err : " + t.getMessage().toString());
             }
         });
-
     }
 
     public void updateSearchHistory(String keyword) {

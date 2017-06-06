@@ -18,7 +18,6 @@ import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ReplyAdapter;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.model.BoardImage;
 import com.android.capstone.yolo.model.Post;
 import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.CommunityService;
@@ -93,7 +92,6 @@ public class BoardDetailActivity extends BaseActivity{
                     images = response.body().getImg();
 
                     if(images!=null) {
-                        Log.d("TEST", "imge size : " + images.length);
                         if (images.length > 0) {
                             for (int i = 0; i < images.length; i++) {
                                 ImageView imageView = new ImageView(getApplicationContext());

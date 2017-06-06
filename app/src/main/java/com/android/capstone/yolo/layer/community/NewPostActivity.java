@@ -60,7 +60,6 @@ public class NewPostActivity extends BaseActivity {
     Uri uri;
     Dialog categoryDialog;
     TextView categoryText;
-    int imageIdx = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,7 +115,6 @@ public class NewPostActivity extends BaseActivity {
                         @Override
                         public void onResponse(Call<BoardList> call, Response<BoardList> response) {
                             if (response.isSuccessful()) {
-                                //TODO boardID로 이미지 call
                                 if(photo.size() == 0) {
                                     setResult(POST_FLAG);
                                     finish();
@@ -151,16 +149,6 @@ public class NewPostActivity extends BaseActivity {
             @Override
             public void onResponse(Call<BoardImage> call, Response<BoardImage> response) {
                 if(response.isSuccessful()){
-                    Log.d("TEST", "image upload success " + response.body());
-                    if(response.body().getImage()!=null) {
-                        Log.d("Image Upload : ", response.body().getImage().length + "");
-                        for(int i=0;i<response.body().getImage().length;i++){
-                            Log.d("Image Resources : ", response.body().getImage()[i]);
-                        }
-                    }
-                    else{
-                        Log.d("Image Test : ", "It's Zero!!!!");
-                    }
                     setResult(POST_FLAG);
                     finish();
                 }
