@@ -21,7 +21,10 @@ import com.android.capstone.yolo.layer.music.MusicFragment;
 import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.layer.search.SearchActivity;
 import com.android.capstone.yolo.model.Login;
+import com.android.capstone.yolo.model.ProfileImage;
 import com.android.capstone.yolo.service.LoginService;
+import com.android.capstone.yolo.service.ProfileService;
+import com.squareup.picasso.Picasso;
 
 import java.util.Stack;
 
@@ -62,6 +65,7 @@ public class MainActivity extends BaseActivity {
         }else{
             String id = pref.getString("id", null);
             String pw = pref.getString("pw", null);
+            getProfileImage();
             postLogin(id, pw);
         }
 
@@ -227,6 +231,37 @@ public class MainActivity extends BaseActivity {
             public void onFailure(Call<Login> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Failed to Access", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
+    }
+
+    public void getProfileImage() {
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        //String url = getPath(getContext(), uri);
+        Call<ProfileImage> profileCall = service.getUserImage(MainActivity.token);
+        profileCall.enqueue(new Callback<ProfileImage>() {
+            @Override
+            public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
+                if (response.isSuccessful()) {
+                    ProfileImage tmp = response.body();
+                    SharedPreferences.Editor editor = MainActivity.pref.edit();
+                    editor.putString("name", tmp.getName());
+                    editor.commit();
+                    ProfileFragment.userName = response.body().getName();
+                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                    //}
+                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+            }
+
+            @Override
+            public void onFailure(Call<ProfileImage> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed to Save Profile Image", Toast.LENGTH_LONG).show();
+                Log.i("TEST", "err : " + t.getMessage());
             }
         });
     }

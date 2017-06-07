@@ -14,8 +14,11 @@ import android.widget.Toast;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.model.Login;
+import com.android.capstone.yolo.model.ProfileImage;
 import com.android.capstone.yolo.service.LoginService;
+import com.android.capstone.yolo.service.ProfileService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -105,22 +108,23 @@ public class LoginActivity extends AppCompatActivity {
                     loginInfo = response.body();
 
                     if(loginInfo!=null) {
+                        if(loginInfo.getUser_token()==null){
+                            Toast.makeText(LoginActivity.this, loginInfo.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Log.d("Login Info : ", loginInfo.getUser_token());
                         //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                         //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                         //}
                         //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
 
-                        intent = new Intent();
-                        intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
-                        setResult(RESULT_OK, intent);
                         SharedPreferences.Editor editor = MainActivity.pref.edit();
                         MainActivity.token = loginInfo.getUser_token();
                         editor.putString("token", loginInfo.getUser_token());
                         editor.putString("id", text_id);
                         editor.putString("pw", text_pw);
                         editor.commit();
-                        finish();
+                        getProfileImage();
                         return;
                     }
                     else{
@@ -138,6 +142,41 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<Login> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Failed to Access", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
+            }
+        });
+    }
+
+    public void getProfileImage() {
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        //String url = getPath(getContext(), uri);
+        Call<ProfileImage> profileCall = service.getUserImage(MainActivity.token);
+        profileCall.enqueue(new Callback<ProfileImage>() {
+            @Override
+            public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
+                if (response.isSuccessful()) {
+                    ProfileImage tmp = response.body();
+                    SharedPreferences.Editor editor = MainActivity.pref.edit();
+                    editor.putString("name", tmp.getName());
+                    editor.commit();
+                    ProfileFragment.userName = response.body().getName();
+                    intent = new Intent();
+                    intent.putExtra(MainActivity.RETURN_RESULT, MainActivity.SUCCESS_LOGIN);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
+                    //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
+                    //}
+                    //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+            }
+
+            @Override
+            public void onFailure(Call<ProfileImage> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Failed to Save Profile Image", Toast.LENGTH_LONG).show();
+                Log.i("TEST", "err : " + t.getMessage());
             }
         });
     }

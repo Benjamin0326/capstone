@@ -119,6 +119,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
                     //music.get(pos).setLike(tmp);
                     Intent intent = new Intent(context, YoutubeActivity.class);
                     intent.putExtra("videoId", tmp_video.getVideoId());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
