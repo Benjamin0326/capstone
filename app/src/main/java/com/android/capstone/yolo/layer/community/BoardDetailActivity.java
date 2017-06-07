@@ -20,7 +20,6 @@ import com.android.capstone.yolo.adapter.ReplyAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.profile.UserProfileActivity;
 import com.android.capstone.yolo.model.Post;
-import com.android.capstone.yolo.model.ProfileImage;
 import com.android.capstone.yolo.model.ProfileImageByName;
 import com.android.capstone.yolo.model.Reply;
 import com.android.capstone.yolo.service.CommunityService;
@@ -36,6 +35,7 @@ import retrofit2.Response;
 
 public class BoardDetailActivity extends BaseActivity{
     final int REPLY_FLAG = 2;
+    final int REPLY_CANCEL = 3;
     TextView title, type, writer, content, date, boardTitle;
     CircleImageView user_profile;
     RecyclerView replyList;
@@ -132,8 +132,8 @@ public class BoardDetailActivity extends BaseActivity{
             @Override
             public void onResponse(Call<ProfileImageByName> call, final Response<ProfileImageByName> response) {
                 if(response.isSuccessful()) {
-                    Log.d("Test : ", response.body().get_id()+"\n"+response.body().getImage());
-                    Picasso.with(getApplicationContext()).load(response.body().getImage()).into(user_profile);
+                    if(!response.body().getImage().equals("profile/profile.jpg"))
+                        Picasso.with(getApplicationContext()).load(response.body().getImage()).into(user_profile);
 
                     CircleImageView.OnClickListener img_listener = new View.OnClickListener(){
                         @Override
@@ -148,9 +148,7 @@ public class BoardDetailActivity extends BaseActivity{
                     return;
                 }
 
-                if(response.code() >= 500) {
-                    Toast.makeText(getApplicationContext(), "Profile Image Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -176,9 +174,7 @@ public class BoardDetailActivity extends BaseActivity{
                     return;
                 }
 
-                if(response.code() >= 500) {
-                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -191,9 +187,13 @@ public class BoardDetailActivity extends BaseActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REPLY_FLAG && resultCode == REPLY_FLAG){
-            getReply(postID);
-            return;
+        if(requestCode == REPLY_FLAG){
+            if(resultCode == REPLY_FLAG) {
+                getReply(postID);
+                return;
+            }
+            if(resultCode == REPLY_CANCEL)
+                return;
         }
         Toast.makeText(getApplicationContext(), "댓글을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
     }

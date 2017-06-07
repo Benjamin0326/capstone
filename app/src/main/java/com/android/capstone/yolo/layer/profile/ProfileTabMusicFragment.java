@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
-import com.android.capstone.yolo.adapter.MusicLikeRankAdapter;
 import com.android.capstone.yolo.adapter.ProfileMusicAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.service.MusicService;
 
@@ -65,6 +65,7 @@ public class ProfileTabMusicFragment extends Fragment {
         adapter = new ProfileMusicAdapter(getContext(), music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(layoutManager);
         getMyLikeMusicChart();
         return rootView;

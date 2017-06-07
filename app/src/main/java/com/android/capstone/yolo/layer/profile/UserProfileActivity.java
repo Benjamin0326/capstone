@@ -1,12 +1,10 @@
 package com.android.capstone.yolo.layer.profile;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,17 +12,14 @@ import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.ProfileMusicAdapter;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.layer.community.NewReplyActivity;
+import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.model.ProfileImage;
-import com.android.capstone.yolo.model.ProfileImageByName;
 import com.android.capstone.yolo.service.MusicService;
 import com.android.capstone.yolo.service.ProfileService;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +42,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         adapter = new ProfileMusicAdapter(this, music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         strId = getIntent().getExtras().getString("userId");

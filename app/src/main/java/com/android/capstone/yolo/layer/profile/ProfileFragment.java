@@ -204,9 +204,9 @@ public class ProfileFragment extends Fragment {
             public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
                 if (response.isSuccessful()) {
                     ProfileImage tmp = response.body();
+                    if(!tmp.getImage().equals("profile/profile.jpg"))
+                        Picasso.with(getActivity()).load(tmp.getImage()).into(thumbnail);
 
-                    Log.d("Profile Image Info : ", tmp.getImage());
-                    Picasso.with(getActivity()).load(tmp.getImage()).into(thumbnail);
                     info.setText(tmp.getName());
                     SharedPreferences.Editor editor = MainActivity.pref.edit();
                     editor.putString("name", response.body().getName());

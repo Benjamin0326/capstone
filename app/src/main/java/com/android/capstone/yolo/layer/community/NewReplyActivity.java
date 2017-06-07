@@ -27,6 +27,7 @@ import retrofit2.Response;
 
 public class NewReplyActivity extends BaseActivity{
     final int REPLY_FLAG = 2;
+    final int REPLY_CANCEL = 3;
     ReplyAdapter replyAdapter;
     ImageView backBtn;
     RecyclerView replyList;
@@ -92,9 +93,7 @@ public class NewReplyActivity extends BaseActivity{
                     return;
                 }
 
-                if(response.code() >= 500) {
-                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -116,9 +115,7 @@ public class NewReplyActivity extends BaseActivity{
                     finish();
                 }
 
-                if(response.code() >= 500) {
-                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -126,5 +123,11 @@ public class NewReplyActivity extends BaseActivity{
                 Log.d("TEST", "err : " + t.getMessage().toString());
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(REPLY_CANCEL);
+        super.onBackPressed();
     }
 }

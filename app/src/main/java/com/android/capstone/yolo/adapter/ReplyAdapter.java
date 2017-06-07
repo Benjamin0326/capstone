@@ -79,10 +79,10 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
             @Override
             public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
                 if(response.isSuccessful()){
-                    Log.d("TEST", "user name : " + response.body().getName());
                     holder.writer.setText(response.body().getName());
-                    Log.d("TEST", "Image Resource : "+response.body().getImage());
-                    Picasso.with(context).load(response.body().getImage()).into(holder.profile);
+                    if(!response.body().getImage().equals("profile/profile.jpg"))
+                        Picasso.with(context).load(response.body().getImage()).into(holder.profile);
+
                     return;
                 }
 

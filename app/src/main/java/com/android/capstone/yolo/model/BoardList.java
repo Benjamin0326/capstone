@@ -1,7 +1,7 @@
 package com.android.capstone.yolo.model;
 
 public class BoardList {
-    public String _id, title, user, tag, date;
+    public String _id, title, user, tag, date, type;
 
     public void set_id(String _id) {
         this._id = _id;
@@ -41,5 +41,13 @@ public class BoardList {
 
     public String getDate() {
         return date;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 }

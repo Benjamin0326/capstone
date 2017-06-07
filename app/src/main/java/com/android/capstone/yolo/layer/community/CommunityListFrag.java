@@ -71,9 +71,7 @@ public class CommunityListFrag extends Fragment{
                     return;
                 }
 
-                if(response.code() >= 500) {
-                    Toast.makeText(getContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
