@@ -108,77 +108,106 @@
                 android:layout_height="2dp"
                 android:layout_gravity="center"
                 android:background="@color/lightGray" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/resultBoardLayout"
-                android:paddingLeft="@dimen/explore_padding_side"
-                android:paddingRight="@dimen/explore_padding_side"
-                android:background="@android:color/white"
                 android:orientation="vertical">
-
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/explore_padding_top"
-                    android:paddingBottom="@dimen/explore_padding_top"
-                    android:layout_marginBottom="@dimen/explore_tab_margin">
+                    android:layout_height="0dp"
+                    android:layout_weight="8"
+                    android:id="@+id/resultBoardLayout"
+                    android:paddingLeft="@dimen/explore_padding_side"
+                    android:paddingRight="@dimen/explore_padding_side"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_gravity="left|center_vertical">
+                        android:paddingTop="@dimen/explore_padding_top"
+                        android:paddingBottom="@dimen/explore_padding_top"
+                        android:layout_marginBottom="@dimen/explore_tab_margin">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_gravity="left|center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="검색결과"/>
+
+                            <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:id="@+id/search_result_cnt"
+                                 android:layout_marginLeft="6dp"
+                                 android:includeFontPadding="false"
+                                 android:text="0 건"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:background="@color/lightGray" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="검색결과"/>
+                            android:layout_gravity="center"
+                            android:id="@+id/search_no_result"
+                            android:text="검색결과가 없습니다."/>
+                            <ListView
+                                android:id="@+id/resultBoardList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
 
-                        <TextView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/search_result_cnt"
-                             android:layout_marginLeft="6dp"
-                             android:includeFontPadding="false"
-                             android:text="0 건"/>
 
-                    </LinearLayout>
 
-                </FrameLayout>
 
-                <View
+
+                    </FrameLayout>
+
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center"
-                    android:background="@color/lightGray" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/search_no_result"
-                        android:text="검색결과가 없습니다."/>
-
-                    <ListView
-                        android:id="@+id/resultBoardList"
+                        android:includeFontPadding="false"
+                        android:text="Youtube 검색결과"/>
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"/>
-
-                </FrameLayout>
-
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:background="@color/lightGray" />
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_search_music"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="6"
+                    android:visibility="gone">
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 
 </FrameLayout>

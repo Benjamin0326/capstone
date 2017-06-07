@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,10 +27,15 @@ import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
+import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
+import com.android.capstone.yolo.adapter.ProfileMusicAdapter;
 import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.community.BoardDetailActivity;
 import com.android.capstone.yolo.model.BoardList;
+import com.android.capstone.yolo.model.Music;
+import com.android.capstone.yolo.model.YoutubeVideo;
+import com.android.capstone.yolo.service.MusicService;
 import com.android.capstone.yolo.service.SearchService;
 
 import java.util.ArrayList;
@@ -48,12 +55,17 @@ public class SearchActivity extends BaseActivity {
     private SharedPreferences preferences;
     SearchHistoryAdapter adapter;
     BoardListAdapter boardListAdapter;
+    MusicSearchResultAdapter musicSearchResultAdapter;
     ListView historyList, resultBoardList;
     ArrayList<String> historys;
+    List<YoutubeVideo> resultMusic;
     LinearLayout searchHistoryLayout, searchTab, searchResultLayout;
     FrameLayout container, categoryLayout;
     EditText searchText;
     ImageView searchBtn;
+
+    RecyclerView recyclerView;
+
     TextView categoryText, resultCount, noResult;
     AlertDialog categoryDialog;
 
@@ -87,6 +99,13 @@ public class SearchActivity extends BaseActivity {
         });
 
         boardListAdapter = new BoardListAdapter(getApplicationContext());
+
+        musicSearchResultAdapter = new MusicSearchResultAdapter(getApplicationContext(), resultMusic);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_search_music);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setAdapter(musicSearchResultAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
         resultBoardList = (ListView) findViewById(R.id.resultBoardList);
         resultBoardList.setAdapter(boardListAdapter);
         resultBoardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,8 +180,9 @@ public class SearchActivity extends BaseActivity {
         historys = new ArrayList<>();
         preferences = getApplicationContext().getSharedPreferences(SEARCH_HISTORY, Context.MODE_PRIVATE);
         for(int i=0; i<Math.min(preferences.getAll().size(), HISTORY_MAX_NUM - 1); i++){
-            String history = new String(preferences.getString(""+i, null));
-            historys.add(history);
+            String history = preferences.getString(""+i, null);
+            if(history!=null)
+                historys.add(history);
         }
         adapter.setSource(historys);
     }
@@ -189,6 +209,7 @@ public class SearchActivity extends BaseActivity {
             public void onResponse(Call<List<BoardList>> call, Response<List<BoardList>> response) {
                 if(response.isSuccessful()){
                     updateSearchHistory(query);
+                    getSearchResultMusic(query);
                     resultCount.setText(response.body().size() + " 건");
                     if(response.body().size() > 0) {
                         resultBoardList.setVisibility(View.VISIBLE);
@@ -207,6 +228,34 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onFailure(Call<List<BoardList>> call, Throwable t) {
                 Log.d("TEST", "err : " + t.getMessage().toString());
+            }
+        });
+    }
+
+    public void getSearchResultMusic(String query){
+        MusicService service = network.buildRetrofit().create(MusicService.class);
+        Call<List<YoutubeVideo>> musicChartListCall = service.getSearchMusic(query);
+
+        musicChartListCall.enqueue(new Callback<List<YoutubeVideo>>() {
+            @Override
+            public void onResponse(Call<List<YoutubeVideo>> call, Response<List<YoutubeVideo>> response) {
+                if(response.isSuccessful()){
+                    resultMusic = response.body();
+                    if(resultMusic.size()>0) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        musicSearchResultAdapter = new MusicSearchResultAdapter(getApplicationContext(), resultMusic);
+                        recyclerView.setAdapter(musicSearchResultAdapter);
+                    }
+                    return;
+                }
+                int code = response.code();
+                Log.d("TEST", "err code : " + code);
+            }
+
+            @Override
+            public void onFailure(Call<List<YoutubeVideo>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Failed to search Youtube Video", Toast.LENGTH_LONG).show();
+                Log.i("TEST","err : "+ t.getMessage());
             }
         });
     }
