@@ -108,6 +108,7 @@ public class ProfileTabReplyFragment extends Fragment {
                     adapter = new ProfileReplyAdapter(getContext(), reply);
 
                     recyclerView.setAdapter(adapter);
+                    Log.d("Test : ", reply.get(0).get_id()+"\n"+reply.get(0).getPath());
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                     //}

@@ -35,7 +35,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProfileMusicAdapter adapter;
     private List<Music> music;
-    String strId, strName, strImage;
+    String strId, strName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     Log.d("Test : ", response.body().getName()+"\n"+response.body().getImage());
                     strName = response.body().getName();
-                    user_name.setText(strName);
+                    user_name.setText(strName+" 님이 좋아요한  노래");
                     getMyLikeMusicChart(strName);
                     //Picasso.with(getApplicationContext()).load(response.body().getImage()).into(user_profile);
                     /*

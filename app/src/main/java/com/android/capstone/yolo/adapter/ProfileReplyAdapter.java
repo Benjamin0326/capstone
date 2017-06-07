@@ -1,6 +1,7 @@
 package com.android.capstone.yolo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.layer.community.BoardDetailActivity;
+import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.model.Reply;
 
 import java.util.List;
@@ -31,7 +34,7 @@ public class ProfileReplyAdapter extends RecyclerView.Adapter<ProfileReplyAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_profile_reply, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_board_list, parent, false);
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
@@ -42,16 +45,17 @@ public class ProfileReplyAdapter extends RecyclerView.Adapter<ProfileReplyAdapte
         TextView.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, BoardDetailActivity.class);
+                intent.putExtra("postID", reply.get(pos).getBoardId());
+                context.startActivity(intent);
             }
         };
 
-        //holder.tv_category.setText(category[pos]);
-        //holder.tv_category.setOnClickListener(listener);
-        holder.tv_reply.setText(reply.get(pos).getContent());
-        holder.tv_reply.setOnClickListener(listener);
-        holder.tv_date.setText(reply.get(pos).getDate());
-        holder.tv_date.setOnClickListener(listener);
+        holder.title.setText(reply.get(pos).getContent());
+        holder.title.setOnClickListener(listener);
+        holder.writer.setText(ProfileFragment.userName);
+        holder.type.setText("");
+        holder.date.setText(reply.get(pos).getDate());
     }
 
     @Override
@@ -64,14 +68,13 @@ public class ProfileReplyAdapter extends RecyclerView.Adapter<ProfileReplyAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tv_category;
-        private TextView tv_reply;
-        private TextView tv_date;
+        private TextView title, type, writer, date;
         public ViewHolder(View view){
             super(view);
-            tv_category = (TextView) view.findViewById(R.id.text_profile_reply_category);
-            tv_reply = (TextView) view.findViewById(R.id.text_profile_reply);
-            tv_date = (TextView) view.findViewById(R.id.text_profile_reply_date);
+            title = (TextView) view.findViewById(R.id.board_title);
+            type = (TextView) view.findViewById(R.id.board_type);
+            writer = (TextView) view.findViewById(R.id.board_writer);
+            date = (TextView) view.findViewById(R.id.board_date);
         }
 
     }
