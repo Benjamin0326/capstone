@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
 import com.android.capstone.yolo.component.network;
@@ -47,7 +48,7 @@ public class SearchDetailActivity extends AppCompatActivity{
 
     public void getMusicResult(String music){
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<YoutubeVideo>> musicChartListCall = service.getSearchMusic(music);
+        Call<List<YoutubeVideo>> musicChartListCall = service.getSearchMusic(music, MainActivity.token);
 
         musicChartListCall.enqueue(new Callback<List<YoutubeVideo>>() {
             @Override

@@ -24,7 +24,7 @@ public interface MusicService {
     Call<List<Music>> getRank(@Query("access_token") String token);
 
     @GET("/api/rank/video/{artist}/{title}")
-    Call<List<YoutubeVideo>> getVideoId(@Path("artist") String artist, @Path("title") String title);
+    Call<List<YoutubeVideo>> getVideoId(@Path("artist") String artist, @Path("title") String title, @Query("access_token") String token);
 
     @POST("/api/rank/like/{id}")
     Call<Music> postLike(@Path("id") String musicId, @Query("access_token") String token);
@@ -39,5 +39,11 @@ public interface MusicService {
     Call<List<Music>> getUserMusicLike(@Path("name") String name, @Query("access_token") String token);
 
     @GET("/api/rank/videosearch/{query}")
-    Call<List<YoutubeVideo>> getSearchMusic(@Path("query") String query);
+    Call<List<YoutubeVideo>> getSearchMusic(@Path("query") String query, @Query("access_token") String token);
+
+    @POST("/api/music/insert/{id}")
+    Call<YoutubeVideo> insertMusic(@Path("id") String id, @Query("access_token") String token);
+
+    @POST("/api/user/like/{id}")
+    Call<YoutubeVideo> iLikeIt(@Path("id") String id, @Query("access_token") String token);
 }
