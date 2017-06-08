@@ -32,7 +32,7 @@ public class MusicFragment extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_music, container, false);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tab_music);
         tabLayout.addTab(tabLayout.newTab().setText("음악 차트"));
-        tabLayout.addTab(tabLayout.newTab().setText("내 리스트"));
+        tabLayout.addTab(tabLayout.newTab().setText("추천 리스트"));
         //tabLayout.addTab(tabLayout.newTab().setText("라인업"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

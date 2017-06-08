@@ -14,9 +14,12 @@ import android.widget.Toast;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.MusicLikeRankAdapter;
+import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
+import com.android.capstone.yolo.layer.profile.ProfileFragment;
 import com.android.capstone.yolo.model.Music;
+import com.android.capstone.yolo.model.YoutubeVideo;
 import com.android.capstone.yolo.service.MusicService;
 
 import java.util.List;
@@ -30,8 +33,8 @@ import retrofit2.Response;
  */
 public class MusicTabMyPlaylistFragment extends Fragment {
     private RecyclerView recyclerView;
-    private List<Music> music;
-    private MusicLikeRankAdapter adapter;
+    private List<YoutubeVideo> music;
+    private MusicSearchResultAdapter adapter;
 
     public MusicTabMyPlaylistFragment() {
         // Required empty public constructor
@@ -43,7 +46,7 @@ public class MusicTabMyPlaylistFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_music_tab_my_playlist, container, false);
-        adapter = new MusicLikeRankAdapter(rootView.getContext(), music);
+        adapter = new MusicSearchResultAdapter(rootView.getContext());
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_tab_my_like_music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
@@ -56,16 +59,14 @@ public class MusicTabMyPlaylistFragment extends Fragment {
 
     public void getMyLikeMusicChart(){
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<Music>> musicChartListCall = service.getMusicLike(MainActivity.token);
+        Call<List<YoutubeVideo>> musicChartListCall = service.getUserMusicLike(ProfileFragment.userName, MainActivity.token);
 
-        musicChartListCall.enqueue(new Callback<List<Music>>() {
+        musicChartListCall.enqueue(new Callback<List<YoutubeVideo>>() {
             @Override
-            public void onResponse(Call<List<Music>> call, Response<List<Music>> response) {
+            public void onResponse(Call<List<YoutubeVideo>> call, Response<List<YoutubeVideo>> response) {
                 if(response.isSuccessful()){
                     music = response.body();
-                    adapter = new MusicLikeRankAdapter(getContext(), music);
-
-                    recyclerView.setAdapter(adapter);
+                    adapter.setSource(music);
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                     //}
@@ -77,7 +78,7 @@ public class MusicTabMyPlaylistFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Music>> call, Throwable t) {
+            public void onFailure(Call<List<YoutubeVideo>> call, Throwable t) {
                 Toast.makeText(getActivity(), "Failed to load Recommends", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
             }
