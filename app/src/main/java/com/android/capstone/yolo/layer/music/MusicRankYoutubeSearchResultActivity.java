@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
 import com.android.capstone.yolo.component.network;
@@ -47,7 +48,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
     public void getYoutubeVideoId(String artist, String title){
         //Log.d("Music ID & Token : ", music.get(pos).get_id()+" "+MainActivity.token);
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<YoutubeVideo>> videoIdCall = service.getVideoId(artist, title);
+        Call<List<YoutubeVideo>> videoIdCall = service.getVideoId(artist, title, MainActivity.token);
 
         videoIdCall.enqueue(new Callback<List<YoutubeVideo>>() {
             @Override

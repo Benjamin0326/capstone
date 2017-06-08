@@ -5,6 +5,7 @@ import com.android.capstone.yolo.model.Profile;
 import com.android.capstone.yolo.model.ProfileImage;
 import com.android.capstone.yolo.model.ProfileImageByName;
 import com.android.capstone.yolo.model.Reply;
+import com.android.capstone.yolo.model.YoutubeVideo;
 
 import java.util.List;
 import java.util.Map;
@@ -43,4 +44,7 @@ public interface ProfileService {
 
     @GET("/api/user/{id}")
     Call<ProfileImage> getProfile(@Path("id") String id, @Query("access_token") String token);
+
+    @GET("/api/user/music")
+    Call<List<YoutubeVideo>> getMyLikeMusic(@Query("access_token") String token);
 }

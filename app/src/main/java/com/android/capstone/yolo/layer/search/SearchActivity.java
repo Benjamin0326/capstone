@@ -204,7 +204,7 @@ public class SearchActivity extends BaseActivity {
 
     public void getSearchResultMusic(String query){
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<YoutubeVideo>> musicChartListCall = service.getSearchMusic(query);
+        Call<List<YoutubeVideo>> musicChartListCall = service.getSearchMusic(query, MainActivity.token);
 
         musicChartListCall.enqueue(new Callback<List<YoutubeVideo>>() {
             @Override
