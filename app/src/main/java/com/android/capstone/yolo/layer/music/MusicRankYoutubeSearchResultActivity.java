@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
@@ -27,12 +28,14 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
     private MusicSearchResultAdapter adapter;
     private List<YoutubeVideo> music;
     private String artist, title;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_rank_youtube_search_result);
 
+        textView = (TextView) findViewById(R.id.text_music_search_result_title);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_music_rank_search_result);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         adapter = new MusicSearchResultAdapter(this);
@@ -42,6 +45,8 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
         Intent intent = getIntent();
         artist = intent.getExtras().getString("artist");
         title = intent.getExtras().getString("title");
+
+        textView.setText(artist + " " + title);
 
         getYoutubeVideoId(artist, title);
     }

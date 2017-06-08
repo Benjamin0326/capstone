@@ -1,6 +1,7 @@
 package com.android.capstone.yolo.layer.community;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
