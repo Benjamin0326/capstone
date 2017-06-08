@@ -59,6 +59,7 @@ public class NewPostActivity extends BaseActivity {
     Uri uri;
     Dialog categoryDialog;
     TextView categoryText;
+    int idx = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -213,8 +214,8 @@ public class NewPostActivity extends BaseActivity {
                     //File file = new File(getPath(getApplicationContext(), uri));
                     RequestBody fileBody = RequestBody.create(MediaType.parse(getContentResolver().getType(uri)), file);
                     //photo.put("UploadFile\"; filename=\"photo"+ imageIdx++ +".jpg\"", fileBody);
-                    photo.put("UploadFile\"; filename=\"" + file.getName() + "\"", fileBody);
-                    Log.d("TEST", "put image");
+                    photo.put("UploadFile\"; filename=\""+ idx++ +file.getName()+"\"", fileBody);
+                    Log.d("Photo Path : ", fileBody.toString());
                     ImageView imageView = new ImageView(this);
                     imageView.setImageURI(uri);
                     imageView.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.new_post_image_size), (int) getResources().getDimension(R.dimen.new_post_image_size)));

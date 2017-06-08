@@ -88,5 +88,7 @@ public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHold
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
+
+
 }
 
