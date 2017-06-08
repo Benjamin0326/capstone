@@ -80,9 +80,6 @@ public class BoardDetailActivity extends BaseActivity{
             }
         });
         replyLayout = (FrameLayout) findViewById(R.id.board_no_reply);
-
-
-
     }
 
     public void getPost(){

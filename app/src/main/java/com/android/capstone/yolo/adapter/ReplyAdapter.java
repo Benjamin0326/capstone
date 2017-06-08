@@ -84,10 +84,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder>{
 
                     return;
                 }
-
-                if(response.code() >= 500) {
-                    Toast.makeText(context, "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(context, "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
