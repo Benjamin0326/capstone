@@ -1,7 +1,6 @@
 package com.android.capstone.yolo.layer.community;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -123,6 +122,7 @@ public class NewPostActivity extends BaseActivity {
                                     postImage(response.body().getId());
                                     return;
                                 }
+                                return;
                             }
 
                             Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
@@ -265,8 +265,7 @@ public class NewPostActivity extends BaseActivity {
             return;
         }
     }
-
-    /*
+/*
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

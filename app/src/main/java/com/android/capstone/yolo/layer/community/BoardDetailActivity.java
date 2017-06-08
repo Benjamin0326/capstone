@@ -51,7 +51,6 @@ public class BoardDetailActivity extends BaseActivity{
         setContentView(R.layout.activity_board_detail);
 
         initView();
-        getPost();
     }
 
     public void initView(){
@@ -80,47 +79,66 @@ public class BoardDetailActivity extends BaseActivity{
             }
         });
         replyLayout = (FrameLayout) findViewById(R.id.board_no_reply);
+        getPost();
     }
 
     public void getPost(){
-        postID = getIntent().getExtras().getString("postID");
-
-        CommunityService service = network.buildRetrofit().create(CommunityService.class);
-        Call<Post> postCall = service.getBoardDetail(postID, MainActivity.token);
-        postCall.enqueue(new Callback<Post>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<Post> call, final Response<Post> response) {
-                if(response.isSuccessful()){
-                    title.setText(response.body().getTitle());
-                    content.setText(response.body().getContent());
-                    writer.setText(response.body().getUser());
-                    date.setText(response.body().getDate());
-                    type.setText("["+response.body().getTag()+"]");
-                    images = response.body().getImg();
+            public void run() {
+                postID = getIntent().getExtras().getString("postID");
 
-                    if(images!=null) {
-                        if (images.length > 0) {
-                            for (int i = 0; i < images.length; i++) {
-                                ImageView imageView = new ImageView(getApplicationContext());
-                                Picasso.with(getApplicationContext()).load(images[i]).into(imageView);
-                                layout.addView(imageView);
+                CommunityService service = network.buildRetrofit().create(CommunityService.class);
+                Call<Post> postCall = service.getBoardDetail(postID, MainActivity.token);
+                postCall.enqueue(new Callback<Post>() {
+                    @Override
+                    public void onResponse(Call<Post> call, final Response<Post> response) {
+                        if(response.isSuccessful()){
+                            title.setText(response.body().getTitle());
+                            content.setText(response.body().getContent());
+                            writer.setText(response.body().getUser());
+                            date.setText(response.body().getDate());
+                            type.setText("["+response.body().getTag()+"]");
+                            images = response.body().getImg();
+
+                            if(images!=null) {
+                                if (images.length > 0) {
+                                    for (int i = 0; i < images.length; i++) {
+                                        ImageView imageView = new ImageView(getApplicationContext());
+                                        Picasso.with(getApplicationContext()).load(images[i]).into(imageView);
+                                        layout.addView(imageView);
+                                    }
+                                }
                             }
+                            getUserProfile(response.body().getUser());
+                            getReply(postID);
+                            return;
                         }
+                        Log.d("TEST", "err code : " + response.code());
                     }
-                    getUserProfile(response.body().getUser());
-                    getReply(postID);
-                    return;
-                }
-                Log.d("TEST", "err code : " + response.code());
-            }
 
-            @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-                Log.d("TEST", "err msg : " + t.getMessage());
+                    @Override
+                    public void onFailure(Call<Post> call, Throwable t) {
+                        Log.d("TEST", "err msg : " + t.getMessage());
+                    }
+                });
             }
-        });
+        }).start();
     }
+/*
+    public void getPostInBackground(){(new AsyncTask<Void, Void, Response<Post>>(){
 
+        @Override
+        protected Response<Post> doInBackground(Void... voids) {
+            return tempPost();
+        }
+
+        @Override
+        protected void onPostExecute(Response<Post> postResponse) {
+            set
+        }
+    }).execute();}
+*/
     public void getUserProfile(String id){
 
         ProfileService service = network.buildRetrofit().create(ProfileService.class);

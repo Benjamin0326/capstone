@@ -77,9 +77,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onResponse(Call<List<FestivalList>> call, Response<List<FestivalList>> response) {
                 if(response.isSuccessful()){
-                    festivalLists = response.body();
-                    adapter = new FestivalListAdapter(getChildFragmentManager(), getActivity(), festivalLists);
-                    pager.setAdapter(adapter);
+                    adapter.setSource(response.body());
                     return;
                 }
                 int code = response.code();

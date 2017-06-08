@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
-import com.android.capstone.yolo.MainFragment;
 import com.android.capstone.yolo.layer.festival.ItemFestivalFragment;
 import com.android.capstone.yolo.model.FestivalList;
 
@@ -25,6 +23,11 @@ public class FestivalListAdapter extends FragmentStatePagerAdapter {
         super(fm);
         context = _context;
         festivalLists = _festivalLists;
+    }
+
+    public void setSource(List<FestivalList> list){
+        this.festivalLists = list;
+        notifyDataSetChanged();
     }
 
     @Override

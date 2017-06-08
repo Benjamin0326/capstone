@@ -113,6 +113,7 @@ public class NewReplyActivity extends BaseActivity{
                     Toast.makeText(getApplicationContext(), "댓글이 등록되었습니다.", Toast.LENGTH_SHORT).show();
                     setResult(REPLY_FLAG);
                     finish();
+                    return;
                 }
 
                 Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
