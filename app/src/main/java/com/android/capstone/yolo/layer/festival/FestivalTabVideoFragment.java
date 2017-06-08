@@ -37,9 +37,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FestivalTabVideoFragment extends Fragment {
-    String[] addr = {"iQpGq4HguVs",
-            "pFscrs6qmDY",
-            "PfQhLcYqE88", "4r1tq1XBN0w"};
+    String[] addr;
     Uri[] uri;
     List<String> author = new ArrayList<>();
 
@@ -69,7 +67,7 @@ public class FestivalTabVideoFragment extends Fragment {
         position = getArguments().getInt("position", 0);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_festival_tab_video);
         adapter = new FestivalVideoAdapter(getContext(), addr);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         getFestivalInfoList();
