@@ -98,5 +98,7 @@ public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicSearchRe
         }
 
     }
+
+
 }
 

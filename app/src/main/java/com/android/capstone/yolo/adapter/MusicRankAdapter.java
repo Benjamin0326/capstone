@@ -16,6 +16,7 @@ import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.festival.GalleryActivity;
 import com.android.capstone.yolo.layer.festival.YoutubeActivity;
+import com.android.capstone.yolo.layer.music.MusicRankYoutubeSearchResultActivity;
 import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.model.YoutubeVideo;
 import com.android.capstone.yolo.service.MusicService;
@@ -59,26 +60,32 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
             @Override
             public void onClick(View v) {
                 if(music.get(pos).getLike()[0].compareTo("0")==0){
-                    postMusicLike(pos);
-                    holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
+  //                  postMusicLike(pos);
+  //                  holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
                 }
                 else{
-                    deleteMusicLike(pos);
-                    holder.img_like.setImageResource(R.mipmap.icon_item_action_like_deselected);
+//                    deleteMusicLike(pos);
+//                    holder.img_like.setImageResource(R.mipmap.icon_item_action_like_deselected);
                 }
             }
         };
         ImageView.OnClickListener img_cover_listener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getYoutubeVideoId(pos);
+                Intent intent = new Intent(context, MusicRankYoutubeSearchResultActivity.class);
+                intent.putExtra("artist", music.get(pos).getArtist());
+                intent.putExtra("title", music.get(pos).getTitle());
+                context.startActivity(intent);
             }
         };
 
         TextView.OnClickListener tv_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getYoutubeVideoId(pos);
+                Intent intent = new Intent(context, MusicRankYoutubeSearchResultActivity.class);
+                intent.putExtra("artist", music.get(pos).getArtist());
+                intent.putExtra("title", music.get(pos).getTitle());
+                context.startActivity(intent);
             }
         };
 
@@ -88,13 +95,15 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
         holder.tv_music_name.setText(music.get(pos).getTitle());
         holder.tv_music_name.setOnClickListener(tv_listener);
         holder.tv_artist_name.setText(music.get(pos).getArtist());
+        holder.tv_artist_name.setOnClickListener(tv_listener);
         holder.tv_rank.setText(music.get(pos).getRank());
-        if(music.get(pos).getLike()[0].compareTo("1")==0){
+/*        if(music.get(pos).getLike()[0].compareTo("1")==0){
             holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
         }else{
             holder.img_like.setImageResource(R.mipmap.icon_item_action_like_deselected);
         }
-        holder.img_like.setOnClickListener(img_listener);
+*/
+        //holder.img_like.setOnClickListener(img_listener);
         //holder.tv_music_name.setOnClickListener(tv_listener);
         //holder.tag_music.setTags(music_tag[pos]);
         //holder.tag_music.setOnClickListener(tag_listener);
@@ -110,7 +119,8 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView img_music, img_like;
+//        private ImageView img_music, img_like;
+        private ImageView img_music;
         private TextView tv_music_name, tv_artist_name, tv_rank;
         public ViewHolder(View view){
             super(view);
@@ -118,10 +128,10 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
             tv_music_name = (TextView) view.findViewById(R.id.text_music_name);
             tv_artist_name = (TextView) view.findViewById(R.id.text_artist_name);
             tv_rank = (TextView) view.findViewById(R.id.text_music_rank);
-            img_like = (ImageView) view.findViewById(R.id.img_music_like);
+            //img_like = (ImageView) view.findViewById(R.id.img_music_like);
         }
     }
-
+/*
     public void postMusicLike(final int pos){
         Log.d("Music ID & Token : ", music.get(pos).get_id()+" "+MainActivity.token);
         MusicService service = network.buildRetrofit().create(MusicService.class);
@@ -185,11 +195,12 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
             }
         });
     }
-
+*/
+    /*
     public void getYoutubeVideoId(final int pos){
         //Log.d("Music ID & Token : ", music.get(pos).get_id()+" "+MainActivity.token);
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<YoutubeVideo> videoIdCall = service.getVideoId(music.get(pos).getArtist(), music.get(pos).getTitle());
+        Call<List<YoutubeVideo>> videoIdCall = service.getVideoId(music.get(pos).getArtist(), music.get(pos).getTitle());
 
         videoIdCall.enqueue(new Callback<YoutubeVideo>() {
             @Override
@@ -224,5 +235,6 @@ public class MusicRankAdapter extends RecyclerView.Adapter<MusicRankAdapter.View
             }
         });
     }
+    */
 
 }

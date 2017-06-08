@@ -57,7 +57,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
         ImageView.OnClickListener img_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getYoutubeVideoId(pos);
+                //getYoutubeVideoId(pos);
             }
         };
         TextView.OnClickListener tv_listener = new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
         }
 
     }
-
+/*
     public void getYoutubeVideoId(final int pos){
         //Log.d("Music ID & Token : ", music.get(pos).get_id()+" "+MainActivity.token);
         MusicService service = network.buildRetrofit().create(MusicService.class);
@@ -138,4 +138,5 @@ public class ProfileMusicAdapter extends RecyclerView.Adapter<ProfileMusicAdapte
             }
         });
     }
+    */
 }

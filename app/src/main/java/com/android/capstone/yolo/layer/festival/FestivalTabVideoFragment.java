@@ -163,10 +163,9 @@ public class FestivalTabVideoFragment extends Fragment {
             public void onResponse(Call<VideoInfo> call, Response<VideoInfo> response) {
                 if(response.isSuccessful()){
                     videoInfo = response.body();
-                    Log.d("Response Test : ", videoInfo.toString()+" "+ videoInfo.videos.get(0).snippet.getTitle() + " " + videoInfo.videos.get(0).statistics.getViewCount());
+                    //Log.d("Response Test : ", videoInfo.toString()+" "+ videoInfo.videos.get(0).snippet.getTitle() + " " + videoInfo.videos.get(0).statistics.getViewCount());
                     try {
                         videoInfoList.add(videoInfo);
-
                     }
                     catch (Exception e){
                         e.printStackTrace();

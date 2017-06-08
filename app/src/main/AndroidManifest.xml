@@ -56,7 +56,8 @@
             android:name=".layer.community.NewReplyActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".layer.login.SplashActivity" />
-        <activity android:name=".layer.profile.UserProfileActivity"></activity>
+        <activity android:name=".layer.profile.UserProfileActivity" />
+        <activity android:name=".layer.music.MusicRankYoutubeSearchResultActivity"></activity>
     </application>
 
 </manifest>
