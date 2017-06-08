@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:textAlignment="center"
+            android:visibility="gone"
             android:textColor="@android:color/black"
             android:textSize="20sp"/>
 
