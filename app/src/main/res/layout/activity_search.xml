@@ -163,7 +163,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="3dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:background="@color/lightGray" />
@@ -219,6 +219,13 @@
                     </FrameLayout>
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lightGray" />
 
             </LinearLayout>
 

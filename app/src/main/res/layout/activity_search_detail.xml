@@ -14,7 +14,9 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:layout_gravity="center"
-            android:id="@+id/music_result"/>
+            android:textStyle="bold"
+            android:textSize="@dimen/com_list_tab_text"
+            android:text="검색 결과"/>
 
     </FrameLayout>
 

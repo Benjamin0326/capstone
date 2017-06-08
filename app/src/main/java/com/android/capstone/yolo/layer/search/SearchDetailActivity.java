@@ -42,8 +42,6 @@ public class SearchDetailActivity extends AppCompatActivity{
         musicList.setAdapter(adapter);
         musicList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
         musicList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        title = (TextView) findViewById(R.id.music_result);
-        title.setText(music);
         getMusicResult(music);
     }
 

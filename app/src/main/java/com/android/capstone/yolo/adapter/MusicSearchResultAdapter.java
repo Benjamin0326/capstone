@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +28,7 @@ class MusicViewHolder extends RecyclerView.ViewHolder{
 
 }
 
-public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHolder> implements AdapterView.OnItemClickListener{
+public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHolder>{
 
     private Context context;
     private List<YoutubeVideo> music;
@@ -82,13 +81,5 @@ public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHold
     public int getItemCount() {
         return music != null ? music.size() : 0;
     }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-
 }
 
