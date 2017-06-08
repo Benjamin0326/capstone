@@ -2,83 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:background="@android:color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/com_list_tab_height"
+        android:background="@color/colorPrimary">
 
         <TextView
-            android:id="@+id/search_result_title"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="30dp"/>
-
-        <Space android:layout_width="match_parent" android:layout_height="8dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:id="@+id/music_result"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:id="@+id/search_result_type"/>
+    </FrameLayout>
 
-            <android.support.v4.widget.Space
-                android:layout_width="8dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:id="@+id/search_result_writer"/>
-
-            <android.support.v4.widget.Space
-                android:layout_width="8dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:id="@+id/search_result_date"
-                android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:textSize="12dp" android:textColor="#A0A0A0"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <Space android:layout_width="match_parent" android:layout_height="24dp" />
-
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/search_result_content_layout"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/search_result_content"
-                android:textSize="12dp"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/explore_padding_side"
+        android:paddingRight="@dimen/explore_padding_side"
+        android:id="@+id/music_result_detail"/>
 
 </LinearLayout>

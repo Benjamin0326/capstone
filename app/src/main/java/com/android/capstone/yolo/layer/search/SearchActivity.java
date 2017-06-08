@@ -1,6 +1,7 @@
 package com.android.capstone.yolo.layer.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -61,7 +62,7 @@ public class SearchActivity extends BaseActivity {
     EditText searchText;
     ImageView searchBtn;
     RecyclerView musicList, resultBoardList;
-    TextView noResult;
+    TextView noResult, musicResultMore;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,6 +137,15 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
+        musicResultMore = (TextView) findViewById(R.id.music_result_more);
+        musicResultMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchDetailActivity.class);
+                intent.putExtra("musicID", searchText.getText().toString());
+                startActivity(intent);
+            }
+        });
         musicResultLayout = (LinearLayout) findViewById(R.id.musicResultLayout);
         noResult = (TextView) findViewById(R.id.search_no_result);
 
