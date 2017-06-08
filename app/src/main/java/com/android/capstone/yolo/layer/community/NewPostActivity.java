@@ -37,9 +37,7 @@ import com.android.capstone.yolo.model.BoardList;
 import com.android.capstone.yolo.service.CommunityService;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -52,6 +50,7 @@ import retrofit2.Response;
 public class NewPostActivity extends BaseActivity {
     final int RESULT_GALLERY = 1;
     final int POST_FLAG = 2;
+    final int POST_CANCEL = 3;
     ImageView backBtn, uploadImageBtn;
     Map<String, RequestBody> photo;
     FrameLayout postBtn, categorySpinner;
@@ -99,9 +98,12 @@ public class NewPostActivity extends BaseActivity {
         uploadImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/jpg");
-                startActivityForResult(intent, RESULT_GALLERY);
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "need permission to access external storage", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                } else {
+                    getImageFromGallery();
+                }
             }
         });
 
@@ -127,9 +129,7 @@ public class NewPostActivity extends BaseActivity {
                                 }
                             }
 
-                            if (response.code() >= 500) {
-                                Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -144,6 +144,7 @@ public class NewPostActivity extends BaseActivity {
 
     public void postImage(String id){
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
+        Log.d("TEST", "photo size : " + photo.size());
         Call<BoardImage> call = service.postImage(id, photo, MainActivity.token);
         call.enqueue(new Callback<BoardImage>() {
             @Override
@@ -153,9 +154,7 @@ public class NewPostActivity extends BaseActivity {
                     finish();
                 }
 
-                if (response.code() >= 500) {
-                    Toast.makeText(getApplicationContext(), "Server err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -201,15 +200,60 @@ public class NewPostActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // get permission to access user gallery
-        if(requestCode == RESULT_GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            uri = data.getData();
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "need permission to access external storage", Toast.LENGTH_SHORT).show();
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            }
+
+        if(resultCode != RESULT_OK)
+            return;
+
+        switch (requestCode) {
+
+            case RESULT_GALLERY:
+                if(data!=null) {
+                    uri = data.getData();
+                    File file = new File(getRealPathFromURI(uri));
+                    //File file = new File(getPath(getApplicationContext(), uri));
+                    RequestBody fileBody = RequestBody.create(MediaType.parse(getContentResolver().getType(uri)), file);
+                    //photo.put("UploadFile\"; filename=\"photo"+ imageIdx++ +".jpg\"", fileBody);
+                    photo.put("UploadFile\"; filename=\"" + file.getName() + "\"", fileBody);
+                    Log.d("TEST", "put image");
+                    ImageView imageView = new ImageView(this);
+                    imageView.setImageURI(uri);
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.new_post_image_size), (int) getResources().getDimension(R.dimen.new_post_image_size)));
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+                    params.gravity = Gravity.CENTER;
+                    imageView.setPadding(0, 0, 8, 0);
+                    if (imageListLayout.getVisibility() == View.GONE) {
+                        imageListLayout.setVisibility(View.VISIBLE);
+                    }
+                    imageListLayout.addView(imageView);
+                }
+                break;
+
         }
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String path;
+        Cursor cursor = getContentResolver()
+                .query(contentURI, null, null, null, null);
+        if (cursor == null)
+            path=contentURI.getPath();
+
+        else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            path=cursor.getString(idx);
+
+        }
+        if(cursor!=null)
+            cursor.close();
+        return path;
+    }
+
+
+    public void getImageFromGallery(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, RESULT_GALLERY);
     }
 
     @Override
@@ -217,26 +261,10 @@ public class NewPostActivity extends BaseActivity {
         switch (requestCode){
             case 1: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    String url = getPath(this, uri);
-                    File file = new File(url);
-                    Log.d("Photo URL : ", url);
-                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
-                    //photo.put("UploadFile\"; filename=\"photo"+ imageIdx++ +".jpg\"", fileBody);
-                    photo.put("UploadFile\"; filename=\""+file.getName()+"\"", fileBody);
-                    Log.d("Photo Path : ", fileBody.toString());
-                    ImageView imageView = new ImageView(this);
-                    imageView.setImageURI(uri);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.new_post_image_size), (int) getResources().getDimension(R.dimen.new_post_image_size)));
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-                    params.gravity = Gravity.CENTER;
-                    imageView.setPadding(0, 0, 8, 0);
-                    if(imageListLayout.getVisibility() == View.GONE){
-                        imageListLayout.setVisibility(View.VISIBLE);
-                    }
-                    imageListLayout.addView(imageView);
-                }else{
-                    Toast.makeText(getApplicationContext(), "permission denied", Toast.LENGTH_SHORT).show();
+                    getImageFromGallery();
+                    return;
                 }
+                Toast.makeText(getApplicationContext(), "permission denied", Toast.LENGTH_SHORT).show();
             }
             return;
         }
@@ -322,5 +350,11 @@ public class NewPostActivity extends BaseActivity {
 
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(POST_CANCEL);
+        super.onBackPressed();
     }
 }

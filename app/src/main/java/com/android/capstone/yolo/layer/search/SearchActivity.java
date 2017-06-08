@@ -1,13 +1,11 @@
 package com.android.capstone.yolo.layer.search;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,14 +24,12 @@ import android.widget.Toast;
 import com.android.capstone.yolo.BaseActivity;
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
-import com.android.capstone.yolo.adapter.BoardListAdapter;
+import com.android.capstone.yolo.adapter.BoardSearchResultAdapter;
 import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
-import com.android.capstone.yolo.adapter.ProfileMusicAdapter;
 import com.android.capstone.yolo.adapter.SearchHistoryAdapter;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.layer.community.BoardDetailActivity;
+import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.BoardList;
-import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.model.YoutubeVideo;
 import com.android.capstone.yolo.service.MusicService;
 import com.android.capstone.yolo.service.SearchService;
@@ -54,20 +50,18 @@ public class SearchActivity extends BaseActivity {
     private InputMethodManager inputMethodManager;
     private SharedPreferences preferences;
     SearchHistoryAdapter adapter;
-    BoardListAdapter boardListAdapter;
+    BoardSearchResultAdapter boardSearchResultAdapter;
     MusicSearchResultAdapter musicSearchResultAdapter;
-    ListView historyList, resultBoardList;
+    ListView historyList;
     ArrayList<String> historys;
     List<YoutubeVideo> resultMusic;
-    LinearLayout searchHistoryLayout, searchTab, searchResultLayout;
-    FrameLayout container, categoryLayout;
+    LinearLayout searchHistoryLayout, searchTab, musicResultLayout;
+    NestedScrollView searchResultLayout;
+    FrameLayout container;
     EditText searchText;
     ImageView searchBtn;
-
-    RecyclerView recyclerView;
-
-    TextView categoryText, resultCount, noResult;
-    AlertDialog categoryDialog;
+    RecyclerView musicList, resultBoardList;
+    TextView noResult;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,16 +92,18 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
-        boardListAdapter = new BoardListAdapter(getApplicationContext());
+        musicSearchResultAdapter = new MusicSearchResultAdapter(getApplicationContext());
+        musicList = (RecyclerView) findViewById(R.id.recycler_search_music);
+        musicList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
+        musicList.setAdapter(musicSearchResultAdapter);
+        musicList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
-        musicSearchResultAdapter = new MusicSearchResultAdapter(getApplicationContext(), resultMusic);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_search_music);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setAdapter(musicSearchResultAdapter);
-        recyclerView.setLayoutManager(layoutManager);
-
-        resultBoardList = (ListView) findViewById(R.id.resultBoardList);
-        resultBoardList.setAdapter(boardListAdapter);
+        boardSearchResultAdapter = new BoardSearchResultAdapter(getApplicationContext());
+        resultBoardList = (RecyclerView) findViewById(R.id.resultBoardList);
+        resultBoardList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
+        resultBoardList.setAdapter(boardSearchResultAdapter);
+        resultBoardList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        /*
         resultBoardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -116,11 +112,11 @@ public class SearchActivity extends BaseActivity {
                 intent.putExtra("postID", boardList.getId());
                 startActivity(intent);
             }
-        });
+        });*/
 
         searchTab = (LinearLayout) findViewById(R.id.searchTab);
         searchHistoryLayout = (LinearLayout) findViewById(R.id.searchHistoryLayout);
-        searchResultLayout = (LinearLayout) findViewById(R.id.searchResultLayout);
+        searchResultLayout = (NestedScrollView) findViewById(R.id.search_result_layout);
         searchText = (EditText) findViewById(searchEditText);
         searchBtn = (ImageView) findViewById(R.id.searchImage);
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -140,17 +136,7 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
-        categoryText = (TextView) findViewById(R.id.search_category_text);
-        categoryLayout = (FrameLayout) findViewById(R.id.search_category);
-        categoryLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                categoryDialog = createDialog();
-                categoryDialog.show();
-            }
-        });
-
-        resultCount = (TextView) findViewById(R.id.search_result_cnt);
+        musicResultLayout = (LinearLayout) findViewById(R.id.musicResultLayout);
         noResult = (TextView) findViewById(R.id.search_no_result);
 
         initView();
@@ -158,22 +144,7 @@ public class SearchActivity extends BaseActivity {
 
     public void initView(){
         initSearchHistory();
-        //initSpinner();
         searchText.requestFocus();
-    }
-
-    private AlertDialog createDialog() {
-        final String[] str = getResources().getStringArray(R.array.cagetory);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setSingleChoiceItems(str, -1, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                categoryText.setText(str[item]);
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        return dialog;
     }
 
     public void initSearchHistory(){
@@ -210,11 +181,10 @@ public class SearchActivity extends BaseActivity {
                 if(response.isSuccessful()){
                     updateSearchHistory(query);
                     getSearchResultMusic(query);
-                    resultCount.setText(response.body().size() + " 건");
                     if(response.body().size() > 0) {
                         resultBoardList.setVisibility(View.VISIBLE);
                         noResult.setVisibility(View.GONE);
-                        boardListAdapter.setSource(response.body());
+                        boardSearchResultAdapter.setSource(response.body());
                         return;
                     }
                     resultBoardList.setVisibility(View.GONE);
@@ -241,15 +211,23 @@ public class SearchActivity extends BaseActivity {
             public void onResponse(Call<List<YoutubeVideo>> call, Response<List<YoutubeVideo>> response) {
                 if(response.isSuccessful()){
                     resultMusic = response.body();
-                    if(resultMusic.size()>0) {
-                        recyclerView.setVisibility(View.VISIBLE);
-                        musicSearchResultAdapter = new MusicSearchResultAdapter(getApplicationContext(), resultMusic);
-                        recyclerView.setAdapter(musicSearchResultAdapter);
+                    if(resultMusic.size()>=3) {
+                        musicResultLayout.setVisibility(View.VISIBLE);
+                        List<YoutubeVideo> list = new ArrayList<YoutubeVideo>();
+                        list.add(resultMusic.get(1));
+                        list.add(resultMusic.get(2));
+                        list.add(resultMusic.get(3));
+                        musicSearchResultAdapter.setSource(list);
+                        return;
                     }
-                    return;
+                    if (resultMusic.size() > 0){
+                        musicResultLayout.setVisibility(View.VISIBLE);
+                        musicSearchResultAdapter.setSource(resultMusic);
+                        return;
+                    }
+                    musicResultLayout.setVisibility(View.GONE);
                 }
-                int code = response.code();
-                Log.d("TEST", "err code : " + code);
+                Log.d("TEST", "err " + response.code() + " : " + response.message());
             }
 
             @Override
@@ -275,8 +253,6 @@ public class SearchActivity extends BaseActivity {
                 for(int i=HISTORY_MAX_NUM; i<historys.size(); i++)
                     historys.remove(i);
             }
-
-            Log.d("TEST", "save : " + keyword);
             adapter.setSource(historys);
         }
     }

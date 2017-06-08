@@ -2,9 +2,7 @@ package com.android.capstone.yolo.layer.music;
 
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,11 +13,9 @@ import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
-import com.android.capstone.yolo.adapter.FestivalPagerAdapter;
 import com.android.capstone.yolo.adapter.MusicLikeRankAdapter;
-import com.android.capstone.yolo.adapter.MusicPagerAdapter;
-import com.android.capstone.yolo.adapter.MusicRankAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.service.MusicService;
 
@@ -50,6 +46,7 @@ public class MusicTabMyPlaylistFragment extends Fragment {
         adapter = new MusicLikeRankAdapter(rootView.getContext(), music);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_tab_my_like_music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         getMyLikeMusicChart();
