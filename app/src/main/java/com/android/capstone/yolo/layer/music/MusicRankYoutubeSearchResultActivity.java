@@ -1,8 +1,8 @@
 package com.android.capstone.yolo.layer.music;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
 import com.android.capstone.yolo.component.network;
-import com.android.capstone.yolo.layer.festival.YoutubeActivity;
 import com.android.capstone.yolo.model.YoutubeVideo;
 import com.android.capstone.yolo.service.MusicService;
 
@@ -35,7 +34,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_music_rank_search_result);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        adapter = new MusicSearchResultAdapter(this, music);
+        adapter = new MusicSearchResultAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -60,8 +59,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
                         return;
                     }
                     //Log.d("Youtube Video : ", tmp_video.getVideoId());
-                    adapter = new MusicSearchResultAdapter(getApplicationContext(), tmp_video);
-                    recyclerView.setAdapter(adapter);
+                    adapter.setSource(tmp_video);
                     //Toast.makeText(context, "좋아요가 반영되었습니다.", Toast.LENGTH_LONG).show();
                     //String[] tmp = {"1"};
                     //music.get(pos).setLike(tmp);
@@ -72,8 +70,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
                     //Picasso.with(getActivity()).load(festivalLists.get(position).getImg()[1]).into(img);
                     return;
                 }
-                int code = response.code();
-                Log.d("TEST", "err code : " + code);
+                Log.d("TEST", "err " + response.code() + " : " + response.message());
             }
 
             @Override

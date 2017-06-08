@@ -141,6 +141,7 @@
                             android:layout_gravity="right|center_vertical"
                             android:includeFontPadding="false"
                             android:id="@+id/music_result_more"
+                            android:textSize="10dp"
                             android:text="더보기"/>
 
                     </FrameLayout>
@@ -149,11 +150,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center"
-                        android:background="@color/lightGray" />
+                        android:background="@color/lightGray"
+                        android:layout_marginBottom="4dp"/>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_search_music"
-                        android:layout_marginBottom="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="6" />
@@ -164,6 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
                     android:background="@color/lightGray" />
 
                 <LinearLayout
@@ -174,15 +176,13 @@
                     android:paddingLeft="@dimen/explore_padding_side"
                     android:paddingRight="@dimen/explore_padding_side"
                     android:background="@android:color/white"
+                    android:layout_marginTop="@dimen/explore_margin_top"
                     android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/explore_padding_top"
-                        android:paddingBottom="@dimen/explore_padding_top"
-                        android:layout_marginBottom="@dimen/explore_tab_margin">
+                        android:layout_margin="5dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -190,14 +190,6 @@
                             android:includeFontPadding="false"
                             android:layout_gravity="left|center_vertical"
                             android:text="커뮤니티 검색결과"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:id="@+id/community_result_more"
-                            android:layout_gravity="right|center_vertical"
-                            android:text="더보기"/>
 
                     </FrameLayout>
 
