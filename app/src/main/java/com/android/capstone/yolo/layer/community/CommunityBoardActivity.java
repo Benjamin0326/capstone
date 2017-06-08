@@ -129,4 +129,8 @@ public class CommunityBoardActivity extends BaseActivity{
         Toast.makeText(getApplicationContext(), "글 목록을 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
 
     }
+
+    public String getCommunityID(){
+        return communityID;
+    }
 }

@@ -47,4 +47,7 @@ public interface CommunityService {
     @POST("/api/board/image/{id}")
     Call<BoardImage> postImage(@Path("id") String id, @PartMap Map<String, RequestBody> params, @Query("access_token") String token);
 
+    @GET("/api/board/festival/hot/{id}")
+    Call<List<BoardList>> getHotList(@Path("id") String id, @Query("access_token") String token);
+
 }
