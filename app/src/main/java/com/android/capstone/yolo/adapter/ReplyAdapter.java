@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +40,7 @@ class ReplyViewHolder extends RecyclerView.ViewHolder{
     }
 }
 
-public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implements AdapterView.OnItemClickListener{
+public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder>{
     Context context;
     List<Reply> lists;
 
@@ -106,10 +105,5 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyViewHolder> implemen
     @Override
     public int getItemCount() {
         return lists != null ? lists.size() : 0;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
     }
 }

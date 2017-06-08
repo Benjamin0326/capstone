@@ -7,6 +7,7 @@
     android:paddingBottom="@dimen/board_list_padding_updown"
     android:paddingLeft="@dimen/board_list_padding_side"
     android:paddingRight="@dimen/board_list_padding_side"
+    android:id="@+id/item_board_container"
     android:orientation="horizontal">
 
     <LinearLayout

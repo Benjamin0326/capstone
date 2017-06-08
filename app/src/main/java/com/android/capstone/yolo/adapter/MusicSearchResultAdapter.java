@@ -39,7 +39,7 @@ class MusicViewHolder extends RecyclerView.ViewHolder{
 
 }
 
-public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHolder> implements AdapterView.OnItemClickListener{
+public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHolder>{
 
     private Context context;
     private List<YoutubeVideo> music;
@@ -105,12 +105,6 @@ public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHold
     @Override
     public int getItemCount() {
         return music != null ? music.size() : 0;
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
     }
 
     public void insertMusicData(final int pos){
