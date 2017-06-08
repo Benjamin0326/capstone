@@ -61,8 +61,8 @@ public class MusicTabMyPlaylistFragment extends Fragment {
     }
 
     public void getMyLikeMusicChart(String name){
-        MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<YoutubeVideo>> musicChartListCall = service.getUserMusicLike(name, MainActivity.token);
+        ProfileService service = network.buildRetrofit().create(ProfileService.class);
+        Call<List<YoutubeVideo>> musicChartListCall = service.getRecommendMusic(MainActivity.token);
 
         musicChartListCall.enqueue(new Callback<List<YoutubeVideo>>() {
             @Override

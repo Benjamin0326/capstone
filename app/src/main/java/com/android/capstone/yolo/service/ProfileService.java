@@ -33,6 +33,9 @@ public interface ProfileService {
     @GET("/api/user/me")
     Call<ProfileImage> getUserImage(@Query("access_token") String token);
 
+    @GET("/api/music")
+    Call<List<YoutubeVideo>> getRecommendMusic(@Query("access_token") String token);
+
     @GET("/api/user/username/{id}")
     Call<ProfileImageByName> getUserImageByName(@Path("id") String id, @Query("access_token") String token);
 
