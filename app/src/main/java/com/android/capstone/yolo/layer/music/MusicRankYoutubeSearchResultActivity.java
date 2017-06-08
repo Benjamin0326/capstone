@@ -35,7 +35,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_rank_youtube_search_result);
 
-        textView = (TextView) findViewById(R.id.text_music_search_result_title);
+        textView = (TextView) findViewById(R.id.text_music_rank_search_result_title);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_music_rank_search_result);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         adapter = new MusicSearchResultAdapter(this);
@@ -46,7 +46,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
         artist = intent.getExtras().getString("artist");
         title = intent.getExtras().getString("title");
 
-        textView.setText(artist + " " + title);
+        textView.setText("검색 결과");
 
         getYoutubeVideoId(artist, title);
     }
