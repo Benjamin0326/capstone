@@ -69,10 +69,14 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        initView();
+    }
+
+    public void initView(){
         MainActivity.menuFlag = 1;
         int tmp;
         if(MainActivity.menuStack.size()!=0)
-             tmp = (int)MainActivity.menuStack.pop();
+            tmp = (int)MainActivity.menuStack.pop();
         else
             tmp = R.id.action_home;
         MainActivity.bottomNavigationView.setSelectedItemId(tmp);
@@ -104,16 +108,6 @@ public class SearchActivity extends BaseActivity {
         resultBoardList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
         resultBoardList.setAdapter(boardSearchResultAdapter);
         resultBoardList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        /*
-        resultBoardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BoardList boardList = (BoardList) boardListAdapter.getItem(i);
-                Intent intent = new Intent(getApplicationContext(), BoardDetailActivity.class);
-                intent.putExtra("postID", boardList.getId());
-                startActivity(intent);
-            }
-        });*/
 
         searchTab = (LinearLayout) findViewById(R.id.searchTab);
         searchHistoryLayout = (LinearLayout) findViewById(R.id.searchHistoryLayout);
@@ -149,10 +143,6 @@ public class SearchActivity extends BaseActivity {
         musicResultLayout = (LinearLayout) findViewById(R.id.musicResultLayout);
         noResult = (TextView) findViewById(R.id.search_no_result);
 
-        initView();
-    }
-
-    public void initView(){
         initSearchHistory();
         searchText.requestFocus();
     }
@@ -223,10 +213,10 @@ public class SearchActivity extends BaseActivity {
                     resultMusic = response.body();
                     if(resultMusic.size()>=3) {
                         musicResultLayout.setVisibility(View.VISIBLE);
-                        List<YoutubeVideo> list = new ArrayList<YoutubeVideo>();
+                        List<YoutubeVideo> list = new ArrayList<>();
+                        list.add(resultMusic.get(0));
                         list.add(resultMusic.get(1));
                         list.add(resultMusic.get(2));
-                        list.add(resultMusic.get(3));
                         musicSearchResultAdapter.setSource(list);
                         return;
                     }
@@ -236,6 +226,7 @@ public class SearchActivity extends BaseActivity {
                         return;
                     }
                     musicResultLayout.setVisibility(View.GONE);
+                    return;
                 }
                 Log.d("TEST", "err " + response.code() + " : " + response.message());
             }
@@ -266,16 +257,8 @@ public class SearchActivity extends BaseActivity {
             adapter.setSource(historys);
         }
     }
-/*
-    public void moveToResultView(){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.exploreContainer, new SearchDetailActivity());
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-*/
-    public void hideKeyboard(View view) {
 
+    public void hideKeyboard(View view) {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
