@@ -1,5 +1,6 @@
 package com.android.capstone.yolo.layer.community;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,7 +17,6 @@ import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.BoardListAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.model.BoardList;
-import com.android.capstone.yolo.model.Post;
 import com.android.capstone.yolo.service.CommunityService;
 
 import java.util.List;
@@ -36,13 +37,26 @@ public class CommunityBoardPopularFragment extends Fragment{
         adapter = new BoardListAdapter(getContext());
         boardList.setAdapter(adapter);
 
+        boardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(((CommunityBoardActivity)getActivity()).isFloatingMenuOpened())
+                    ((CommunityBoardActivity)getActivity()).closeFloatingMenu();
+
+                BoardList boardList = (BoardList) adapter.getItem(i);
+                Intent intent = new Intent(getContext(), BoardDetailActivity.class);
+                intent.putExtra("postID", boardList.getId());
+                intent.putExtra("communityTitle", getActivity().getIntent().getExtras().getString("communityTitle"));
+                startActivity(intent);
+            }
+        });
+
         getHotList();
 
         return view;
     }
 
     public void getHotList(){
-        Log.d("TEST", "id : " + ((CommunityBoardActivity)getActivity()).getCommunityID());
         CommunityService service = network.buildRetrofit().create(CommunityService.class);
         Call<List<BoardList>> call = service.getHotList(((CommunityBoardActivity)getActivity()).getCommunityID(), MainActivity.token);
         call.enqueue(new Callback<List<BoardList>>() {
