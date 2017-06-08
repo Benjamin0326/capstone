@@ -1,14 +1,20 @@
 package com.android.capstone.yolo.layer.community;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -122,6 +128,7 @@ public class NewPostActivity extends BaseActivity {
                                     postImage(response.body().getId());
                                     return;
                                 }
+                                return;
                             }
 
                             Toast.makeText(getApplicationContext(), "err " + response.code() + " : " + response.message(), Toast.LENGTH_SHORT).show();
@@ -265,7 +272,6 @@ public class NewPostActivity extends BaseActivity {
         }
     }
 
-    /*
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -346,7 +352,7 @@ public class NewPostActivity extends BaseActivity {
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
-*/
+
     @Override
     public void onBackPressed() {
         setResult(POST_CANCEL);
