@@ -46,7 +46,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
         artist = intent.getExtras().getString("artist");
         title = intent.getExtras().getString("title");
 
-        textView.setText(artist + " " + title);
+        textView.setText("검색 결과");
 
         getYoutubeVideoId(artist, title);
     }
