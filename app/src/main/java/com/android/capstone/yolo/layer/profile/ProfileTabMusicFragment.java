@@ -85,7 +85,7 @@ public class ProfileTabMusicFragment extends Fragment {
                     music = response.body();
                     if(music.size()!=0){
                         for(int i=0;i<music.size();i++)
-                            music.get(i).setLike(1);
+                            music.get(i).setLike(2);
                     }
                     adapter.setSource(music);
 

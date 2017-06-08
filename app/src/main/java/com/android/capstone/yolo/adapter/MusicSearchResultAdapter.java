@@ -100,6 +100,8 @@ public class MusicSearchResultAdapter extends RecyclerView.Adapter<MusicViewHold
         holder.img_like.setOnClickListener(like_listener);
         if(music.get(pos).getLike()==1)
             holder.img_like.setImageResource(R.mipmap.icon_item_action_like_selected);
+        if(music.get(pos).getLike()==2)
+            holder.img_like.setVisibility(View.GONE);
     }
 
     @Override

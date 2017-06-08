@@ -10,11 +10,13 @@ import android.widget.Toast;
 
 import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
+import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
 import com.android.capstone.yolo.adapter.ProfileMusicAdapter;
 import com.android.capstone.yolo.component.network;
 import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.Music;
 import com.android.capstone.yolo.model.ProfileImage;
+import com.android.capstone.yolo.model.YoutubeVideo;
 import com.android.capstone.yolo.service.MusicService;
 import com.android.capstone.yolo.service.ProfileService;
 
@@ -28,8 +30,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private TextView user_name;
     private RecyclerView recyclerView;
-    private ProfileMusicAdapter adapter;
-    private List<Music> music;
+    private MusicSearchResultAdapter adapter;
+    private List<YoutubeVideo> music;
     String strId, strName;
 
     @Override
@@ -40,7 +42,7 @@ public class UserProfileActivity extends AppCompatActivity {
         user_name = (TextView) findViewById(R.id.user_profile_title);
         recyclerView = (RecyclerView) findViewById(R.id.user_profile_recycler);
 
-        adapter = new ProfileMusicAdapter(this, music);
+        adapter = new MusicSearchResultAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
         recyclerView.setAdapter(adapter);
@@ -92,16 +94,18 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void getMyLikeMusicChart(String name){
         MusicService service = network.buildRetrofit().create(MusicService.class);
-        Call<List<Music>> musicChartListCall = service.getUserMusicLike(name, MainActivity.token);
+        Call<List<YoutubeVideo>> musicChartListCall = service.getUserMusicLike(name, MainActivity.token);
 
-        musicChartListCall.enqueue(new Callback<List<Music>>() {
+        musicChartListCall.enqueue(new Callback<List<YoutubeVideo>>() {
             @Override
-            public void onResponse(Call<List<Music>> call, Response<List<Music>> response) {
+            public void onResponse(Call<List<YoutubeVideo>> call, Response<List<YoutubeVideo>> response) {
                 if(response.isSuccessful()){
                     music = response.body();
-                    adapter = new ProfileMusicAdapter(getApplicationContext(), music);
+                    if(music.size()!=0)
+                        for(int i=0;i<music.size();i++)
+                            music.get(i).setLike(2);
+                    adapter.setSource(music);
 
-                    recyclerView.setAdapter(adapter);
                     //for(int i=0;i<festivalLists.get(position).getVideo().length;i++){
                     //    Log.d("#Test :", festivalLists.get(position).getVideo()[i]);
                     //}
@@ -113,7 +117,7 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Music>> call, Throwable t) {
+            public void onFailure(Call<List<YoutubeVideo>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Failed to load", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
             }

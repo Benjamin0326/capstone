@@ -35,8 +35,8 @@ public interface MusicService {
     @GET("/api/rank/my")
     Call<List<Music>> getMusicLike(@Query("access_token") String token);
 
-    @GET("/api/rank/like/{name}")
-    Call<List<Music>> getUserMusicLike(@Path("name") String name, @Query("access_token") String token);
+    @GET("/api/user/music/{name}")
+    Call<List<YoutubeVideo>> getUserMusicLike(@Path("name") String name, @Query("access_token") String token);
 
     @GET("/api/rank/videosearch/{query}")
     Call<List<YoutubeVideo>> getSearchMusic(@Path("query") String query, @Query("access_token") String token);
