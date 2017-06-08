@@ -6,6 +6,27 @@ package com.android.capstone.yolo.model;
 
 public class YoutubeVideo {
     private String videoId, title, thumbnail;
+    private int viewCount, likeCount;
+    private String[] like;
+
+    public void setViewCount(int _viewCount){
+        viewCount = _viewCount;
+    }
+    public void setLikeCount(int _likeCount){
+        likeCount = _likeCount;
+    }
+    public void setLike(String[] _like){
+        like = _like;
+    }
+    public int getViewCount(){
+        return viewCount;
+    }
+    public int getLikeCount(){
+        return likeCount;
+    }
+    public String[] getLike(){
+        return like;
+    }
     public void setVideoId(String _videoId){
         videoId = _videoId;
     }
