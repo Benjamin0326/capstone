@@ -78,7 +78,7 @@ public class MusicTabMyPlaylistFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Music>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Failed to load Recommends", Toast.LENGTH_LONG).show();
                 Log.i("TEST","err : "+ t.getMessage());
             }
         });

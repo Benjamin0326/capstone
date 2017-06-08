@@ -96,7 +96,7 @@ public class FestivalVideoAdapter extends RecyclerView.Adapter<FestivalVideoAdap
         ImageView.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                //AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
                 Intent intent = new Intent(context, YoutubeActivity.class);
 

@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:textAlignment="center"
+            android:visibility="gone"
             android:textColor="@android:color/black"
             android:textSize="20sp"/>
 
@@ -42,6 +43,15 @@
                 android:maxLines="1"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
+
+        <ImageView
+            android:background="@android:color/transparent"
+            android:id="@+id/img_music_like"
+            android:src="@mipmap/icon_item_action_like_deselected"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_marginRight="5dp"/>
 
     </LinearLayout>
 
