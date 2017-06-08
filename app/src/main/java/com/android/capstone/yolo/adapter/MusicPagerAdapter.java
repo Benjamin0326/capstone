@@ -23,7 +23,7 @@ public class MusicPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                MusicTabRankFragment tab1 = new MusicTabRankFragment(); // Fragment 는 알아서 만들자
+                MusicTabRankFragment tab1 = new MusicTabRankFragment();
                 return tab1;
             case 1:
                 MusicTabMyPlaylistFragment tab2 = new MusicTabMyPlaylistFragment();

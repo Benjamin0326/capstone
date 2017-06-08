@@ -13,6 +13,7 @@ import com.android.capstone.yolo.MainActivity;
 import com.android.capstone.yolo.R;
 import com.android.capstone.yolo.adapter.MusicSearchResultAdapter;
 import com.android.capstone.yolo.component.network;
+import com.android.capstone.yolo.layer.community.SimpleDividerItemDecoration;
 import com.android.capstone.yolo.model.YoutubeVideo;
 import com.android.capstone.yolo.service.MusicService;
 
@@ -39,6 +40,7 @@ public class MusicRankYoutubeSearchResultActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_music_rank_search_result);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         adapter = new MusicSearchResultAdapter(this);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
